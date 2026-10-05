@@ -1,0 +1,17 @@
+▶ runtime quality and standalone proxy integration
+  ✔ navigation/footer text cannot make a loading shell successful or cached (15270.3797ms)
+  ✔ late hydration is recovered before delivery (5423.1582ms)
+  ✔ completed pages with loading-related prose remain valid (4170.5499ms)
+  ✔ explicit output requirements fail before cache saving (4204.5166ms)
+  ✔ standalone proxy carries actual browser traffic without a region (4598.3318ms)
+  ✔ caller can explicitly capture a loading state (5175.1252ms)
+✔ runtime quality and standalone proxy integration (39004.5091ms)
+✔ public worker network policy checks redirect destinations (24888.8682ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 67074.7181

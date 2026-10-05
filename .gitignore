@@ -1,0 +1,12 @@
+node_modules/
+node_modules.repair-backup/
+dist/
+.test-dist/
+.turbo/
+.next/
+.pnpm-store/
+
+.env
+.env.local
+.env.*.local
+!.env.example

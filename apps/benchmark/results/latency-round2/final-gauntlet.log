@@ -1,0 +1,53 @@
+[ 1/30] PASS easy     example-com               11963ms
+[ 2/30] PASS easy     wikipedia-home            13441ms
+[ 3/30] PASS easy     hackernews-front          14178ms
+[ 4/30] PASS easy     mdn-web                   16688ms
+[ 5/30] PASS easy     rust-lang-home             6204ms
+[ 6/30] PASS easy     kernel-org                 4376ms
+[ 7/30] PASS easy     python-docs                6559ms
+[ 8/30] PASS easy     python-org-home            9934ms
+[ 9/30] PASS easy     gnu-home                  10708ms
+[10/30] PASS moderate react-dev                 11742ms
+[11/30] PASS easy     peps-index                16205ms
+[12/30] PASS moderate nextjs-docs                8881ms
+[13/30] PASS moderate typescript-docs            8255ms
+[14/30] PASS moderate amazon-serp               19920ms
+[15/30] PASS moderate tailwind-docs             35029ms
+[16/30] PASS moderate svelte-docs                9283ms
+[engine:warn] capture attempt failed {"request_id":"req_5f0b9483-7e29-4ab2-bb34-5964692c2191","slot":3,"attempt":0,"code":"render_timeout","message":"page.goto: Timeout 45000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://github.com/\", waiting until \"domcontentloaded\"\u001b[22m\n"}
+[engine:warn] capture attempt failed {"request_id":"req_7152e13b-26ed-4a6c-9bc7-5affa6be96ef","slot":1,"attempt":0,"code":"render_timeout","message":"page.goto: Timeout 45000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://www.allbirds.com/\", waiting until \"domcontentloaded\"\u001b[22m\n"}
+[17/30] PASS moderate vercel-docs               15354ms
+[18/30] FAIL moderate dribbble-grid             43399ms  min_height
+[19/30] PASS hard     reddit-feed               21262ms
+[20/30] PASS moderate github-home               96720ms
+[21/30] PASS hard     bbc-news                  31753ms
+[engine:warn] capture attempt failed {"request_id":"req_b7197c9c-7ab6-4d10-9911-ab4fdfec4016","slot":1,"attempt":0,"code":"render_timeout","message":"page.goto: Timeout 45000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://www.allbirds.com/\", waiting until \"domcontentloaded\"\u001b[22m\n"}
+[22/30] FAIL moderate allbirds-store            93195ms  render_timeout: page.goto: Timeout 45000ms exceeded.
+Call log:
+[2m  - navigating to "https://ww
+[23/30] PASS hard     guardian-home             27141ms
+[engine:warn] capture attempt failed {"request_id":"req_124d6c39-a360-4287-80a9-3898d1ac26ec","slot":1,"attempt":0,"code":"blocked_by_target","message":"Target blocked the capture: Human Verification"}
+[24/30] BLOCK hard     imdb-home                 16112ms  blocked_by_target: Target blocked the capture: Human Verification
+[25/30] PASS hard     booking-home              18344ms
+[engine:warn] capture attempt failed {"request_id":"req_23bbc826-59d2-4ca5-b324-00a0d9b72164","slot":1,"attempt":0,"code":"blocked_by_target","message":"Target blocked the capture (status 403): Just a moment..."}
+[26/30] BLOCK hard     stackoverflow-home        16755ms  blocked_by_target: Target blocked the capture (status 403): Just a moment...
+[engine:warn] capture attempt failed {"request_id":"req_fb7ef03d-910a-4de5-b132-790460f5389d","slot":3,"attempt":0,"code":"render_timeout","message":"page.goto: Timeout 45000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://www.youtube.com/watch?v=dQw4w9WgXcQ\", waiting until \"domcontentloaded\"\u001b[22m\n"}
+[27/30] PASS hard     twitch-home               50564ms
+[engine:warn] capture attempt failed {"request_id":"req_2657679d-1e16-4a6e-a24d-a1c1b174d89b","slot":0,"attempt":0,"code":"render_timeout","message":"page.goto: Timeout 45000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://www.cloudflare.com/turnstile/\", waiting until \"domcontentloaded\"\u001b[22m\n"}
+[engine:warn] capture attempt failed {"request_id":"req_cf38024d-fa8a-49bc-beb5-18efa6e28605","slot":1,"attempt":0,"code":"render_timeout","message":"page.goto: Timeout 45000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://www.spotify.com/\", waiting until \"domcontentloaded\"\u001b[22m\n"}
+[engine:warn] capture attempt failed {"request_id":"req_66c3cfd1-5476-4528-af3a-e1a247d40646","slot":3,"attempt":0,"code":"render_timeout","message":"page.goto: Timeout 45000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://www.youtube.com/watch?v=dQw4w9WgXcQ\", waiting until \"domcontentloaded\"\u001b[22m\n"}
+[28/30] FAIL hard     youtube-watch             92855ms  render_timeout: page.goto: Timeout 45000ms exceeded.
+Call log:
+[2m  - navigating to "https://ww
+[29/30] PASS hard     cloudflare-turnstile      68756ms
+[30/30] FAIL hard     spotify-home              78275ms  min_bytes
+
+=== Gauntlet summary ===
+  easy      10/10 passed  pass    100%  success    100%  p50 10708ms  p95 16688ms
+  moderate   8/10 passed  pass     80%  success     90%  p50 15354ms  p95 96720ms
+  hard       6/8 passed (2 blocked)  pass     75%  success     70%  p50 27141ms  p95 92855ms
+  overall   24/28 passed (2 blocked)  pass  85.71%  success  86.67%  p50 16205ms  p95 93195ms
+
+  Gate: 85.71% >= 95% → FAIL (28 eligible, 2 blocked excluded)
+
+  Reports: apps\benchmark\results\latency-round2\final-gauntlet\latest.md

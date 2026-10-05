@@ -1,0 +1,20 @@
+✔ worker cache reuses stored bytes, honors zero and shortened TTLs, and requires revalidation (48.5624ms)
+✔ worker cache falls back to rendering when lookup is unavailable (1.0275ms)
+✔ executor forwards capture options to the engine (3.9169ms)
+✔ executor re-throws engine errors so the queue can decide retry policy (1.7089ms)
+✔ executor propagates store.save errors so the job is not silently lost (0.621ms)
+✔ executor respects the abort signal forwarded by the queue (0.6316ms)
+✔ a cached capture is delivered without uploading it again (0.4991ms)
+✔ an incomplete render is never persisted (0.6558ms)
+✔ storage without a delivery URL cannot produce a billable successful capture (0.6968ms)
+✔ worker waits for browser initialization before accepting jobs (3.6727ms)
+✔ failed initialization cleans up and never accepts a capture job (1.2479ms)
+✔ readiness is published after warmup and withdrawn when the worker stops (0.7051ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8214.8594

@@ -1,0 +1,211 @@
+@import "tailwindcss";
+@import "@snapforge/brand/tokens.css";
+
+@theme inline {
+  --color-canvas: var(--sf-bg-canvas);
+  --color-surface: var(--sf-bg-surface);
+  --color-raised: var(--sf-bg-surface-raised);
+  --color-line: var(--sf-border);
+  --color-line-strong: var(--sf-border-strong);
+  --color-ink: var(--sf-text-primary);
+  --color-ink-2: var(--sf-text-secondary);
+  --color-ink-3: var(--sf-text-muted);
+  --color-accent: var(--sf-color-primary-600);
+  --color-accent-hover: var(--sf-color-primary-700);
+  --color-accent-ink: var(--sf-accent-text);
+  --color-ring: var(--sf-focus-ring);
+
+  --color-p-50: var(--sf-color-primary-50);
+  --color-p-100: var(--sf-color-primary-100);
+  --color-p-200: var(--sf-color-primary-200);
+  --color-p-300: var(--sf-color-primary-300);
+  --color-p-400: var(--sf-color-primary-400);
+  --color-p-500: var(--sf-color-primary-500);
+  --color-p-600: var(--sf-color-primary-600);
+  --color-p-700: var(--sf-color-primary-700);
+  --color-p-800: var(--sf-color-primary-800);
+  --color-p-900: var(--sf-color-primary-900);
+  --color-p-950: var(--sf-color-primary-950);
+
+  --color-n-0: var(--sf-color-neutral-0);
+  --color-n-50: var(--sf-color-neutral-50);
+  --color-n-100: var(--sf-color-neutral-100);
+  --color-n-200: var(--sf-color-neutral-200);
+  --color-n-300: var(--sf-color-neutral-300);
+  --color-n-400: var(--sf-color-neutral-400);
+  --color-n-500: var(--sf-color-neutral-500);
+  --color-n-600: var(--sf-color-neutral-600);
+  --color-n-700: var(--sf-color-neutral-700);
+  --color-n-800: var(--sf-color-neutral-800);
+  --color-n-900: var(--sf-color-neutral-900);
+  --color-n-950: var(--sf-color-neutral-950);
+
+  --color-ok: var(--sf-color-success);
+  --color-ok-ink: var(--sf-color-success-text);
+  --color-warn: var(--sf-color-warning);
+  --color-warn-ink: var(--sf-color-warning-text);
+  --color-bad: var(--sf-color-danger);
+  --color-bad-ink: var(--sf-color-danger-text);
+  --color-info: var(--sf-color-info);
+  --color-info-ink: var(--sf-color-info-text);
+
+  --radius-xs: 4px;
+  --radius-sm: var(--sf-radius-sm);
+  --radius-md: var(--sf-radius-md);
+  --radius-lg: var(--sf-radius-lg);
+  --radius-pill: var(--sf-radius-pill);
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-geist-sans), ui-sans-serif, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+}
+
+@layer base {
+  * {
+    border-color: var(--sf-border);
+  }
+
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: var(--sf-bg-canvas);
+    color: var(--sf-text-primary);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  ::selection {
+    background: var(--sf-color-primary-400);
+    color: var(--sf-bg-canvas);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--sf-focus-ring);
+    outline-offset: 2px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--sf-border-strong);
+    border-radius: var(--sf-radius-pill);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--sf-text-muted);
+  }
+}
+
+@layer components {
+  .sf-card {
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--sf-bg-surface) 45%, var(--sf-bg-canvas));
+    border-color: color-mix(in srgb, var(--sf-border) 75%, transparent);
+  }
+
+  .sf-stat-group {
+    gap: 0;
+    overflow: hidden;
+    border: 1px solid var(--sf-border);
+    border-radius: 12px;
+  }
+
+  .sf-stat-group > .sf-card {
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+  }
+
+  .sf-stat-group > .sf-card + .sf-card {
+    border-left: 1px solid var(--sf-border);
+  }
+
+  .sf-primary-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 36px;
+    padding: 8px 14px;
+    border-radius: 8px;
+    background: var(--sf-color-primary-600);
+    color: var(--sf-color-neutral-0);
+    font-size: 13px;
+    font-weight: 500;
+    transition: background 150ms;
+  }
+
+  .sf-primary-link:hover { background: var(--sf-color-primary-700); }
+
+  .sf-intro {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--sf-border);
+    border-radius: 12px;
+    background: var(--sf-bg-surface);
+  }
+
+  .sf-intro::before {
+    position: absolute;
+    content: "";
+    inset: 0 0 auto;
+    height: 2px;
+    background: var(--sf-color-gradient-brand);
+  }
+
+  .sf-auth {
+    display: grid;
+    min-height: 100dvh;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 64px;
+    padding: 48px clamp(24px, 7vw, 120px);
+  }
+
+  .sf-auth-story { max-width: 480px; }
+  .sf-auth-form { display: flex; justify-content: center; min-width: 0; }
+
+  @media (max-width: 767px) {
+    .sf-stat-group > .sf-card + .sf-card { border-left: 0; border-top: 1px solid var(--sf-border); }
+    .sf-auth { grid-template-columns: 1fr; gap: 32px; padding: 32px 16px; }
+    .sf-auth-story { margin: auto; }
+    .sf-auth-story > .sf-auth-details { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+  }
+
+  .sf-gradient-text {
+    background: var(--sf-color-gradient-brand);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .sf-checkerboard {
+    background-image:
+      linear-gradient(45deg, var(--sf-bg-surface-raised) 25%, transparent 25%),
+      linear-gradient(-45deg, var(--sf-bg-surface-raised) 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, var(--sf-bg-surface-raised) 75%),
+      linear-gradient(-45deg, transparent 75%, var(--sf-bg-surface-raised) 75%);
+    background-size: 16px 16px;
+    background-position:
+      0 0,
+      0 8px,
+      8px -8px,
+      -8px 0;
+  }
+
+  .sf-scroll-fade {
+    mask-image: linear-gradient(to bottom, transparent, black 12px, black calc(100% - 12px), transparent);
+  }
+}

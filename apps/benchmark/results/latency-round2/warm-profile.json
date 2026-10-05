@@ -1,0 +1,85 @@
+{
+  "initialized_ms": 5814,
+  "captures": [
+    {
+      "capture": 1,
+      "timings": {
+        "total_ms": 618,
+        "phases_ms": {
+          "cache_lookup": 0,
+          "pool_wait": 0,
+          "browser_start": 0,
+          "page_setup": 0,
+          "init_scripts": 6,
+          "request_filters": 2,
+          "egress": 0,
+          "navigation": 35,
+          "load_settle": 504,
+          "challenge_check": 5,
+          "dom_tweaks": 17,
+          "pre_capture": 3,
+          "page_metrics": 1,
+          "screenshot": 36,
+          "cleanup": 6,
+          "cache_save": 0
+        }
+      },
+      "bytes": 9205,
+      "cached": false
+    },
+    {
+      "capture": 2,
+      "timings": {
+        "total_ms": 2113,
+        "phases_ms": {
+          "cache_lookup": 0,
+          "pool_wait": 0,
+          "browser_start": 0,
+          "context_setup": 4,
+          "page_setup": 1399,
+          "init_scripts": 6,
+          "request_filters": 1,
+          "egress": 0,
+          "navigation": 19,
+          "load_settle": 622,
+          "challenge_check": 4,
+          "dom_tweaks": 17,
+          "pre_capture": 1,
+          "page_metrics": 1,
+          "screenshot": 33,
+          "cleanup": 3,
+          "cache_save": 0
+        }
+      },
+      "bytes": 9205,
+      "cached": false
+    },
+    {
+      "capture": 3,
+      "timings": {
+        "total_ms": 2015,
+        "phases_ms": {
+          "cache_lookup": 0,
+          "pool_wait": 0,
+          "browser_start": 0,
+          "context_setup": 3,
+          "page_setup": 1419,
+          "init_scripts": 5,
+          "request_filters": 1,
+          "egress": 0,
+          "navigation": 20,
+          "load_settle": 508,
+          "challenge_check": 4,
+          "dom_tweaks": 14,
+          "pre_capture": 1,
+          "page_metrics": 1,
+          "screenshot": 34,
+          "cleanup": 3,
+          "cache_save": 0
+        }
+      },
+      "bytes": 9205,
+      "cached": false
+    }
+  ]
+}

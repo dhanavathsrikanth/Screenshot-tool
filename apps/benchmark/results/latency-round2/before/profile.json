@@ -1,0 +1,315 @@
+{
+  "recorded_at": "2026-10-02T11:21:05.300Z",
+  "rows": [
+    {
+      "name": "static",
+      "timings": {
+        "total_ms": 13379,
+        "phases_ms": {
+          "pool_wait": 0,
+          "browser_start": 3790,
+          "context_setup": 23,
+          "init_scripts": 11,
+          "request_filters": 3,
+          "page_setup": 8644,
+          "egress": 0,
+          "navigation": 113,
+          "load_settle": 561,
+          "challenge_check": 11,
+          "dom_tweaks": 48,
+          "pre_capture": 7,
+          "page_metrics": 3,
+          "screenshot": 69,
+          "inspection": 60,
+          "cleanup": 25
+        }
+      },
+      "reference_timings": {
+        "total_ms": 5765,
+        "phases_ms": {
+          "pool_wait": 0,
+          "browser_start": 0,
+          "context_setup": 6,
+          "init_scripts": 3,
+          "request_filters": 1,
+          "page_setup": 3179,
+          "egress": 0,
+          "navigation": 46,
+          "load_settle": 554,
+          "challenge_check": 8,
+          "dom_tweaks": 38,
+          "pre_capture": 1817,
+          "page_metrics": 3,
+          "screenshot": 51,
+          "inspection": 47,
+          "cleanup": 8
+        }
+      },
+      "bytes": 9104,
+      "width": 1280,
+      "height": 720,
+      "identical_pixels": true
+    },
+    {
+      "name": "hydration",
+      "timings": {
+        "total_ms": 4438,
+        "phases_ms": {
+          "pool_wait": 0,
+          "browser_start": 0,
+          "context_setup": 8,
+          "init_scripts": 5,
+          "request_filters": 1,
+          "page_setup": 3146,
+          "egress": 0,
+          "navigation": 36,
+          "load_settle": 557,
+          "challenge_check": 16,
+          "dom_tweaks": 31,
+          "pre_capture": 532,
+          "page_metrics": 2,
+          "screenshot": 53,
+          "inspection": 40,
+          "cleanup": 7
+        }
+      },
+      "reference_timings": {
+        "total_ms": 6056,
+        "phases_ms": {
+          "pool_wait": 0,
+          "browser_start": 0,
+          "context_setup": 6,
+          "init_scripts": 4,
+          "request_filters": 1,
+          "page_setup": 2990,
+          "egress": 0,
+          "navigation": 38,
+          "load_settle": 526,
+          "challenge_check": 8,
+          "dom_tweaks": 30,
+          "pre_capture": 2331,
+          "page_metrics": 2,
+          "screenshot": 67,
+          "inspection": 43,
+          "cleanup": 7
+        }
+      },
+      "bytes": 30776,
+      "width": 1280,
+      "height": 720,
+      "identical_pixels": true
+    },
+    {
+      "name": "image",
+      "timings": {
+        "total_ms": 4811,
+        "phases_ms": {
+          "pool_wait": 0,
+          "browser_start": 0,
+          "context_setup": 6,
+          "init_scripts": 4,
+          "request_filters": 0,
+          "page_setup": 3118,
+          "egress": 0,
+          "navigation": 46,
+          "load_settle": 1442,
+          "challenge_check": 8,
+          "dom_tweaks": 40,
+          "pre_capture": 7,
+          "page_metrics": 3,
+          "screenshot": 74,
+          "inspection": 51,
+          "cleanup": 8
+        }
+      },
+      "reference_timings": {
+        "total_ms": 6591,
+        "phases_ms": {
+          "pool_wait": 0,
+          "browser_start": 0,
+          "context_setup": 8,
+          "init_scripts": 3,
+          "request_filters": 0,
+          "page_setup": 3155,
+          "egress": 0,
+          "navigation": 36,
+          "load_settle": 1425,
+          "challenge_check": 7,
+          "dom_tweaks": 30,
+          "pre_capture": 1815,
+          "page_metrics": 2,
+          "screenshot": 59,
+          "inspection": 41,
+          "cleanup": 6
+        }
+      },
+      "bytes": 35211,
+      "width": 1280,
+      "height": 720,
+      "identical_pixels": true
+    },
+    {
+      "name": "lazy",
+      "timings": {
+        "total_ms": 6194,
+        "phases_ms": {
+          "pool_wait": 0,
+          "browser_start": 0,
+          "context_setup": 7,
+          "init_scripts": 3,
+          "request_filters": 1,
+          "page_setup": 3033,
+          "egress": 0,
+          "navigation": 34,
+          "load_settle": 1435,
+          "challenge_check": 7,
+          "dom_tweaks": 29,
+          "pre_capture": 3,
+          "growth_wait": 3,
+          "scroll": 1394,
+          "post_scroll": 1,
+          "page_metrics": 1,
+          "screenshot": 219,
+          "inspection": 13,
+          "cleanup": 8
+        }
+      },
+      "reference_timings": {
+        "total_ms": 8056,
+        "phases_ms": {
+          "pool_wait": 0,
+          "browser_start": 0,
+          "context_setup": 3,
+          "init_scripts": 2,
+          "request_filters": 0,
+          "page_setup": 2922,
+          "egress": 0,
+          "navigation": 33,
+          "load_settle": 1444,
+          "challenge_check": 8,
+          "dom_tweaks": 31,
+          "pre_capture": 1813,
+          "growth_wait": 3,
+          "scroll": 1413,
+          "post_scroll": 2,
+          "page_metrics": 2,
+          "screenshot": 350,
+          "inspection": 19,
+          "cleanup": 7
+        }
+      },
+      "bytes": 89981,
+      "width": 1280,
+      "height": 4869,
+      "identical_pixels": true
+    },
+    {
+      "name": "growth",
+      "timings": {
+        "total_ms": 5495,
+        "phases_ms": {
+          "pool_wait": 0,
+          "browser_start": 0,
+          "context_setup": 8,
+          "init_scripts": 4,
+          "request_filters": 1,
+          "page_setup": 2883,
+          "egress": 0,
+          "navigation": 37,
+          "load_settle": 531,
+          "challenge_check": 7,
+          "dom_tweaks": 35,
+          "pre_capture": 3,
+          "growth_wait": 511,
+          "scroll": 964,
+          "post_scroll": 264,
+          "page_metrics": 3,
+          "screenshot": 212,
+          "inspection": 21,
+          "cleanup": 7
+        }
+      },
+      "reference_timings": {
+        "total_ms": 6421,
+        "phases_ms": {
+          "pool_wait": 0,
+          "browser_start": 0,
+          "context_setup": 7,
+          "init_scripts": 3,
+          "request_filters": 1,
+          "page_setup": 2884,
+          "egress": 0,
+          "navigation": 33,
+          "load_settle": 539,
+          "challenge_check": 8,
+          "dom_tweaks": 32,
+          "pre_capture": 1817,
+          "growth_wait": 2,
+          "scroll": 854,
+          "post_scroll": 2,
+          "page_metrics": 2,
+          "screenshot": 206,
+          "inspection": 20,
+          "cleanup": 7
+        }
+      },
+      "bytes": 47780,
+      "width": 1280,
+      "height": 2617,
+      "identical_pixels": true
+    },
+    {
+      "name": "banner",
+      "timings": {
+        "total_ms": 4900,
+        "phases_ms": {
+          "pool_wait": 0,
+          "browser_start": 0,
+          "context_setup": 6,
+          "init_scripts": 4,
+          "request_filters": 1,
+          "page_setup": 2962,
+          "egress": 0,
+          "navigation": 37,
+          "load_settle": 532,
+          "challenge_check": 7,
+          "dom_tweaks": 31,
+          "pre_capture": 1205,
+          "page_metrics": 2,
+          "screenshot": 60,
+          "inspection": 44,
+          "cleanup": 7
+        }
+      },
+      "reference_timings": {
+        "total_ms": 5422,
+        "phases_ms": {
+          "pool_wait": 0,
+          "browser_start": 0,
+          "context_setup": 6,
+          "init_scripts": 3,
+          "request_filters": 1,
+          "page_setup": 2857,
+          "egress": 0,
+          "navigation": 34,
+          "load_settle": 541,
+          "challenge_check": 8,
+          "dom_tweaks": 32,
+          "pre_capture": 1816,
+          "page_metrics": 2,
+          "screenshot": 64,
+          "inspection": 49,
+          "cleanup": 6
+        }
+      },
+      "bytes": 32111,
+      "width": 1280,
+      "height": 720,
+      "identical_pixels": true
+    },
+    {
+      "name": "banner-sweep-12000-elements",
+      "average_sweep_ms": 82.89499999284745
+    }
+  ]
+}

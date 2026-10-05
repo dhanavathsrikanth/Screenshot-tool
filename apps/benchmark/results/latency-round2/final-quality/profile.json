@@ -1,0 +1,363 @@
+{
+  "recorded_at": "2026-10-02T11:39:44.350Z",
+  "rows": [
+    {
+      "name": "static",
+      "timings": {
+        "total_ms": 14759,
+        "phases_ms": {
+          "pool_wait": 0,
+          "browser_start": 3978,
+          "context_setup": 27,
+          "page_setup": 9581,
+          "init_scripts": 30,
+          "request_filters": 15,
+          "egress": 0,
+          "navigation": 277,
+          "load_settle": 507,
+          "challenge_check": 13,
+          "dom_tweaks": 72,
+          "pre_capture": 14,
+          "page_metrics": 3,
+          "screenshot": 106,
+          "inspection": 83,
+          "cleanup": 34
+        }
+      },
+      "reference_timings": {
+        "total_ms": 5964,
+        "phases_ms": {
+          "pool_wait": 0,
+          "browser_start": 0,
+          "context_setup": 13,
+          "page_setup": 3391,
+          "init_scripts": 12,
+          "request_filters": 3,
+          "egress": 0,
+          "navigation": 42,
+          "load_settle": 512,
+          "challenge_check": 9,
+          "dom_tweaks": 37,
+          "pre_capture": 1809,
+          "page_metrics": 3,
+          "screenshot": 65,
+          "inspection": 53,
+          "cleanup": 8
+        }
+      },
+      "bytes": 9104,
+      "width": 1280,
+      "height": 720,
+      "identical_pixels": true
+    },
+    {
+      "name": "hydration",
+      "timings": {
+        "total_ms": 4375,
+        "phases_ms": {
+          "pool_wait": 0,
+          "browser_start": 0,
+          "context_setup": 10,
+          "page_setup": 3049,
+          "init_scripts": 13,
+          "request_filters": 3,
+          "egress": 0,
+          "navigation": 47,
+          "load_settle": 514,
+          "challenge_check": 9,
+          "dom_tweaks": 49,
+          "pre_capture": 527,
+          "page_metrics": 3,
+          "screenshot": 76,
+          "inspection": 62,
+          "cleanup": 9
+        }
+      },
+      "reference_timings": {
+        "total_ms": 6833,
+        "phases_ms": {
+          "pool_wait": 0,
+          "browser_start": 0,
+          "context_setup": 5,
+          "page_setup": 3722,
+          "init_scripts": 12,
+          "request_filters": 2,
+          "egress": 0,
+          "navigation": 50,
+          "load_settle": 500,
+          "challenge_check": 9,
+          "dom_tweaks": 55,
+          "pre_capture": 2343,
+          "page_metrics": 2,
+          "screenshot": 63,
+          "inspection": 55,
+          "cleanup": 8
+        }
+      },
+      "bytes": 30776,
+      "width": 1280,
+      "height": 720,
+      "identical_pixels": true
+    },
+    {
+      "name": "image",
+      "timings": {
+        "total_ms": 4910,
+        "phases_ms": {
+          "pool_wait": 0,
+          "browser_start": 0,
+          "context_setup": 7,
+          "page_setup": 3313,
+          "init_scripts": 10,
+          "request_filters": 2,
+          "egress": 0,
+          "navigation": 38,
+          "load_settle": 1379,
+          "challenge_check": 8,
+          "dom_tweaks": 32,
+          "pre_capture": 3,
+          "page_metrics": 2,
+          "screenshot": 61,
+          "inspection": 43,
+          "cleanup": 8
+        }
+      },
+      "reference_timings": {
+        "total_ms": 6473,
+        "phases_ms": {
+          "pool_wait": 0,
+          "browser_start": 0,
+          "context_setup": 5,
+          "page_setup": 2988,
+          "init_scripts": 9,
+          "request_filters": 2,
+          "egress": 0,
+          "navigation": 44,
+          "load_settle": 1412,
+          "challenge_check": 11,
+          "dom_tweaks": 50,
+          "pre_capture": 1822,
+          "page_metrics": 2,
+          "screenshot": 66,
+          "inspection": 49,
+          "cleanup": 8
+        }
+      },
+      "bytes": 35211,
+      "width": 1280,
+      "height": 720,
+      "identical_pixels": true
+    },
+    {
+      "name": "lazy",
+      "timings": {
+        "total_ms": 6517,
+        "phases_ms": {
+          "pool_wait": 0,
+          "browser_start": 0,
+          "context_setup": 5,
+          "page_setup": 3180,
+          "init_scripts": 9,
+          "request_filters": 2,
+          "egress": 0,
+          "navigation": 42,
+          "load_settle": 1378,
+          "challenge_check": 7,
+          "dom_tweaks": 36,
+          "pre_capture": 6,
+          "growth_wait": 3,
+          "scroll": 894,
+          "post_scroll": 496,
+          "page_metrics": 2,
+          "screenshot": 410,
+          "inspection": 35,
+          "cleanup": 10
+        }
+      },
+      "reference_timings": {
+        "total_ms": 8459,
+        "phases_ms": {
+          "pool_wait": 0,
+          "browser_start": 0,
+          "context_setup": 5,
+          "page_setup": 3210,
+          "init_scripts": 10,
+          "request_filters": 2,
+          "egress": 0,
+          "navigation": 38,
+          "load_settle": 1499,
+          "challenge_check": 8,
+          "dom_tweaks": 36,
+          "pre_capture": 1814,
+          "growth_wait": 2,
+          "scroll": 885,
+          "post_scroll": 520,
+          "page_metrics": 2,
+          "screenshot": 386,
+          "inspection": 28,
+          "cleanup": 9
+        }
+      },
+      "bytes": 89981,
+      "width": 1280,
+      "height": 4869,
+      "identical_pixels": true
+    },
+    {
+      "name": "growth",
+      "timings": {
+        "total_ms": 6028,
+        "phases_ms": {
+          "pool_wait": 0,
+          "browser_start": 0,
+          "context_setup": 7,
+          "page_setup": 3433,
+          "init_scripts": 9,
+          "request_filters": 2,
+          "egress": 0,
+          "navigation": 37,
+          "load_settle": 502,
+          "challenge_check": 7,
+          "dom_tweaks": 30,
+          "pre_capture": 3,
+          "growth_wait": 518,
+          "scroll": 968,
+          "post_scroll": 255,
+          "page_metrics": 2,
+          "screenshot": 223,
+          "inspection": 21,
+          "cleanup": 7
+        }
+      },
+      "reference_timings": {
+        "total_ms": 6660,
+        "phases_ms": {
+          "pool_wait": 0,
+          "browser_start": 0,
+          "context_setup": 6,
+          "page_setup": 3049,
+          "init_scripts": 9,
+          "request_filters": 2,
+          "egress": 0,
+          "navigation": 34,
+          "load_settle": 624,
+          "challenge_check": 8,
+          "dom_tweaks": 30,
+          "pre_capture": 1808,
+          "growth_wait": 3,
+          "scroll": 847,
+          "post_scroll": 3,
+          "page_metrics": 2,
+          "screenshot": 206,
+          "inspection": 18,
+          "cleanup": 8
+        }
+      },
+      "bytes": 47780,
+      "width": 1280,
+      "height": 2617,
+      "identical_pixels": true
+    },
+    {
+      "name": "banner",
+      "timings": {
+        "total_ms": 6192,
+        "phases_ms": {
+          "pool_wait": 0,
+          "browser_start": 0,
+          "context_setup": 5,
+          "page_setup": 4153,
+          "init_scripts": 13,
+          "request_filters": 2,
+          "egress": 0,
+          "navigation": 67,
+          "load_settle": 511,
+          "challenge_check": 11,
+          "dom_tweaks": 55,
+          "pre_capture": 1212,
+          "page_metrics": 3,
+          "screenshot": 79,
+          "inspection": 72,
+          "cleanup": 6
+        }
+      },
+      "reference_timings": {
+        "total_ms": 6521,
+        "phases_ms": {
+          "pool_wait": 0,
+          "browser_start": 0,
+          "context_setup": 11,
+          "page_setup": 3967,
+          "init_scripts": 9,
+          "request_filters": 2,
+          "egress": 0,
+          "navigation": 53,
+          "load_settle": 502,
+          "challenge_check": 8,
+          "dom_tweaks": 32,
+          "pre_capture": 1817,
+          "page_metrics": 2,
+          "screenshot": 63,
+          "inspection": 47,
+          "cleanup": 7
+        }
+      },
+      "bytes": 32111,
+      "width": 1280,
+      "height": 720,
+      "identical_pixels": true
+    },
+    {
+      "name": "font",
+      "timings": {
+        "total_ms": 3690,
+        "phases_ms": {
+          "pool_wait": 0,
+          "browser_start": 0,
+          "page_setup": 428,
+          "init_scripts": 9,
+          "request_filters": 2,
+          "egress": 0,
+          "navigation": 37,
+          "load_settle": 3010,
+          "challenge_check": 7,
+          "dom_tweaks": 31,
+          "pre_capture": 3,
+          "page_metrics": 2,
+          "screenshot": 93,
+          "inspection": 49,
+          "cleanup": 17
+        }
+      },
+      "reference_timings": {
+        "total_ms": 7976,
+        "phases_ms": {
+          "pool_wait": 0,
+          "browser_start": 0,
+          "context_setup": 5,
+          "page_setup": 2941,
+          "init_scripts": 8,
+          "request_filters": 2,
+          "egress": 0,
+          "navigation": 38,
+          "load_settle": 3000,
+          "challenge_check": 8,
+          "dom_tweaks": 30,
+          "pre_capture": 1806,
+          "page_metrics": 2,
+          "screenshot": 73,
+          "inspection": 52,
+          "cleanup": 8
+        }
+      },
+      "bytes": 71890,
+      "width": 1280,
+      "height": 720,
+      "identical_pixels": true
+    },
+    {
+      "name": "banner-sweep-12000-elements",
+      "average_sweep_ms": 21.144999992847442
+    }
+  ]
+}

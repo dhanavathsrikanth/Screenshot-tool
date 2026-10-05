@@ -1,0 +1,463 @@
+{
+  "started_at": "2026-10-02T08:54:14.517Z",
+  "finished_at": "2026-10-02T08:59:10.500Z",
+  "options": {
+    "concurrency": 4,
+    "retries": 1,
+    "inspect_text": true,
+    "gate_percent": 95
+  },
+  "summary": {
+    "total": 30,
+    "passed": 26,
+    "pass_rate": 86.67,
+    "success_rate": 93.33,
+    "gate_percent": 95,
+    "gate_passed": false,
+    "p50_ms": 38640,
+    "p95_ms": 50099,
+    "by_tier": {
+      "easy": {
+        "tier": "easy",
+        "total": 10,
+        "passed": 10,
+        "pass_rate": 100,
+        "success_rate": 100,
+        "p50_ms": 23835,
+        "p95_ms": 40391
+      },
+      "moderate": {
+        "tier": "moderate",
+        "total": 10,
+        "passed": 9,
+        "pass_rate": 90,
+        "success_rate": 100,
+        "p50_ms": 39972,
+        "p95_ms": 49843
+      },
+      "hard": {
+        "tier": "hard",
+        "total": 10,
+        "passed": 7,
+        "pass_rate": 70,
+        "success_rate": 80,
+        "p50_ms": 42969,
+        "p95_ms": 54207
+      }
+    }
+  },
+  "results": [
+    {
+      "id": "example-com",
+      "tier": "easy",
+      "url": "https://example.com",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 12888,
+      "width": 1280,
+      "height": 720,
+      "bytes": 10967,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "gnu-home",
+      "tier": "easy",
+      "url": "https://www.gnu.org/",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 38550,
+      "width": 1280,
+      "height": 720,
+      "bytes": 97313,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "hackernews-front",
+      "tier": "easy",
+      "url": "https://news.ycombinator.com/",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 23106,
+      "width": 1280,
+      "height": 720,
+      "bytes": 92539,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "kernel-org",
+      "tier": "easy",
+      "url": "https://www.kernel.org/",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 23715,
+      "width": 1280,
+      "height": 720,
+      "bytes": 141719,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "mdn-web",
+      "tier": "easy",
+      "url": "https://developer.mozilla.org/en-US/docs/Web",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 30159,
+      "width": 1280,
+      "height": 720,
+      "bytes": 166565,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "peps-index",
+      "tier": "easy",
+      "url": "https://peps.python.org/pep-0000/",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 36168,
+      "width": 1280,
+      "height": 24000,
+      "bytes": 2272054,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "python-docs",
+      "tier": "easy",
+      "url": "https://docs.python.org/3/",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 24967,
+      "width": 1280,
+      "height": 1572,
+      "bytes": 169847,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "python-org-home",
+      "tier": "easy",
+      "url": "https://www.python.org/",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 40391,
+      "width": 1280,
+      "height": 720,
+      "bytes": 111793,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "rust-lang-home",
+      "tier": "easy",
+      "url": "https://www.rust-lang.org/",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 23835,
+      "width": 1280,
+      "height": 720,
+      "bytes": 74467,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "wikipedia-home",
+      "tier": "easy",
+      "url": "https://www.wikipedia.org/",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 17725,
+      "width": 1280,
+      "height": 720,
+      "bytes": 83063,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "allbirds-store",
+      "tier": "moderate",
+      "url": "https://www.allbirds.com/",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 43206,
+      "width": 1280,
+      "height": 720,
+      "bytes": 702072,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "amazon-serp",
+      "tier": "moderate",
+      "url": "https://www.amazon.com/s?k=laptop",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 41281,
+      "width": 1280,
+      "height": 720,
+      "bytes": 225031,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "dribbble-grid",
+      "tier": "moderate",
+      "url": "https://dribbble.com/",
+      "ok": false,
+      "attempts": 1,
+      "latency_ms": 49843,
+      "width": 1280,
+      "height": 720,
+      "bytes": 70287,
+      "failures": [
+        {
+          "check": "min_height",
+          "message": "Height 720 is below the minimum 4000"
+        }
+      ],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "github-home",
+      "tier": "moderate",
+      "url": "https://github.com",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 34611,
+      "width": 1280,
+      "height": 720,
+      "bytes": 91444,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "nextjs-docs",
+      "tier": "moderate",
+      "url": "https://nextjs.org/docs",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 30806,
+      "width": 1280,
+      "height": 720,
+      "bytes": 81686,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "react-dev",
+      "tier": "moderate",
+      "url": "https://react.dev/",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 44016,
+      "width": 1280,
+      "height": 720,
+      "bytes": 79009,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "svelte-docs",
+      "tier": "moderate",
+      "url": "https://svelte.dev/docs/svelte/",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 44703,
+      "width": 1280,
+      "height": 720,
+      "bytes": 75036,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "tailwind-docs",
+      "tier": "moderate",
+      "url": "https://tailwindcss.com/docs",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 33294,
+      "width": 1280,
+      "height": 2547,
+      "bytes": 263262,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "typescript-docs",
+      "tier": "moderate",
+      "url": "https://www.typescriptlang.org/docs/",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 31802,
+      "width": 1280,
+      "height": 720,
+      "bytes": 56893,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "vercel-docs",
+      "tier": "moderate",
+      "url": "https://vercel.com/docs",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 39972,
+      "width": 1280,
+      "height": 720,
+      "bytes": 104441,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "bbc-news",
+      "tier": "hard",
+      "url": "https://www.bbc.com/news",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 38640,
+      "width": 1280,
+      "height": 720,
+      "bytes": 219189,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "booking-home",
+      "tier": "hard",
+      "url": "https://www.booking.com/",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 47888,
+      "width": 1280,
+      "height": 720,
+      "bytes": 56623,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "cloudflare-turnstile",
+      "tier": "hard",
+      "url": "https://www.cloudflare.com/turnstile/",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 40958,
+      "width": 1280,
+      "height": 720,
+      "bytes": 69464,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "guardian-home",
+      "tier": "hard",
+      "url": "https://www.theguardian.com/international",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 42621,
+      "width": 1280,
+      "height": 720,
+      "bytes": 167122,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "imdb-home",
+      "tier": "hard",
+      "url": "https://www.imdb.com/",
+      "ok": false,
+      "attempts": 1,
+      "latency_ms": 49527,
+      "width": 0,
+      "height": 0,
+      "bytes": 0,
+      "failures": [],
+      "error": {
+        "code": "blocked_by_target",
+        "message": "Target blocked the capture (status 405): Human Verification"
+      },
+      "text_checks_skipped": false
+    },
+    {
+      "id": "reddit-feed",
+      "tier": "hard",
+      "url": "https://www.reddit.com/",
+      "ok": false,
+      "attempts": 1,
+      "latency_ms": 36002,
+      "width": 0,
+      "height": 0,
+      "bytes": 0,
+      "failures": [],
+      "error": {
+        "code": "blocked_by_target",
+        "message": "Target blocked the capture (status 200): Reddit - Prove your humanity"
+      },
+      "text_checks_skipped": false
+    },
+    {
+      "id": "spotify-home",
+      "tier": "hard",
+      "url": "https://www.spotify.com/",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 42969,
+      "width": 1280,
+      "height": 720,
+      "bytes": 165716,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "stackoverflow-home",
+      "tier": "hard",
+      "url": "https://stackoverflow.com/",
+      "ok": false,
+      "attempts": 1,
+      "latency_ms": 45500,
+      "width": 1280,
+      "height": 720,
+      "bytes": 4254,
+      "failures": [
+        {
+          "check": "min_bytes",
+          "message": "Only 4254 bytes (minimum 6000) — likely blank or failed render"
+        },
+        {
+          "check": "bits_per_pixel",
+          "message": "0.037 bits/pixel is below 0.05 — capture looks blank"
+        }
+      ],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "twitch-home",
+      "tier": "hard",
+      "url": "https://www.twitch.tv/",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 54207,
+      "width": 1280,
+      "height": 720,
+      "bytes": 415847,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "youtube-watch",
+      "tier": "hard",
+      "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 50099,
+      "width": 1280,
+      "height": 720,
+      "bytes": 593403,
+      "failures": [],
+      "text_checks_skipped": false
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+:root {
+  /* Hostinger primary (purple) */
+  --sf-color-primary-50: #F5F0FE;
+  --sf-color-primary-100: #EAE2FD;
+  --sf-color-primary-200: #D8CBFB;
+  --sf-color-primary-300: #BFABF8;
+  --sf-color-primary-400: #9A7DF2;
+  --sf-color-primary-500: #7F5BEC;
+  --sf-color-primary-600: #673DE6; /* brand */
+  --sf-color-primary-700: #5323D7;
+  --sf-color-primary-800: #4B24AE;
+  --sf-color-primary-900: #402287;
+  --sf-color-primary-950: #2D1958;
+
+  /* Purple-biased neutrals */
+  --sf-color-neutral-0: #FFFFFF;
+  --sf-color-neutral-50: #FAF9FB;
+  --sf-color-neutral-100: #F5F3F6;
+  --sf-color-neutral-200: #EBE8ED;
+  --sf-color-neutral-300: #DBD7E0;
+  --sf-color-neutral-400: #C7C1CD;
+  --sf-color-neutral-500: #A8A1AF;
+  --sf-color-neutral-600: #8C8395;
+  --sf-color-neutral-700: #6E6379;
+  --sf-color-neutral-800: #4F4659;
+  --sf-color-neutral-900: #332C3A;
+  --sf-color-neutral-950: #1C1721;
+
+  /* Accent + gradient (live-site matched) */
+  --sf-color-accent-magenta: #C63FF3;
+  --sf-color-accent-purple: #673DE6;
+  --sf-color-accent-blue: #4DB5FF;
+  --sf-color-gradient-brand: linear-gradient(-87.63deg, #C63FF3 6.95%, #673DE6 51.17%, #4DB5FF 109.29%);
+
+  /* Status */
+  --sf-color-success: #27B070;
+  --sf-color-success-text: #7CDEAD;
+  --sf-color-warning: #F59F0A;
+  --sf-color-warning-text: #FBC456;
+  --sf-color-danger: #EA3E55;
+  --sf-color-danger-text: #F88191;
+  --sf-color-info: #29A6FF;
+  --sf-color-info-text: #74CEFB;
+
+  /* Radius */
+  --sf-radius-sm: 6px;
+  --sf-radius-md: 10px;
+  --sf-radius-lg: 16px;
+  --sf-radius-pill: 999px;
+}
+
+/*
+ * Theme: dark (default, matches "sleek, dark-themed command center").
+ * Export via `@snapforge/brand/tokens.css` when adding UI apps later.
+ */
+[data-theme="dark"],
+:root {
+  --sf-bg-canvas: var(--sf-color-neutral-950);
+  --sf-bg-surface: #241E2B;
+  --sf-bg-surface-raised: #2E2737;
+  --sf-border: #3A3245;
+  --sf-border-strong: #4C4259;
+  --sf-text-primary: var(--sf-color-neutral-50);
+  --sf-text-secondary: var(--sf-color-neutral-300);
+  --sf-text-muted: var(--sf-color-neutral-500);
+  --sf-accent: var(--sf-color-primary-400);
+  --sf-accent-hover: var(--sf-color-primary-300);
+  --sf-accent-text: var(--sf-color-primary-300);
+  --sf-focus-ring: var(--sf-color-primary-300);
+}
+
+[data-theme="light"] {
+  --sf-bg-canvas: var(--sf-color-neutral-50);
+  --sf-bg-surface: var(--sf-color-neutral-0);
+  --sf-bg-surface-raised: var(--sf-color-neutral-0);
+  --sf-border: var(--sf-color-neutral-200);
+  --sf-border-strong: var(--sf-color-neutral-300);
+  --sf-text-primary: var(--sf-color-neutral-900);
+  --sf-text-secondary: var(--sf-color-neutral-700);
+  --sf-text-muted: var(--sf-color-neutral-600);
+  --sf-accent: var(--sf-color-primary-600);
+  --sf-accent-hover: var(--sf-color-primary-700);
+  --sf-accent-text: var(--sf-color-primary-700);
+  --sf-focus-ring: var(--sf-color-primary-500);
+}

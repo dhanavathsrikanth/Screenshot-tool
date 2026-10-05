@@ -1,0 +1,240 @@
+{
+  "started_at": "2026-10-03T02:51:30.715Z",
+  "finished_at": "2026-10-03T02:53:41.658Z",
+  "options": {
+    "concurrency": 1,
+    "retries": 1,
+    "inspect_text": true,
+    "gate_percent": 95
+  },
+  "summary": {
+    "total": 5,
+    "blocked": 0,
+    "eligible": 5,
+    "passed": 4,
+    "pass_rate": 80,
+    "success_rate": 100,
+    "gate_percent": 95,
+    "gate_passed": false,
+    "p50_ms": 23347,
+    "p95_ms": 43789,
+    "by_tier": {
+      "easy": {
+        "tier": "easy",
+        "total": 0,
+        "blocked": 0,
+        "passed": 0,
+        "pass_rate": 0,
+        "success_rate": 0,
+        "p50_ms": 0,
+        "p95_ms": 0
+      },
+      "moderate": {
+        "tier": "moderate",
+        "total": 3,
+        "blocked": 0,
+        "passed": 3,
+        "pass_rate": 100,
+        "success_rate": 100,
+        "p50_ms": 16663,
+        "p95_ms": 30493
+      },
+      "hard": {
+        "tier": "hard",
+        "total": 2,
+        "blocked": 0,
+        "passed": 1,
+        "pass_rate": 50,
+        "success_rate": 100,
+        "p50_ms": 23347,
+        "p95_ms": 43789
+      }
+    }
+  },
+  "results": [
+    {
+      "id": "allbirds-store",
+      "tier": "moderate",
+      "url": "https://www.allbirds.com/",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 16634,
+      "attempt_timings": [
+        {
+          "total_ms": 16634,
+          "phases_ms": {
+            "pool_wait": 0,
+            "browser_start": 0,
+            "page_setup": 0,
+            "init_scripts": 6,
+            "request_filters": 2,
+            "egress": 0,
+            "navigation": 13306,
+            "load_settle": 3006,
+            "challenge_check": 4,
+            "dom_tweaks": 18,
+            "pre_capture": 8,
+            "page_metrics": 3,
+            "screenshot": 192,
+            "inspection": 69,
+            "cleanup": 17
+          }
+        }
+      ],
+      "width": 1280,
+      "height": 720,
+      "bytes": 702072,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "dribbble-grid",
+      "tier": "moderate",
+      "url": "https://dribbble.com/",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 16663,
+      "attempt_timings": [
+        {
+          "total_ms": 16663,
+          "phases_ms": {
+            "pool_wait": 0,
+            "browser_start": 0,
+            "page_setup": 0,
+            "init_scripts": 11,
+            "request_filters": 2,
+            "egress": 0,
+            "navigation": 3608,
+            "load_settle": 3007,
+            "challenge_check": 10,
+            "dom_tweaks": 14,
+            "pre_capture": 1086,
+            "growth_wait": 4,
+            "scroll": 3988,
+            "post_scroll": 4127,
+            "page_metrics": 2,
+            "screenshot": 676,
+            "inspection": 118,
+            "cleanup": 6
+          }
+        }
+      ],
+      "width": 1280,
+      "height": 13883,
+      "bytes": 737580,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "github-home",
+      "tier": "moderate",
+      "url": "https://github.com",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 30493,
+      "attempt_timings": [
+        {
+          "total_ms": 30492,
+          "phases_ms": {
+            "pool_wait": 0,
+            "browser_start": 1610,
+            "context_setup": 11,
+            "page_setup": 4218,
+            "init_scripts": 5,
+            "request_filters": 2,
+            "egress": 0,
+            "navigation": 21311,
+            "load_settle": 3005,
+            "challenge_check": 5,
+            "dom_tweaks": 19,
+            "pre_capture": 47,
+            "page_metrics": 2,
+            "screenshot": 166,
+            "inspection": 75,
+            "cleanup": 8
+          }
+        }
+      ],
+      "width": 1280,
+      "height": 720,
+      "bytes": 91379,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "spotify-home",
+      "tier": "hard",
+      "url": "https://www.spotify.com/",
+      "ok": false,
+      "attempts": 1,
+      "latency_ms": 23347,
+      "attempt_timings": [
+        {
+          "total_ms": 23348,
+          "phases_ms": {
+            "pool_wait": 0,
+            "browser_start": 0,
+            "page_setup": 0,
+            "init_scripts": 11,
+            "request_filters": 3,
+            "egress": 0,
+            "navigation": 18925,
+            "load_settle": 3011,
+            "challenge_check": 4,
+            "dom_tweaks": 15,
+            "pre_capture": 1303,
+            "page_metrics": 1,
+            "screenshot": 35,
+            "inspection": 30,
+            "cleanup": 5
+          }
+        }
+      ],
+      "width": 1280,
+      "height": 720,
+      "bytes": 18628,
+      "failures": [
+        {
+          "check": "min_bytes",
+          "message": "Only 18628 bytes (minimum 40000) — likely blank or failed render"
+        }
+      ],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "youtube-watch",
+      "tier": "hard",
+      "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 43789,
+      "attempt_timings": [
+        {
+          "total_ms": 43789,
+          "phases_ms": {
+            "pool_wait": 0,
+            "browser_start": 0,
+            "page_setup": 0,
+            "init_scripts": 10,
+            "request_filters": 1,
+            "egress": 0,
+            "navigation": 40433,
+            "load_settle": 3012,
+            "challenge_check": 16,
+            "dom_tweaks": 32,
+            "pre_capture": 12,
+            "page_metrics": 1,
+            "screenshot": 174,
+            "inspection": 82,
+            "cleanup": 12
+          }
+        }
+      ],
+      "width": 1280,
+      "height": 720,
+      "bytes": 640373,
+      "failures": [],
+      "text_checks_skipped": false
+    }
+  ]
+}

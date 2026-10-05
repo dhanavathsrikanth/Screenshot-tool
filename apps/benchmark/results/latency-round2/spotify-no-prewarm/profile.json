@@ -1,0 +1,94 @@
+[
+  {
+    "delay": 0,
+    "prewarmPages": false,
+    "data": {
+      "url": "https://www.spotify.com/",
+      "final_url": "https://open.spotify.com/",
+      "format": "png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 18624,
+      "duration_ms": 26704,
+      "cached": false,
+      "blocked_requests": 2
+    },
+    "timings": {
+      "total_ms": 26715,
+      "phases_ms": {
+        "pool_wait": 0,
+        "browser_start": 1564,
+        "context_setup": 13,
+        "init_scripts": 3,
+        "request_filters": 1,
+        "page_setup": 3810,
+        "egress": 0,
+        "navigation": 16124,
+        "load_settle": 3008,
+        "challenge_check": 6,
+        "dom_tweaks": 17,
+        "pre_capture": 2071,
+        "page_metrics": 2,
+        "screenshot": 40,
+        "inspection": 42,
+        "cleanup": 8
+      }
+    },
+    "failures": [
+      {
+        "check": "min_bytes",
+        "message": "Only 18624 bytes (minimum 40000) — likely blank or failed render"
+      }
+    ],
+    "inspection": {
+      "markdown": "#### Company\n\n- About\n\n- Jobs\n\n- For the Record\n\n#### Communities\n\n- For Artists\n\n- For Creators\n\n- For Authors\n\n- Developers\n\n- Advertising\n\n- Investors\n\n- Vendors\n\n#### Useful links\n\n- Support\n\n- Free Mobile App\n\n- Popular by Country\n\n- Top Song Lyrics\n\n- Import your music\n\n#### Spotify Plans\n\n- Premium Standard\n\n- Premium Platinum\n\n- Premium Student\n\n- Spotify Free",
+      "accessibleTree": "- link \"Skip to main content\":\n  - /url: \"#main-view\"\n- link \"Spotify\":\n  - /url: /\n  - img \"Spotify\"\n- button \"Home\"\n- search:\n  - button \"Search\"\n  - combobox \"What do you want to play?\"\n  - status\n  - button \"Browse\"\n- button \"Premium\"\n- button \"Support\"\n- button \"Download\"\n- link \"Install App\":\n  - /url: /download\n- button \"Sign up\"\n- button \"Log in\"\n- navigation \"Main\"\n- text: Resize main navigation\n- slider \"Resize main navigation\": \"290\"\n- main:\n  - img\n  - text: Loading\n  - separator\n  - navigation:\n    - heading \"Company\" [level=4]\n    - list:\n      - listitem:\n        - link \"About\":\n          - /url: https://www.spotify.com/in-en/about-us/contact/\n      - listitem:\n        - link \"Jobs\":\n          - /url: https://www.lifeatspotify.com/\n      - listitem:\n        - link \"For the Record\":\n          - /url: https://newsroom.spotify.com/\n    - heading \"Communities\" [level=4]\n    - list:\n      - listitem:\n        - link \"For Artists\":\n          - /url: https://artists.spotify.com/\n      - listitem:\n        - link \"For Creators\":\n          - /url: https://creators.spotify.com/\n      - listitem:\n        - link \"For Authors\":\n          - /url: https://authors.spotify.com/\n      - listitem:\n        - link \"Developers\":\n          - /url: https://developer.spotify.com/\n      - listitem:\n        - link \"Advertising\":\n          - /url: https://ads.spotify.com/\n      - listitem:\n        - link \"Investors\":\n          - /url: https://investors.spotify.com/\n      - listitem:\n        - link \"Vendors\":\n          - /url: https://spotifyforvendors.com/\n    - heading \"Useful links\" [level=4]\n    - list:\n      - listitem:\n        - link \"Support\":\n          - /url: https://support.spotify.com/\n      - listitem:\n        - link \"Free Mobile App\":\n          - /url: https://www.spotify.com/in-en/free/\n      - listitem:\n        - link \"Popular by Country\":\n          - /url: /popular-in/in\n      - listitem:\n        - link \"Top Song Lyrics\":\n          - /url: https://open.spotify.com/playlist/37i9dQZF1CLcTo7UzL0sYK\n      - listitem:\n        - link \"Import your music\":\n          - /url: https://www.spotify.com/in-en/import-music/\n    - heading \"Spotify Plans\" [level=4]\n    - list:\n      - listitem:\n        - link \"Premium Standard\":\n          - /url: https://www.spotify.com/in-en/premium/#plans\n      - listitem:\n        - link \"Premium Platinum\":\n          - /url: https://www.spotify.com/in-en/platinum/#ref=spotifycom_footer_platinum\n      - listitem:\n        - link \"Premium Student\":\n          - /url: https://www.spotify.com/in-en/student/#ref=spotifycom_footer_premium_student\n      - listitem:\n        - link \"Spotify Free\":\n          - /url: https://www.spotify.com/in-en/free/#ref=spotifycom_footer_free\n    - link \"Instagram\":\n      - /url: https://instagram.com/spotify\n    - link \"X\":\n      - /url: https://x.com/spotify\n    - link \"Facebook\":\n      - /url: https://www.facebook.com/Spotify\n    - separator\n    - text: © 2026 Spotify AB\n- button \"Show Now Playing view\""
+    }
+  },
+  {
+    "delay": 5000,
+    "prewarmPages": false,
+    "data": {
+      "url": "https://www.spotify.com/",
+      "final_url": "https://open.spotify.com/",
+      "format": "png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 18628,
+      "duration_ms": 26543,
+      "cached": false,
+      "blocked_requests": 3
+    },
+    "timings": {
+      "total_ms": 26562,
+      "phases_ms": {
+        "pool_wait": 0,
+        "browser_start": 0,
+        "context_setup": 5,
+        "init_scripts": 3,
+        "request_filters": 1,
+        "page_setup": 1386,
+        "egress": 0,
+        "navigation": 16008,
+        "load_settle": 3012,
+        "challenge_check": 5,
+        "dom_tweaks": 15,
+        "pre_capture": 6045,
+        "page_metrics": 1,
+        "screenshot": 31,
+        "inspection": 31,
+        "cleanup": 17
+      }
+    },
+    "failures": [
+      {
+        "check": "min_bytes",
+        "message": "Only 18628 bytes (minimum 40000) — likely blank or failed render"
+      }
+    ],
+    "inspection": {
+      "markdown": "#### Company\n\n- About\n\n- Jobs\n\n- For the Record\n\n#### Communities\n\n- For Artists\n\n- For Creators\n\n- For Authors\n\n- Developers\n\n- Advertising\n\n- Investors\n\n- Vendors\n\n#### Useful links\n\n- Support\n\n- Free Mobile App\n\n- Popular by Country\n\n- Top Song Lyrics\n\n- Import your music\n\n#### Spotify Plans\n\n- Premium Standard\n\n- Premium Platinum\n\n- Premium Student\n\n- Spotify Free",
+      "accessibleTree": "- link \"Skip to main content\":\n  - /url: \"#main-view\"\n- link \"Spotify\":\n  - /url: /\n  - img \"Spotify\"\n- button \"Home\"\n- search:\n  - button \"Search\"\n  - combobox \"What do you want to play?\"\n  - status\n  - button \"Browse\"\n- button \"Premium\"\n- button \"Support\"\n- button \"Download\"\n- link \"Install App\":\n  - /url: /download\n- button \"Sign up\"\n- button \"Log in\"\n- navigation \"Main\"\n- text: Resize main navigation\n- slider \"Resize main navigation\": \"290\"\n- main:\n  - img\n  - text: Loading\n  - separator\n  - navigation:\n    - heading \"Company\" [level=4]\n    - list:\n      - listitem:\n        - link \"About\":\n          - /url: https://www.spotify.com/in-en/about-us/contact/\n      - listitem:\n        - link \"Jobs\":\n          - /url: https://www.lifeatspotify.com/\n      - listitem:\n        - link \"For the Record\":\n          - /url: https://newsroom.spotify.com/\n    - heading \"Communities\" [level=4]\n    - list:\n      - listitem:\n        - link \"For Artists\":\n          - /url: https://artists.spotify.com/\n      - listitem:\n        - link \"For Creators\":\n          - /url: https://creators.spotify.com/\n      - listitem:\n        - link \"For Authors\":\n          - /url: https://authors.spotify.com/\n      - listitem:\n        - link \"Developers\":\n          - /url: https://developer.spotify.com/\n      - listitem:\n        - link \"Advertising\":\n          - /url: https://ads.spotify.com/\n      - listitem:\n        - link \"Investors\":\n          - /url: https://investors.spotify.com/\n      - listitem:\n        - link \"Vendors\":\n          - /url: https://spotifyforvendors.com/\n    - heading \"Useful links\" [level=4]\n    - list:\n      - listitem:\n        - link \"Support\":\n          - /url: https://support.spotify.com/\n      - listitem:\n        - link \"Free Mobile App\":\n          - /url: https://www.spotify.com/in-en/free/\n      - listitem:\n        - link \"Popular by Country\":\n          - /url: /popular-in/in\n      - listitem:\n        - link \"Top Song Lyrics\":\n          - /url: https://open.spotify.com/playlist/37i9dQZF1CLcTo7UzL0sYK\n      - listitem:\n        - link \"Import your music\":\n          - /url: https://www.spotify.com/in-en/import-music/\n    - heading \"Spotify Plans\" [level=4]\n    - list:\n      - listitem:\n        - link \"Premium Standard\":\n          - /url: https://www.spotify.com/in-en/premium/#plans\n      - listitem:\n        - link \"Premium Platinum\":\n          - /url: https://www.spotify.com/in-en/platinum/#ref=spotifycom_footer_platinum\n      - listitem:\n        - link \"Premium Student\":\n          - /url: https://www.spotify.com/in-en/student/#ref=spotifycom_footer_premium_student\n      - listitem:\n        - link \"Spotify Free\":\n          - /url: https://www.spotify.com/in-en/free/#ref=spotifycom_footer_free\n    - link \"Instagram\":\n      - /url: https://instagram.com/spotify\n    - link \"X\":\n      - /url: https://x.com/spotify\n    - link \"Facebook\":\n      - /url: https://www.facebook.com/Spotify\n    - separator\n    - text: © 2026 Spotify AB\n- button \"Show Now Playing view\""
+    }
+  }
+]

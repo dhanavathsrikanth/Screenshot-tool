@@ -1,0 +1,11 @@
+[ 1/1] PASS hard     spotify-home              23890ms
+
+=== Gauntlet summary ===
+  easy       0/0 passed  pass      0%  success      0%  p50     0ms  p95     0ms
+  moderate   0/0 passed  pass      0%  success      0%  p50     0ms  p95     0ms
+  hard       1/1 passed  pass    100%  success    100%  p50 23890ms  p95 23890ms
+  overall    1/1 passed  pass    100%  success    100%  p50 23890ms  p95 23890ms
+
+  Gate: 100% >= 95% → PASS
+
+  Reports: apps\benchmark\results\market-readiness\spotify\latest.md

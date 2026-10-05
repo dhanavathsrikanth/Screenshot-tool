@@ -1,0 +1,268 @@
+✔ CMP selectors cover the major consent platforms (1.2062ms)
+✔ banner removal script embeds selectors, lifetime, and bridge (0.2211ms)
+✔ banner removal script honors custom selectors and lifetime (0.1266ms)
+✔ banner style css hides each selector (0.7961ms)
+✔ banner removal script is valid javascript (0.4348ms)
+✔ hostMatches handles exact and subdomain matches (0.9157ms)
+✔ shouldBlockUrl blocks ad hosts when ads are enabled (0.2292ms)
+✔ shouldBlockUrl blocks tracker hosts when trackers are enabled (0.8159ms)
+✔ shouldBlockUrl allows first-party and unrelated hosts (0.211ms)
+✔ shouldBlockUrl respects disabled policies (0.1966ms)
+✔ shouldBlockUrl ignores non-http protocols and invalid urls (0.1737ms)
+✔ shouldBlockUrl is case-insensitive for hosts (0.1392ms)
+✔ a miss returns null and no entry is created on read (3.013ms)
+✔ a saved capture reads back marked cached with the same bytes (0.8263ms)
+✔ a zero ttl never caches (0.2634ms)
+✔ changing a render option misses the cache (0.4538ms)
+✔ delivery-only option changes do not miss the cache (0.4478ms)
+✔ option property order does not miss the cache (0.4184ms)
+✔ header order does not miss the cache (0.6213ms)
+✔ an expired entry is dropped (0.3903ms)
+✔ the entry bound is enforced with LRU eviction (1.1491ms)
+✔ save returns the data unchanged so a hit is the only place cached flips (0.3673ms)
+✔ the null port is a no-op that always misses (0.4372ms)
+✔ the engine cache port is satisfied by the storage cache shape (1.0395ms)
+✔ a standalone authenticated proxy is applied without requesting a region (2.9349ms)
+✔ proxy and region emulation can be configured together (0.5061ms)
+✔ sampleCpu reports a usable host snapshot (2.6309ms)
+✔ concurrency scales up with available cores (0.2687ms)
+✔ concurrency never exceeds the configured ceiling (0.1973ms)
+✔ memory pressure caps concurrency and is reported as the constraint (0.1522ms)
+✔ exhausted memory clamps to the floor and says so (0.1551ms)
+✔ reserved cores prevent oversubscribing a tiny host (0.1414ms)
+✔ sustained load collapses the ceiling to the floor (0.1516ms)
+✔ load at the threshold does not throttle (0.1694ms)
+✔ a fully saturated host never throttles below the floor (0.1892ms)
+✔ policy overrides layer over the defaults (0.2287ms)
+✔ policy tolerates degenerate cores-per-capture values (0.1971ms)
+▶ engine end-to-end capture suite
+  ✔ worker warmup prepares an isolated page without navigating a target (6256.4886ms)
+  ✔ captures a basic viewport png (1927.883ms)
+  ✔ short static captures skip guards with identical screenshot pixels (4284.3443ms)
+  ✔ automatic capture still waits for delayed SPA hydration (2483.7008ms)
+  ✔ explicit content thresholds still fail on short static pages (2874.5641ms)
+  ✔ custom JavaScript keeps the content guard for delayed mutations (3014.8196ms)
+  ✔ captures the full page beyond the viewport (2340.2806ms)
+  ✔ captures jpeg output (2024.7917ms)
+  ✔ captures webp output (1990.3514ms)
+  ✔ captures pdf output (2087.9479ms)
+  ✔ captures a targeted element (2012.3884ms)
+  ✔ annihilates cookie banners (2020.8863ms)
+  ✔ keeps banners when annihilation is disabled (1965.5628ms)
+  ✔ hides elements via hide_selectors (1957.2725ms)
+  ✔ removes elements via remove_selectors (2008.5899ms)
+  ✔ rejects invalid hide selectors (1916.8446ms)
+  ✔ accepts comma separated hide selectors (6983.0823ms)
+  ✔ waits for a delayed selector (6983.9452ms)
+  ✔ times out on a missing selector (3804.0314ms)
+  ✔ blocks tracker requests and reports the count (5591.6076ms)
+  ✔ classifies anti-bot challenges as blocked_by_target (3056.5675ms)
+  ✔ classifies http 503 as target_error (531.7756ms)
+  ✔ classifies unreachable hosts as navigation_failed (3735.5654ms)
+  ✔ applies the stealth fingerprint (11442.9895ms)
+  ✔ runs concurrent captures within the concurrency limit (3462.9609ms)
+  ✔ standby pages preserve cookie, storage, viewport, and locale isolation (10680.9282ms)
+An error occured while executing "onPageCreated" in plugin "stealth/evasions/chrome.app": page.addInitScript: Target page, context or browser has been closed
+    at async Proxy.<anonymous> (C:\Users\ratho\Desktop\scr tool\node_modules\.pnpm\playwright-extra@4.3.6_play_d5121e49d128d3bb02c6b3d3fc8159d2\node_modules\playwright-extra\dist\index.cjs.js:236:32) {
+  log: []
+}
+An error occured while executing "onPageCreated" in plugin "stealth/evasions/chrome.csi": page.addInitScript: Target page, context or browser has been closed
+    at async Proxy.<anonymous> (C:\Users\ratho\Desktop\scr tool\node_modules\.pnpm\playwright-extra@4.3.6_play_d5121e49d128d3bb02c6b3d3fc8159d2\node_modules\playwright-extra\dist\index.cjs.js:236:32) {
+  log: []
+}
+An error occured while executing "onPageCreated" in plugin "stealth/evasions/chrome.loadTimes": page.addInitScript: Target page, context or browser has been closed
+    at async Proxy.<anonymous> (C:\Users\ratho\Desktop\scr tool\node_modules\.pnpm\playwright-extra@4.3.6_play_d5121e49d128d3bb02c6b3d3fc8159d2\node_modules\playwright-extra\dist\index.cjs.js:236:32) {
+  log: []
+}
+An error occured while executing "onPageCreated" in plugin "stealth/evasions/chrome.runtime": page.addInitScript: Target page, context or browser has been closed
+    at async Proxy.<anonymous> (C:\Users\ratho\Desktop\scr tool\node_modules\.pnpm\playwright-extra@4.3.6_play_d5121e49d128d3bb02c6b3d3fc8159d2\node_modules\playwright-extra\dist\index.cjs.js:236:32) {
+  log: []
+}
+An error occured while executing "onPageCreated" in plugin "stealth/evasions/media.codecs": page.addInitScript: Target page, context or browser has been closed
+    at async Proxy.<anonymous> (C:\Users\ratho\Desktop\scr tool\node_modules\.pnpm\playwright-extra@4.3.6_play_d5121e49d128d3bb02c6b3d3fc8159d2\node_modules\playwright-extra\dist\index.cjs.js:236:32) {
+  log: []
+}
+An error occured while executing "onPageCreated" in plugin "stealth/evasions/navigator.hardwareConcurrency": page.addInitScript: Target page, context or browser has been closed
+    at async Proxy.<anonymous> (C:\Users\ratho\Desktop\scr tool\node_modules\.pnpm\playwright-extra@4.3.6_play_d5121e49d128d3bb02c6b3d3fc8159d2\node_modules\playwright-extra\dist\index.cjs.js:236:32) {
+  log: []
+}
+An error occured while executing "onPageCreated" in plugin "stealth/evasions/navigator.languages": page.addInitScript: Target page, context or browser has been closed
+    at async Proxy.<anonymous> (C:\Users\ratho\Desktop\scr tool\node_modules\.pnpm\playwright-extra@4.3.6_play_d5121e49d128d3bb02c6b3d3fc8159d2\node_modules\playwright-extra\dist\index.cjs.js:236:32) {
+  log: []
+}
+An error occured while executing "onPageCreated" in plugin "stealth/evasions/navigator.permissions": page.addInitScript: Target page, context or browser has been closed
+    at async Proxy.<anonymous> (C:\Users\ratho\Desktop\scr tool\node_modules\.pnpm\playwright-extra@4.3.6_play_d5121e49d128d3bb02c6b3d3fc8159d2\node_modules\playwright-extra\dist\index.cjs.js:236:32) {
+  log: []
+}
+An error occured while executing "onPageCreated" in plugin "stealth/evasions/navigator.plugins": page.addInitScript: Target page, context or browser has been closed
+    at async Proxy.<anonymous> (C:\Users\ratho\Desktop\scr tool\node_modules\.pnpm\playwright-extra@4.3.6_play_d5121e49d128d3bb02c6b3d3fc8159d2\node_modules\playwright-extra\dist\index.cjs.js:236:32) {
+  log: []
+}
+An error occured while executing "onPageCreated" in plugin "stealth/evasions/navigator.webdriver": page.addInitScript: Target page, context or browser has been closed
+    at async Proxy.<anonymous> (C:\Users\ratho\Desktop\scr tool\node_modules\.pnpm\playwright-extra@4.3.6_play_d5121e49d128d3bb02c6b3d3fc8159d2\node_modules\playwright-extra\dist\index.cjs.js:236:32)
+    at async Plugin.onPageCreated (C:\Users\ratho\Desktop\scr tool\node_modules\.pnpm\puppeteer-extra-plugin-stea_2cc470db6477bfe829e48e95711f0cce\node_modules\puppeteer-extra-plugin-stealth\evasions\navigator.webdriver\index.js:19:5) {
+  log: []
+}
+An error occured while executing "onPageCreated" in plugin "stealth/evasions/webgl.vendor": page.addInitScript: Target page, context or browser has been closed
+    at async Proxy.<anonymous> (C:\Users\ratho\Desktop\scr tool\node_modules\.pnpm\playwright-extra@4.3.6_play_d5121e49d128d3bb02c6b3d3fc8159d2\node_modules\playwright-extra\dist\index.cjs.js:236:32) {
+  log: []
+}
+An error occured while executing "onPageCreated" in plugin "stealth/evasions/window.outerdimensions": page.addInitScript: Target page, context or browser has been closed
+    at async Proxy.<anonymous> (C:\Users\ratho\Desktop\scr tool\node_modules\.pnpm\playwright-extra@4.3.6_play_d5121e49d128d3bb02c6b3d3fc8159d2\node_modules\playwright-extra\dist\index.cjs.js:236:32)
+    at async Plugin.onPageCreated (C:\Users\ratho\Desktop\scr tool\node_modules\.pnpm\puppeteer-extra-plugin-stea_2cc470db6477bfe829e48e95711f0cce\node_modules\puppeteer-extra-plugin-stealth\evasions\window.outerdimensions\index.js:20:5) {
+  log: []
+}
+An error occured while executing "onPageCreated" in plugin "stealth/evasions/iframe.contentWindow": page.addInitScript: Target page, context or browser has been closed
+    at async Proxy.<anonymous> (C:\Users\ratho\Desktop\scr tool\node_modules\.pnpm\playwright-extra@4.3.6_play_d5121e49d128d3bb02c6b3d3fc8159d2\node_modules\playwright-extra\dist\index.cjs.js:236:32) {
+  log: []
+}
+  ✔ browser recycling discards standby pages and counts served contexts (14313.222ms)
+✔ engine end-to-end capture suite (112495.0924ms)
+✔ verifyEgress passes when the context egresses from the region (4308.1386ms)
+✔ verifyEgress rejects an egress country outside the region (4509.6018ms)
+✔ verifyEgress reports an unreachable lookup as retriable (4578.0944ms)
+✔ a region preset drives locale, timezone, and geolocation on the context (6638.9721ms)
+✔ the engine fails a region request whose egress is in the wrong country (6002.0937ms)
+✔ a matching region reports the region and verified country (11146.5194ms)
+✔ captures still succeed when no region is requested (11747.2494ms)
+✔ an unknown region is rejected before a browser is needed (2.4247ms)
+✔ resolveConfig applies production defaults (1.8746ms)
+✔ resolveConfig keeps explicit overrides (0.2652ms)
+✔ resolveViewport defaults to desktop standard (3.1525ms)
+✔ resolveViewport applies device presets (0.6694ms)
+✔ resolveViewport prefers explicit viewport over preset defaults (0.362ms)
+✔ resolveViewport rejects unknown device presets (0.6436ms)
+✔ capture rejects invalid urls without launching a browser (3.0238ms)
+✔ capture rejects completely malformed payloads (2.0599ms)
+✔ engine derives concurrency from the host, capped by config (0.9518ms)
+✔ a pinned policy makes concurrency exactly predictable (1.2877ms)
+✔ invalid urls never consume a browser slot (1.4007ms)
+✔ classifyErrorMessage maps crash messages (1.2365ms)
+✔ classifyErrorMessage maps navigation messages (0.7061ms)
+✔ classifyErrorMessage maps timeout messages (0.2866ms)
+✔ classifyErrorMessage defaults to internal_error (0.2008ms)
+✔ looksLikeChallenge uses status codes (0.4245ms)
+✔ looksLikeChallenge uses title patterns (0.346ms)
+✔ looksLikeChallenge uses body patterns for error statuses (0.3132ms)
+✔ looksLikeChallenge ignores titles that only mention captcha (0.1545ms)
+✔ looksLikeChallenge flags bot walls in 200-status bodies (0.1606ms)
+✔ toSnapforgeError maps ZodError to invalid_request (1.5893ms)
+✔ toSnapforgeError passes SnapforgeError through (0.156ms)
+✔ toSnapforgeError merges extraDetails into SnapforgeError (0.7753ms)
+✔ toSnapforgeError classifies raw playwright errors (0.3593ms)
+✔ toSnapforgeError keeps extra details and stack (0.2091ms)
+✔ planCapture for viewport png produces no clip (2.9406ms)
+✔ planCapture for full page clips to the document height (0.466ms)
+✔ planCapture caps full page height at maxPageHeight (0.2788ms)
+✔ planCapture never clips narrower than the viewport (0.2595ms)
+✔ planCapture keeps quality for lossy formats only (0.3888ms)
+✔ planCapture for pdf ignores clipping (0.2663ms)
+✔ buildPdfOptions sets print defaults and single page unless full page (0.4143ms)
+✔ readPngSize parses width and height from a png header (0.8763ms)
+✔ readPngSize rejects non-png and short buffers (0.2541ms)
+✔ computeScrollStep scales with viewport height (1.0977ms)
+✔ computeScrollStep enforces a floor and ceiling (0.1611ms)
+✔ nextScrollTarget advances by step toward the bottom (0.1532ms)
+✔ nextScrollTarget clamps at the document bottom (0.1458ms)
+✔ nextScrollTarget respects the max page height cap (0.1629ms)
+✔ nextScrollTarget returns null when the page fits the viewport (0.1212ms)
+✔ isConverged detects a stable height history (0.215ms)
+✔ pinFixedProperties pins an element in document coordinates (0.2045ms)
+✔ waitForScrollGrowth resolves once the document outgrows the viewport (5.6041ms)
+✔ waitForScrollGrowth times out while the document stays viewport-sized (75.1399ms)
+✔ waitForScrollGrowth with a zero budget returns false (0.3999ms)
+✔ waitForScrollGrowth skips waiting for a complete static page that fits the viewport (0.177ms)
+✔ waitForScrollGrowth can retain the guard for custom script mutations (31.0465ms)
+✔ public network policy rejects local, metadata, mapped, and reserved addresses (5.3172ms)
+✔ DNS validation rejects a hostname with any private answer (0.8465ms)
+✔ encoded IP addresses and local hostnames cannot bypass public URL validation (0.4707ms)
+✔ disabled auto concurrency honors the configured slots despite restrictive host policy (4.7892ms)
+✔ initialization reserves only idle slots and keeps queued captures within the limit (0.8208ms)
+✔ failed initialization releases every reserved slot before propagating the error (31.7247ms)
+✔ automatic concurrency still respects restrictive host policy (0.7926ms)
+✔ pool never grants more leases than the CPU budget allows (14.2013ms)
+✔ queued callers are served oldest first (1.538ms)
+✔ recycling one slot leaves sibling slots leased (0.7403ms)
+✔ a crashed slot is reusable immediately after recycling (0.5028ms)
+✔ a slot is not handed to a waiter while it is mid-recycle (0.508ms)
+✔ destroy rejects queued callers instead of hanging them (0.6912ms)
+✔ acquiring from a destroyed pool fails fast (0.4886ms)
+✔ health reports pool shape before any browser launches (0.4918ms)
+✔ a throttled budget collapses grants to the floor (1.1935ms)
+✔ slot lookup rejects an unknown slot id (0.6039ms)
+▶ runtime quality and standalone proxy integration
+  ✔ navigation/footer text cannot make a loading shell successful or cached (7451.1044ms)
+  ✔ late hydration is recovered before delivery (2577.8165ms)
+  ✔ completed pages with loading-related prose remain valid (1987.5872ms)
+  ✔ explicit output requirements fail before cache saving (1935.7322ms)
+  ✔ standalone proxy carries actual browser traffic without a region (1965.0618ms)
+  ✔ caller can explicitly capture a loading state (2000.1639ms)
+✔ runtime quality and standalone proxy integration (17992.6764ms)
+✔ public worker network policy checks redirect destinations (10297.2499ms)
+✔ quality assertions detect missing and forbidden content without case sensitivity (3.2741ms)
+✔ loading-shell rejection has an explicit opt-out (0.585ms)
+✔ ready pages do not spend the quality waiting budget (0.4127ms)
+✔ quality wait recovers a loading shell that finishes rendering (254.4468ms)
+✔ exhausted budget rejects incomplete content with a retriable error (0.9936ms)
+✔ minimum output dimensions and size are enforced before delivery (0.47ms)
+✔ completed short HTML and JSON metadata are static (2.2131ms)
+✔ JavaScript and modules keep the hydration guard (5.1118ms)
+✔ unfinished or nearly empty pages keep the guard (1.5421ms)
+✔ embedded documents keep the hydration and scroll guards (0.8794ms)
+✔ region preset table is internally consistent (1.2848ms)
+✔ region schema accepts known ids and rejects unknown ones (2.6301ms)
+✔ isRegionId guards against prototype keys (0.1568ms)
+✔ resolveRegion derives locale, timezone, and currency from the preset (0.4208ms)
+✔ explicit locale and timezone override the preset (0.3216ms)
+✔ proxy is carried on the resolved region (0.3363ms)
+✔ no region means no geo bundle (0.2692ms)
+✔ countryMatches compares on the ISO code only (0.1575ms)
+✔ SettlementBudget tracks remaining time and expiry (1.0839ms)
+✔ SettlementBudget with zero budget is immediately expired (0.137ms)
+✔ RequestIdleTracker tracks inflight requests and idle time (0.1981ms)
+✔ waitForNetworkIdle returns idle when no requests are active (28.6414ms)
+✔ waitForNetworkIdle returns budget when requests never settle (82.4284ms)
+✔ waitForNetworkIdle returns expired for a zero budget (0.3549ms)
+✔ waitForNetworkIdle notices completion within budget (49.4521ms)
+✔ waitForContent resolves once the body has enough text (33.1546ms)
+✔ waitForContent times out on empty pages (61.9006ms)
+✔ waitForContent with a zero budget returns false immediately (0.4598ms)
+✔ waitForContent accepts loaded images when allowImages is set (102.2586ms)
+✔ automatic content guards accept short static pages but explicit content waits keep their threshold (30.4857ms)
+✔ automatic content guards continue waiting for script-driven hydration (30.9972ms)
+✔ waitForImages reports ready when there are no images (0.385ms)
+✔ waitForImages fails open when the page cannot be evaluated (0.2329ms)
+✔ settlePreCapture resolves when content arrives (0.3283ms)
+✔ settlePreCapture throws a classified timeout when content never arrives (61.4547ms)
+✔ settlePreCapture auto-guards empty pages without throwing (62.7303ms)
+✔ settlePreCapture skips the auto-guard for selector captures (0.3502ms)
+✔ font and network waits overlap without lowering their budgets (62.4295ms)
+✔ network activity that begins after idle while fonts load is settled again (79.0211ms)
+✔ post-scroll settlement rechecks images added during the network wait (47.1244ms)
+✔ standby provides fresh contexts and keeps only one prepared page (3.5171ms)
+✔ changed capture settings discard the unused context (1.4341ms)
+✔ a recycled browser never receives a page from its predecessor (0.5895ms)
+✔ failed background preparation closes its context and falls back safely (0.7729ms)
+✔ shutdown waits for preparation and prevents creating more pages (0.7513ms)
+✔ closed prepared pages are discarded instead of being handed to callers (1.0804ms)
+✔ memory pressure disables speculation while fresh capture pages remain available (0.3899ms)
+✔ startup reserves its first page even when spare memory disables background preparation (0.2701ms)
+✔ changed options cancel page creation without waiting for its startup (0.4693ms)
+✔ unresponsive renderer startup times out and attempts context cleanup (33.816ms)
+✔ shutdown cancels pending startup even when the renderer and close never respond (15.5419ms)
+✔ a context arriving after a startup timeout is closed rather than leaked (15.9357ms)
+✔ capture timings accumulate repeated phases and include unmeasured overhead (1.6569ms)
+✔ failed phases and cleanup are measured without swallowing the original error (0.6438ms)
+✔ sleep resolves after the delay (32.0113ms)
+✔ Semaphore never exceeds its limit (93.4802ms)
+✔ Semaphore hands queued waiters a live slot (33.2125ms)
+✔ truncateText passes short values through (0.3531ms)
+✔ truncateText truncates long values with ellipsis (0.1508ms)
+ℹ tests 204
+ℹ suites 0
+ℹ pass 204
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 210279.5813

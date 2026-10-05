@@ -1,0 +1,311 @@
+{
+  "recorded_at": "2026-10-04T18:36:15.263Z",
+  "reference_p50_ms": 8677,
+  "target_p50_ms": 1735.4,
+  "additional_80_percent_achieved": false,
+  "runs": [
+    {
+      "run": 1,
+      "started_at": "2026-10-04T18:29:57.250Z",
+      "finished_at": "2026-10-04T18:31:25.401Z",
+      "options": {
+        "concurrency": 4,
+        "retries": 1,
+        "inspect_text": true,
+        "gate_percent": 95
+      },
+      "summary": {
+        "total": 30,
+        "blocked": 3,
+        "eligible": 27,
+        "passed": 27,
+        "pass_rate": 100,
+        "success_rate": 90,
+        "gate_percent": 95,
+        "gate_passed": true,
+        "p50_ms": 9618,
+        "p95_ms": 23073,
+        "by_tier": {
+          "easy": {
+            "tier": "easy",
+            "total": 10,
+            "blocked": 0,
+            "passed": 10,
+            "pass_rate": 100,
+            "success_rate": 100,
+            "p50_ms": 9636,
+            "p95_ms": 23073
+          },
+          "moderate": {
+            "tier": "moderate",
+            "total": 10,
+            "blocked": 0,
+            "passed": 10,
+            "pass_rate": 100,
+            "success_rate": 100,
+            "p50_ms": 8696,
+            "p95_ms": 24974
+          },
+          "hard": {
+            "tier": "hard",
+            "total": 10,
+            "blocked": 3,
+            "passed": 7,
+            "pass_rate": 100,
+            "success_rate": 70,
+            "p50_ms": 9479,
+            "p95_ms": 13085
+          }
+        }
+      },
+      "failures": [
+        {
+          "id": "imdb-home",
+          "error": {
+            "code": "blocked_by_target",
+            "message": "Target blocked the capture (status 405): Human Verification"
+          }
+        },
+        {
+          "id": "reddit-feed",
+          "error": {
+            "code": "blocked_by_target",
+            "message": "Target blocked the capture (status 200): Reddit - Prove your humanity"
+          }
+        },
+        {
+          "id": "stackoverflow-home",
+          "error": {
+            "code": "blocked_by_target",
+            "message": "Target blocked the capture (status 403): Forbidden - Stack Exchange"
+          }
+        }
+      ],
+      "phase_medians_ms": {
+        "pool_wait": 0,
+        "browser_start": 0,
+        "context_setup": 7,
+        "page_setup": 2323,
+        "init_scripts": 17,
+        "request_filters": 3,
+        "egress": 0,
+        "navigation": 2132,
+        "load_settle": 3001,
+        "challenge_check": 25,
+        "dom_tweaks": 45,
+        "pre_capture": 6,
+        "quality_check": 9,
+        "page_metrics": 4,
+        "screenshot": 127,
+        "inspection": 143,
+        "cleanup": 12,
+        "growth_wait": 14,
+        "scroll": 2791,
+        "post_scroll": 3007,
+        "failure_artifacts": 6
+      }
+    },
+    {
+      "run": 2,
+      "started_at": "2026-10-04T18:32:15.698Z",
+      "finished_at": "2026-10-04T18:33:34.081Z",
+      "options": {
+        "concurrency": 4,
+        "retries": 1,
+        "inspect_text": true,
+        "gate_percent": 95
+      },
+      "summary": {
+        "total": 30,
+        "blocked": 3,
+        "eligible": 27,
+        "passed": 27,
+        "pass_rate": 100,
+        "success_rate": 90,
+        "gate_percent": 95,
+        "gate_passed": true,
+        "p50_ms": 8904,
+        "p95_ms": 15877,
+        "by_tier": {
+          "easy": {
+            "tier": "easy",
+            "total": 10,
+            "blocked": 0,
+            "passed": 10,
+            "pass_rate": 100,
+            "success_rate": 100,
+            "p50_ms": 12857,
+            "p95_ms": 18217
+          },
+          "moderate": {
+            "tier": "moderate",
+            "total": 10,
+            "blocked": 0,
+            "passed": 10,
+            "pass_rate": 100,
+            "success_rate": 100,
+            "p50_ms": 9856,
+            "p95_ms": 14065
+          },
+          "hard": {
+            "tier": "hard",
+            "total": 10,
+            "blocked": 3,
+            "passed": 7,
+            "pass_rate": 100,
+            "success_rate": 70,
+            "p50_ms": 8461,
+            "p95_ms": 14247
+          }
+        }
+      },
+      "failures": [
+        {
+          "id": "imdb-home",
+          "error": {
+            "code": "blocked_by_target",
+            "message": "Target blocked the capture (status 405): Human Verification"
+          }
+        },
+        {
+          "id": "reddit-feed",
+          "error": {
+            "code": "blocked_by_target",
+            "message": "Target blocked the capture (status 200): Reddit - Prove your humanity"
+          }
+        },
+        {
+          "id": "stackoverflow-home",
+          "error": {
+            "code": "blocked_by_target",
+            "message": "Target blocked the capture (status 403): Forbidden - Stack Exchange"
+          }
+        }
+      ],
+      "phase_medians_ms": {
+        "pool_wait": 0,
+        "browser_start": 0,
+        "context_setup": 9,
+        "page_setup": 2592,
+        "init_scripts": 10,
+        "request_filters": 2,
+        "egress": 0,
+        "navigation": 1204,
+        "load_settle": 3001,
+        "challenge_check": 15,
+        "dom_tweaks": 41,
+        "pre_capture": 8,
+        "quality_check": 11,
+        "page_metrics": 4,
+        "screenshot": 121,
+        "inspection": 149,
+        "cleanup": 12,
+        "growth_wait": 8,
+        "scroll": 2606,
+        "post_scroll": 1049,
+        "failure_artifacts": 12
+      }
+    },
+    {
+      "run": 3,
+      "started_at": "2026-10-04T18:34:08.794Z",
+      "finished_at": "2026-10-04T18:35:17.696Z",
+      "options": {
+        "concurrency": 4,
+        "retries": 1,
+        "inspect_text": true,
+        "gate_percent": 95
+      },
+      "summary": {
+        "total": 30,
+        "blocked": 3,
+        "eligible": 27,
+        "passed": 27,
+        "pass_rate": 100,
+        "success_rate": 90,
+        "gate_percent": 95,
+        "gate_passed": true,
+        "p50_ms": 8383,
+        "p95_ms": 15245,
+        "by_tier": {
+          "easy": {
+            "tier": "easy",
+            "total": 10,
+            "blocked": 0,
+            "passed": 10,
+            "pass_rate": 100,
+            "success_rate": 100,
+            "p50_ms": 6642,
+            "p95_ms": 17455
+          },
+          "moderate": {
+            "tier": "moderate",
+            "total": 10,
+            "blocked": 0,
+            "passed": 10,
+            "pass_rate": 100,
+            "success_rate": 100,
+            "p50_ms": 7228,
+            "p95_ms": 14828
+          },
+          "hard": {
+            "tier": "hard",
+            "total": 10,
+            "blocked": 3,
+            "passed": 7,
+            "pass_rate": 100,
+            "success_rate": 70,
+            "p50_ms": 8518,
+            "p95_ms": 11303
+          }
+        }
+      },
+      "failures": [
+        {
+          "id": "imdb-home",
+          "error": {
+            "code": "blocked_by_target",
+            "message": "Target blocked the capture (status 405): Human Verification"
+          }
+        },
+        {
+          "id": "reddit-feed",
+          "error": {
+            "code": "blocked_by_target",
+            "message": "Target blocked the capture (status 200): Reddit - Prove your humanity"
+          }
+        },
+        {
+          "id": "stackoverflow-home",
+          "error": {
+            "code": "blocked_by_target",
+            "message": "Target blocked the capture (status 403): Forbidden - Stack Exchange"
+          }
+        }
+      ],
+      "phase_medians_ms": {
+        "pool_wait": 0,
+        "browser_start": 0,
+        "context_setup": 6,
+        "page_setup": 2212,
+        "init_scripts": 9,
+        "request_filters": 2,
+        "egress": 0,
+        "navigation": 1112,
+        "load_settle": 2363,
+        "challenge_check": 14,
+        "dom_tweaks": 33,
+        "pre_capture": 7,
+        "quality_check": 11,
+        "page_metrics": 4,
+        "screenshot": 92,
+        "inspection": 123,
+        "cleanup": 12,
+        "growth_wait": 4,
+        "scroll": 1740,
+        "post_scroll": 898,
+        "failure_artifacts": 9
+      }
+    }
+  ]
+}

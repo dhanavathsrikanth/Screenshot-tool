@@ -1,0 +1,22 @@
+{
+  "name": "@snapforge/benchmark",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/src/cli.js",
+  "types": "./dist/src/cli.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "node --test dist/test/**/*.test.js",
+    "start": "node dist/src/cli.js"
+  },
+  "dependencies": {
+    "@snapforge/contracts": "workspace:*",
+    "@snapforge/engine": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.1",
+    "typescript": "^5.8.2"
+  }
+}

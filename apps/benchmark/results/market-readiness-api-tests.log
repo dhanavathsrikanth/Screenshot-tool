@@ -1,0 +1,12 @@
+✔ unpaused queue with no live worker is unavailable (85.0948ms)
+✔ live worker, ready database, and running queue report healthy (3.1923ms)
+✔ a paused queue remains unavailable even with a worker heartbeat (2.2022ms)
+✔ incomplete capture releases its credit reservation rather than consuming it (17.0374ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2454.7737

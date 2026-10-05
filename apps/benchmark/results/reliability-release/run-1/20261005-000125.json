@@ -1,0 +1,1175 @@
+{
+  "started_at": "2026-10-04T18:29:57.250Z",
+  "finished_at": "2026-10-04T18:31:25.401Z",
+  "options": {
+    "concurrency": 4,
+    "retries": 1,
+    "inspect_text": true,
+    "gate_percent": 95
+  },
+  "summary": {
+    "total": 30,
+    "blocked": 3,
+    "eligible": 27,
+    "passed": 27,
+    "pass_rate": 100,
+    "success_rate": 90,
+    "gate_percent": 95,
+    "gate_passed": true,
+    "p50_ms": 9618,
+    "p95_ms": 23073,
+    "by_tier": {
+      "easy": {
+        "tier": "easy",
+        "total": 10,
+        "blocked": 0,
+        "passed": 10,
+        "pass_rate": 100,
+        "success_rate": 100,
+        "p50_ms": 9636,
+        "p95_ms": 23073
+      },
+      "moderate": {
+        "tier": "moderate",
+        "total": 10,
+        "blocked": 0,
+        "passed": 10,
+        "pass_rate": 100,
+        "success_rate": 100,
+        "p50_ms": 8696,
+        "p95_ms": 24974
+      },
+      "hard": {
+        "tier": "hard",
+        "total": 10,
+        "blocked": 3,
+        "passed": 7,
+        "pass_rate": 100,
+        "success_rate": 70,
+        "p50_ms": 9479,
+        "p95_ms": 13085
+      }
+    }
+  },
+  "results": [
+    {
+      "id": "example-com",
+      "tier": "easy",
+      "url": "https://example.com",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 16945,
+      "attempt_timings": [
+        {
+          "total_ms": 16942,
+          "phases_ms": {
+            "pool_wait": 1,
+            "browser_start": 13113,
+            "context_setup": 30,
+            "page_setup": 2515,
+            "init_scripts": 19,
+            "request_filters": 1,
+            "egress": 0,
+            "navigation": 635,
+            "load_settle": 380,
+            "challenge_check": 12,
+            "dom_tweaks": 53,
+            "pre_capture": 16,
+            "quality_check": 9,
+            "page_metrics": 4,
+            "screenshot": 71,
+            "inspection": 61,
+            "cleanup": 16
+          }
+        }
+      ],
+      "width": 1280,
+      "height": 720,
+      "bytes": 35482,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "gnu-home",
+      "tier": "easy",
+      "url": "https://www.gnu.org/",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 9636,
+      "attempt_timings": [
+        {
+          "total_ms": 9637,
+          "phases_ms": {
+            "pool_wait": 0,
+            "browser_start": 0,
+            "context_setup": 7,
+            "page_setup": 3567,
+            "init_scripts": 63,
+            "request_filters": 5,
+            "egress": 0,
+            "navigation": 3346,
+            "load_settle": 2361,
+            "challenge_check": 6,
+            "dom_tweaks": 24,
+            "pre_capture": 3,
+            "quality_check": 7,
+            "page_metrics": 3,
+            "screenshot": 153,
+            "inspection": 77,
+            "cleanup": 9
+          }
+        }
+      ],
+      "width": 1280,
+      "height": 720,
+      "bytes": 329257,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "hackernews-front",
+      "tier": "easy",
+      "url": "https://news.ycombinator.com/",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 23073,
+      "attempt_timings": [
+        {
+          "total_ms": 23073,
+          "phases_ms": {
+            "pool_wait": 0,
+            "browser_start": 12851,
+            "context_setup": 5,
+            "page_setup": 7316,
+            "init_scripts": 17,
+            "request_filters": 4,
+            "egress": 0,
+            "navigation": 1344,
+            "load_settle": 763,
+            "challenge_check": 34,
+            "dom_tweaks": 47,
+            "pre_capture": 5,
+            "quality_check": 13,
+            "page_metrics": 8,
+            "screenshot": 91,
+            "inspection": 151,
+            "cleanup": 12
+          }
+        }
+      ],
+      "width": 1280,
+      "height": 720,
+      "bytes": 101806,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "kernel-org",
+      "tier": "easy",
+      "url": "https://www.kernel.org/",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 7557,
+      "attempt_timings": [
+        {
+          "total_ms": 7556,
+          "phases_ms": {
+            "pool_wait": 0,
+            "browser_start": 0,
+            "context_setup": 22,
+            "page_setup": 4752,
+            "init_scripts": 42,
+            "request_filters": 14,
+            "egress": 0,
+            "navigation": 665,
+            "load_settle": 1892,
+            "challenge_check": 7,
+            "dom_tweaks": 14,
+            "pre_capture": 4,
+            "quality_check": 4,
+            "page_metrics": 3,
+            "screenshot": 61,
+            "inspection": 67,
+            "cleanup": 5
+          }
+        }
+      ],
+      "width": 1280,
+      "height": 720,
+      "bytes": 133296,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "mdn-web",
+      "tier": "easy",
+      "url": "https://developer.mozilla.org/en-US/docs/Web",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 22290,
+      "attempt_timings": [
+        {
+          "total_ms": 22289,
+          "phases_ms": {
+            "pool_wait": 0,
+            "browser_start": 12712,
+            "context_setup": 21,
+            "page_setup": 4951,
+            "init_scripts": 27,
+            "request_filters": 5,
+            "egress": 0,
+            "navigation": 1745,
+            "load_settle": 1985,
+            "challenge_check": 56,
+            "dom_tweaks": 50,
+            "pre_capture": 31,
+            "quality_check": 12,
+            "page_metrics": 4,
+            "screenshot": 108,
+            "inspection": 157,
+            "cleanup": 13
+          }
+        }
+      ],
+      "width": 1280,
+      "height": 720,
+      "bytes": 165181,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "peps-index",
+      "tier": "easy",
+      "url": "https://peps.python.org/pep-0000/",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 19598,
+      "attempt_timings": [
+        {
+          "total_ms": 19597,
+          "phases_ms": {
+            "pool_wait": 0,
+            "browser_start": 0,
+            "context_setup": 10,
+            "page_setup": 4385,
+            "init_scripts": 42,
+            "request_filters": 10,
+            "egress": 0,
+            "navigation": 1393,
+            "load_settle": 1863,
+            "challenge_check": 15,
+            "dom_tweaks": 45,
+            "pre_capture": 18,
+            "growth_wait": 14,
+            "scroll": 7547,
+            "post_scroll": 14,
+            "quality_check": 25,
+            "page_metrics": 7,
+            "screenshot": 2969,
+            "inspection": 1227,
+            "cleanup": 8
+          }
+        }
+      ],
+      "width": 1280,
+      "height": 24000,
+      "bytes": 2272054,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "python-docs",
+      "tier": "easy",
+      "url": "https://docs.python.org/3/",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 5554,
+      "attempt_timings": [
+        {
+          "total_ms": 5554,
+          "phases_ms": {
+            "pool_wait": 0,
+            "browser_start": 0,
+            "context_setup": 9,
+            "page_setup": 2490,
+            "init_scripts": 18,
+            "request_filters": 2,
+            "egress": 0,
+            "navigation": 585,
+            "load_settle": 1514,
+            "challenge_check": 39,
+            "dom_tweaks": 46,
+            "pre_capture": 6,
+            "growth_wait": 9,
+            "scroll": 520,
+            "post_scroll": 4,
+            "quality_check": 5,
+            "page_metrics": 2,
+            "screenshot": 258,
+            "inspection": 39,
+            "cleanup": 5
+          }
+        }
+      ],
+      "width": 1280,
+      "height": 1572,
+      "bytes": 169654,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "python-org-home",
+      "tier": "easy",
+      "url": "https://www.python.org/",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 6566,
+      "attempt_timings": [
+        {
+          "total_ms": 6566,
+          "phases_ms": {
+            "pool_wait": 0,
+            "browser_start": 0,
+            "context_setup": 4,
+            "page_setup": 3039,
+            "init_scripts": 35,
+            "request_filters": 7,
+            "egress": 0,
+            "navigation": 1354,
+            "load_settle": 1876,
+            "challenge_check": 6,
+            "dom_tweaks": 27,
+            "pre_capture": 4,
+            "quality_check": 5,
+            "page_metrics": 2,
+            "screenshot": 87,
+            "inspection": 108,
+            "cleanup": 8
+          }
+        }
+      ],
+      "width": 1280,
+      "height": 720,
+      "bytes": 111793,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "rust-lang-home",
+      "tier": "easy",
+      "url": "https://www.rust-lang.org/",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 4969,
+      "attempt_timings": [
+        {
+          "total_ms": 4968,
+          "phases_ms": {
+            "pool_wait": 0,
+            "browser_start": 0,
+            "context_setup": 7,
+            "page_setup": 2111,
+            "init_scripts": 9,
+            "request_filters": 6,
+            "egress": 0,
+            "navigation": 1519,
+            "load_settle": 1132,
+            "challenge_check": 6,
+            "dom_tweaks": 26,
+            "pre_capture": 3,
+            "quality_check": 7,
+            "page_metrics": 2,
+            "screenshot": 55,
+            "inspection": 66,
+            "cleanup": 14
+          }
+        }
+      ],
+      "width": 1280,
+      "height": 720,
+      "bytes": 74467,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "wikipedia-home",
+      "tier": "easy",
+      "url": "https://www.wikipedia.org/",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 18081,
+      "attempt_timings": [
+        {
+          "total_ms": 18081,
+          "phases_ms": {
+            "pool_wait": 0,
+            "browser_start": 12710,
+            "context_setup": 21,
+            "page_setup": 2502,
+            "init_scripts": 13,
+            "request_filters": 9,
+            "egress": 0,
+            "navigation": 1683,
+            "load_settle": 513,
+            "challenge_check": 7,
+            "dom_tweaks": 31,
+            "pre_capture": 6,
+            "quality_check": 8,
+            "page_metrics": 2,
+            "screenshot": 61,
+            "inspection": 92,
+            "cleanup": 10
+          }
+        }
+      ],
+      "width": 1280,
+      "height": 720,
+      "bytes": 83063,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "allbirds-store",
+      "tier": "moderate",
+      "url": "https://www.allbirds.com/",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 12598,
+      "attempt_timings": [
+        {
+          "total_ms": 12598,
+          "phases_ms": {
+            "pool_wait": 0,
+            "browser_start": 0,
+            "context_setup": 7,
+            "page_setup": 2628,
+            "init_scripts": 24,
+            "request_filters": 4,
+            "egress": 0,
+            "navigation": 6579,
+            "load_settle": 3015,
+            "challenge_check": 5,
+            "dom_tweaks": 21,
+            "pre_capture": 4,
+            "quality_check": 4,
+            "page_metrics": 1,
+            "screenshot": 220,
+            "inspection": 69,
+            "cleanup": 15
+          }
+        }
+      ],
+      "width": 1280,
+      "height": 720,
+      "bytes": 702072,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "amazon-serp",
+      "tier": "moderate",
+      "url": "https://www.amazon.com/s?k=laptop",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 8178,
+      "attempt_timings": [
+        {
+          "total_ms": 8177,
+          "phases_ms": {
+            "pool_wait": 0,
+            "browser_start": 0,
+            "context_setup": 6,
+            "page_setup": 2474,
+            "init_scripts": 18,
+            "request_filters": 3,
+            "egress": 0,
+            "navigation": 2132,
+            "load_settle": 3002,
+            "challenge_check": 7,
+            "dom_tweaks": 39,
+            "pre_capture": 3,
+            "quality_check": 12,
+            "page_metrics": 2,
+            "screenshot": 136,
+            "inspection": 333,
+            "cleanup": 6
+          }
+        }
+      ],
+      "width": 1280,
+      "height": 720,
+      "bytes": 224266,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "dribbble-grid",
+      "tier": "moderate",
+      "url": "https://dribbble.com/",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 24974,
+      "attempt_timings": [
+        {
+          "total_ms": 24974,
+          "phases_ms": {
+            "pool_wait": 0,
+            "browser_start": 0,
+            "context_setup": 6,
+            "page_setup": 2670,
+            "init_scripts": 27,
+            "request_filters": 4,
+            "egress": 0,
+            "navigation": 6172,
+            "load_settle": 3004,
+            "challenge_check": 5,
+            "dom_tweaks": 18,
+            "pre_capture": 5015,
+            "growth_wait": 267,
+            "scroll": 2791,
+            "post_scroll": 3072,
+            "quality_check": 73,
+            "page_metrics": 30,
+            "screenshot": 1440,
+            "inspection": 367,
+            "cleanup": 9
+          }
+        }
+      ],
+      "width": 1280,
+      "height": 7467,
+      "bytes": 1363942,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "github-home",
+      "tier": "moderate",
+      "url": "https://github.com",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 10742,
+      "attempt_timings": [
+        {
+          "total_ms": 10742,
+          "phases_ms": {
+            "pool_wait": 0,
+            "browser_start": 0,
+            "context_setup": 8,
+            "page_setup": 2182,
+            "init_scripts": 16,
+            "request_filters": 4,
+            "egress": 0,
+            "navigation": 4389,
+            "load_settle": 2234,
+            "challenge_check": 153,
+            "dom_tweaks": 401,
+            "pre_capture": 69,
+            "quality_check": 69,
+            "page_metrics": 62,
+            "screenshot": 668,
+            "inspection": 459,
+            "cleanup": 22
+          }
+        }
+      ],
+      "width": 1280,
+      "height": 720,
+      "bytes": 214470,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "nextjs-docs",
+      "tier": "moderate",
+      "url": "https://nextjs.org/docs",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 5264,
+      "attempt_timings": [
+        {
+          "total_ms": 5263,
+          "phases_ms": {
+            "pool_wait": 0,
+            "browser_start": 0,
+            "context_setup": 7,
+            "page_setup": 2121,
+            "init_scripts": 11,
+            "request_filters": 2,
+            "egress": 0,
+            "navigation": 1159,
+            "load_settle": 994,
+            "challenge_check": 318,
+            "dom_tweaks": 229,
+            "pre_capture": 21,
+            "quality_check": 19,
+            "page_metrics": 7,
+            "screenshot": 127,
+            "inspection": 230,
+            "cleanup": 13
+          }
+        }
+      ],
+      "width": 1280,
+      "height": 720,
+      "bytes": 81686,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "react-dev",
+      "tier": "moderate",
+      "url": "https://react.dev/",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 4446,
+      "attempt_timings": [
+        {
+          "total_ms": 4445,
+          "phases_ms": {
+            "pool_wait": 0,
+            "browser_start": 0,
+            "context_setup": 5,
+            "page_setup": 2301,
+            "init_scripts": 11,
+            "request_filters": 3,
+            "egress": 0,
+            "navigation": 934,
+            "load_settle": 728,
+            "challenge_check": 8,
+            "dom_tweaks": 49,
+            "pre_capture": 3,
+            "quality_check": 97,
+            "page_metrics": 3,
+            "screenshot": 100,
+            "inspection": 185,
+            "cleanup": 16
+          }
+        }
+      ],
+      "width": 1280,
+      "height": 720,
+      "bytes": 79009,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "svelte-docs",
+      "tier": "moderate",
+      "url": "https://svelte.dev/docs/svelte/",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 8696,
+      "attempt_timings": [
+        {
+          "total_ms": 8696,
+          "phases_ms": {
+            "pool_wait": 0,
+            "browser_start": 0,
+            "context_setup": 20,
+            "page_setup": 1953,
+            "init_scripts": 8,
+            "request_filters": 2,
+            "egress": 0,
+            "navigation": 3565,
+            "load_settle": 3007,
+            "challenge_check": 5,
+            "dom_tweaks": 18,
+            "pre_capture": 4,
+            "quality_check": 6,
+            "page_metrics": 4,
+            "screenshot": 47,
+            "inspection": 48,
+            "cleanup": 7
+          }
+        }
+      ],
+      "width": 1280,
+      "height": 720,
+      "bytes": 75036,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "tailwind-docs",
+      "tier": "moderate",
+      "url": "https://tailwindcss.com/docs",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 10546,
+      "attempt_timings": [
+        {
+          "total_ms": 10546,
+          "phases_ms": {
+            "pool_wait": 0,
+            "browser_start": 0,
+            "context_setup": 5,
+            "page_setup": 2359,
+            "init_scripts": 22,
+            "request_filters": 3,
+            "egress": 0,
+            "navigation": 695,
+            "load_settle": 3014,
+            "challenge_check": 8,
+            "dom_tweaks": 37,
+            "pre_capture": 3,
+            "growth_wait": 3,
+            "scroll": 818,
+            "post_scroll": 3007,
+            "quality_check": 13,
+            "page_metrics": 10,
+            "screenshot": 403,
+            "inspection": 129,
+            "cleanup": 13
+          }
+        }
+      ],
+      "width": 1280,
+      "height": 2547,
+      "bytes": 263262,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "typescript-docs",
+      "tier": "moderate",
+      "url": "https://www.typescriptlang.org/docs/",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 6290,
+      "attempt_timings": [
+        {
+          "total_ms": 6290,
+          "phases_ms": {
+            "pool_wait": 0,
+            "browser_start": 0,
+            "context_setup": 10,
+            "page_setup": 2323,
+            "init_scripts": 8,
+            "request_filters": 2,
+            "egress": 0,
+            "navigation": 645,
+            "load_settle": 3002,
+            "challenge_check": 25,
+            "dom_tweaks": 38,
+            "pre_capture": 6,
+            "quality_check": 7,
+            "page_metrics": 5,
+            "screenshot": 99,
+            "inspection": 107,
+            "cleanup": 7
+          }
+        }
+      ],
+      "width": 1280,
+      "height": 720,
+      "bytes": 56893,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "vercel-docs",
+      "tier": "moderate",
+      "url": "https://vercel.com/docs",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 9641,
+      "attempt_timings": [
+        {
+          "total_ms": 9641,
+          "phases_ms": {
+            "pool_wait": 0,
+            "browser_start": 0,
+            "context_setup": 5,
+            "page_setup": 1715,
+            "init_scripts": 7,
+            "request_filters": 1,
+            "egress": 0,
+            "navigation": 4656,
+            "load_settle": 3002,
+            "challenge_check": 18,
+            "dom_tweaks": 31,
+            "pre_capture": 2,
+            "quality_check": 8,
+            "page_metrics": 5,
+            "screenshot": 67,
+            "inspection": 116,
+            "cleanup": 6
+          }
+        }
+      ],
+      "width": 1280,
+      "height": 720,
+      "bytes": 104441,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "bbc-news",
+      "tier": "hard",
+      "url": "https://www.bbc.com/news",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 13085,
+      "attempt_timings": [
+        {
+          "total_ms": 13084,
+          "phases_ms": {
+            "pool_wait": 0,
+            "browser_start": 0,
+            "context_setup": 5,
+            "page_setup": 1692,
+            "init_scripts": 7,
+            "request_filters": 2,
+            "egress": 0,
+            "navigation": 7981,
+            "load_settle": 3008,
+            "challenge_check": 18,
+            "dom_tweaks": 50,
+            "pre_capture": 7,
+            "quality_check": 9,
+            "page_metrics": 4,
+            "screenshot": 141,
+            "inspection": 143,
+            "cleanup": 15
+          }
+        }
+      ],
+      "width": 1280,
+      "height": 720,
+      "bytes": 248513,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "booking-home",
+      "tier": "hard",
+      "url": "https://www.booking.com/",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 12436,
+      "attempt_timings": [
+        {
+          "total_ms": 12436,
+          "phases_ms": {
+            "pool_wait": 0,
+            "browser_start": 0,
+            "context_setup": 6,
+            "page_setup": 2323,
+            "init_scripts": 11,
+            "request_filters": 2,
+            "egress": 0,
+            "navigation": 6098,
+            "load_settle": 3008,
+            "challenge_check": 180,
+            "dom_tweaks": 45,
+            "pre_capture": 6,
+            "quality_check": 8,
+            "page_metrics": 4,
+            "screenshot": 191,
+            "inspection": 538,
+            "cleanup": 12
+          }
+        }
+      ],
+      "width": 1280,
+      "height": 720,
+      "bytes": 417349,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "cloudflare-turnstile",
+      "tier": "hard",
+      "url": "https://www.cloudflare.com/turnstile/",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 7627,
+      "attempt_timings": [
+        {
+          "total_ms": 7627,
+          "phases_ms": {
+            "pool_wait": 0,
+            "browser_start": 0,
+            "context_setup": 7,
+            "page_setup": 2011,
+            "init_scripts": 6,
+            "request_filters": 2,
+            "egress": 0,
+            "navigation": 2188,
+            "load_settle": 3005,
+            "challenge_check": 30,
+            "dom_tweaks": 48,
+            "pre_capture": 15,
+            "quality_check": 12,
+            "page_metrics": 6,
+            "screenshot": 107,
+            "inspection": 174,
+            "cleanup": 13
+          }
+        }
+      ],
+      "width": 1280,
+      "height": 720,
+      "bytes": 69464,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "guardian-home",
+      "tier": "hard",
+      "url": "https://www.theguardian.com/international",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 9618,
+      "attempt_timings": [
+        {
+          "total_ms": 9618,
+          "phases_ms": {
+            "pool_wait": 0,
+            "browser_start": 0,
+            "context_setup": 5,
+            "page_setup": 1577,
+            "init_scripts": 9,
+            "request_filters": 2,
+            "egress": 0,
+            "navigation": 4487,
+            "load_settle": 3001,
+            "challenge_check": 27,
+            "dom_tweaks": 39,
+            "pre_capture": 19,
+            "quality_check": 16,
+            "page_metrics": 3,
+            "screenshot": 114,
+            "inspection": 300,
+            "cleanup": 14
+          }
+        }
+      ],
+      "width": 1280,
+      "height": 720,
+      "bytes": 135839,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "imdb-home",
+      "tier": "hard",
+      "url": "https://www.imdb.com/",
+      "ok": false,
+      "attempts": 1,
+      "latency_ms": 10612,
+      "attempt_timings": [
+        {
+          "total_ms": 10611,
+          "phases_ms": {
+            "pool_wait": 0,
+            "browser_start": 0,
+            "context_setup": 8,
+            "page_setup": 2267,
+            "init_scripts": 10,
+            "request_filters": 2,
+            "egress": 0,
+            "navigation": 2771,
+            "load_settle": 3003,
+            "challenge_check": 2523,
+            "failure_artifacts": 6,
+            "cleanup": 18
+          }
+        }
+      ],
+      "width": 0,
+      "height": 0,
+      "bytes": 0,
+      "failures": [],
+      "error": {
+        "code": "blocked_by_target",
+        "message": "Target blocked the capture (status 405): Human Verification"
+      },
+      "text_checks_skipped": false
+    },
+    {
+      "id": "reddit-feed",
+      "tier": "hard",
+      "url": "https://www.reddit.com/",
+      "ok": false,
+      "attempts": 1,
+      "latency_ms": 8364,
+      "attempt_timings": [
+        {
+          "total_ms": 8363,
+          "phases_ms": {
+            "pool_wait": 0,
+            "browser_start": 0,
+            "context_setup": 4,
+            "page_setup": 1692,
+            "init_scripts": 7,
+            "request_filters": 1,
+            "egress": 0,
+            "navigation": 1108,
+            "load_settle": 3000,
+            "challenge_check": 2511,
+            "failure_artifacts": 24,
+            "cleanup": 9
+          }
+        }
+      ],
+      "width": 0,
+      "height": 0,
+      "bytes": 0,
+      "failures": [],
+      "error": {
+        "code": "blocked_by_target",
+        "message": "Target blocked the capture (status 200): Reddit - Prove your humanity"
+      },
+      "text_checks_skipped": false
+    },
+    {
+      "id": "spotify-home",
+      "tier": "hard",
+      "url": "https://www.spotify.com/",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 9479,
+      "attempt_timings": [
+        {
+          "total_ms": 9479,
+          "phases_ms": {
+            "pool_wait": 0,
+            "browser_start": 0,
+            "context_setup": 9,
+            "page_setup": 2020,
+            "init_scripts": 38,
+            "request_filters": 3,
+            "egress": 0,
+            "navigation": 2840,
+            "load_settle": 3007,
+            "challenge_check": 467,
+            "dom_tweaks": 243,
+            "pre_capture": 61,
+            "quality_check": 206,
+            "page_metrics": 131,
+            "screenshot": 189,
+            "inspection": 246,
+            "cleanup": 14
+          }
+        }
+      ],
+      "width": 1280,
+      "height": 720,
+      "bytes": 153650,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "stackoverflow-home",
+      "tier": "hard",
+      "url": "https://stackoverflow.com/",
+      "ok": false,
+      "attempts": 1,
+      "latency_ms": 7191,
+      "attempt_timings": [
+        {
+          "total_ms": 7191,
+          "phases_ms": {
+            "pool_wait": 0,
+            "browser_start": 0,
+            "context_setup": 6,
+            "page_setup": 3442,
+            "init_scripts": 18,
+            "request_filters": 2,
+            "egress": 0,
+            "navigation": 318,
+            "load_settle": 876,
+            "challenge_check": 2514,
+            "failure_artifacts": 4,
+            "cleanup": 8
+          }
+        }
+      ],
+      "width": 0,
+      "height": 0,
+      "bytes": 0,
+      "failures": [],
+      "error": {
+        "code": "blocked_by_target",
+        "message": "Target blocked the capture (status 403): Forbidden - Stack Exchange"
+      },
+      "text_checks_skipped": false
+    },
+    {
+      "id": "twitch-home",
+      "tier": "hard",
+      "url": "https://www.twitch.tv/",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 9106,
+      "attempt_timings": [
+        {
+          "total_ms": 9105,
+          "phases_ms": {
+            "pool_wait": 0,
+            "browser_start": 0,
+            "context_setup": 9,
+            "page_setup": 2310,
+            "init_scripts": 12,
+            "request_filters": 2,
+            "egress": 0,
+            "navigation": 2474,
+            "load_settle": 3012,
+            "challenge_check": 771,
+            "dom_tweaks": 174,
+            "pre_capture": 8,
+            "quality_check": 9,
+            "page_metrics": 4,
+            "screenshot": 183,
+            "inspection": 123,
+            "cleanup": 13
+          }
+        }
+      ],
+      "width": 1280,
+      "height": 720,
+      "bytes": 68045,
+      "failures": [],
+      "text_checks_skipped": false
+    },
+    {
+      "id": "youtube-watch",
+      "tier": "hard",
+      "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 12201,
+      "attempt_timings": [
+        {
+          "total_ms": 12201,
+          "phases_ms": {
+            "pool_wait": 0,
+            "browser_start": 0,
+            "context_setup": 5,
+            "page_setup": 2018,
+            "init_scripts": 17,
+            "request_filters": 3,
+            "egress": 0,
+            "navigation": 6636,
+            "load_settle": 3002,
+            "challenge_check": 30,
+            "dom_tweaks": 61,
+            "pre_capture": 18,
+            "quality_check": 23,
+            "page_metrics": 7,
+            "screenshot": 193,
+            "inspection": 173,
+            "cleanup": 11
+          }
+        }
+      ],
+      "width": 1280,
+      "height": 720,
+      "bytes": 251756,
+      "failures": [],
+      "text_checks_skipped": false
+    }
+  ]
+}

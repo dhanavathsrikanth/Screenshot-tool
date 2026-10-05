@@ -1,0 +1,93 @@
+{
+  "started_at": "2026-10-03T04:03:48.864Z",
+  "finished_at": "2026-10-03T04:04:12.766Z",
+  "options": {
+    "concurrency": 1,
+    "retries": 0,
+    "inspect_text": true,
+    "gate_percent": 95
+  },
+  "summary": {
+    "total": 1,
+    "blocked": 0,
+    "eligible": 1,
+    "passed": 1,
+    "pass_rate": 100,
+    "success_rate": 100,
+    "gate_percent": 95,
+    "gate_passed": true,
+    "p50_ms": 23890,
+    "p95_ms": 23890,
+    "by_tier": {
+      "easy": {
+        "tier": "easy",
+        "total": 0,
+        "blocked": 0,
+        "passed": 0,
+        "pass_rate": 0,
+        "success_rate": 0,
+        "p50_ms": 0,
+        "p95_ms": 0
+      },
+      "moderate": {
+        "tier": "moderate",
+        "total": 0,
+        "blocked": 0,
+        "passed": 0,
+        "pass_rate": 0,
+        "success_rate": 0,
+        "p50_ms": 0,
+        "p95_ms": 0
+      },
+      "hard": {
+        "tier": "hard",
+        "total": 1,
+        "blocked": 0,
+        "passed": 1,
+        "pass_rate": 100,
+        "success_rate": 100,
+        "p50_ms": 23890,
+        "p95_ms": 23890
+      }
+    }
+  },
+  "results": [
+    {
+      "id": "spotify-home",
+      "tier": "hard",
+      "url": "https://www.spotify.com/",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 23890,
+      "attempt_timings": [
+        {
+          "total_ms": 23889,
+          "phases_ms": {
+            "pool_wait": 0,
+            "browser_start": 3645,
+            "context_setup": 23,
+            "page_setup": 8915,
+            "init_scripts": 15,
+            "request_filters": 5,
+            "egress": 0,
+            "navigation": 6466,
+            "load_settle": 3006,
+            "challenge_check": 50,
+            "dom_tweaks": 69,
+            "pre_capture": 273,
+            "quality_check": 334,
+            "page_metrics": 63,
+            "screenshot": 384,
+            "inspection": 591,
+            "cleanup": 30
+          }
+        }
+      ],
+      "width": 1280,
+      "height": 720,
+      "bytes": 164941,
+      "failures": [],
+      "text_checks_skipped": false
+    }
+  ]
+}

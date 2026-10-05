@@ -1,0 +1,64 @@
+{
+  "started_at": "2026-10-02T08:52:49.711Z",
+  "finished_at": "2026-10-02T08:53:06.240Z",
+  "options": {
+    "concurrency": 4,
+    "retries": 1,
+    "inspect_text": true,
+    "gate_percent": 95
+  },
+  "summary": {
+    "total": 1,
+    "passed": 1,
+    "pass_rate": 100,
+    "success_rate": 100,
+    "gate_percent": 95,
+    "gate_passed": true,
+    "p50_ms": 16521,
+    "p95_ms": 16521,
+    "by_tier": {
+      "easy": {
+        "tier": "easy",
+        "total": 1,
+        "passed": 1,
+        "pass_rate": 100,
+        "success_rate": 100,
+        "p50_ms": 16521,
+        "p95_ms": 16521
+      },
+      "moderate": {
+        "tier": "moderate",
+        "total": 0,
+        "passed": 0,
+        "pass_rate": 0,
+        "success_rate": 0,
+        "p50_ms": 0,
+        "p95_ms": 0
+      },
+      "hard": {
+        "tier": "hard",
+        "total": 0,
+        "passed": 0,
+        "pass_rate": 0,
+        "success_rate": 0,
+        "p50_ms": 0,
+        "p95_ms": 0
+      }
+    }
+  },
+  "results": [
+    {
+      "id": "example-com",
+      "tier": "easy",
+      "url": "https://example.com",
+      "ok": true,
+      "attempts": 1,
+      "latency_ms": 16521,
+      "width": 1280,
+      "height": 720,
+      "bytes": 10967,
+      "failures": [],
+      "text_checks_skipped": false
+    }
+  ]
+}

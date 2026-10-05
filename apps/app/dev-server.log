@@ -1,0 +1,184 @@
+▲ Next.js 16.3.7 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://172.22.176.152:3000
+- Environments: .env.local
+✓ Ready in 3.2s
+✓ Running next.config.ts took 346ms
+
+Clerk - DEPRECATION WARNING: "createRouteMatcher" is deprecated and will be removed in the next major release.
+Use resource-based auth checks instead. Move auth checks into each page, layout, API route, or Server Function that accesses protected data. Middleware-based auth checks rely on path matching, which can diverge from how Next.js routes requests and leave protected resources reachable. For a migration guide, see: https://clerk.com/docs/guides/development/upgrading/upgrade-guides/migrate-from-create-route-matcher
+Attention: Clerk collects telemetry data from its SDKs when connected to development instances.
+The data collected is used to inform Clerk's product roadmap.
+To learn more, including how to opt-out from the telemetry program, visit: https://clerk.com/docs/telemetry.
+
+○ Compiling /_not-found/page ...
+ GET / 404 in 11.2s (next.js: 9.7s, proxy.ts: 522ms, application-code: 986ms)
+ GET /sign-in 200 in 5.5s (next.js: 5.3s, proxy.ts: 32ms, application-code: 147ms)
+ GET /sign-in?redirect_url=http%3A%2F%2Flocalhost%3A3000%2F%28dashboard%29 200 in 1732ms (next.js: 1598ms, proxy.ts: 33ms, application-code: 101ms)
+(node:25780) Warning: SECURITY WARNING: The SSL modes 'prefer', 'require', and 'verify-ca' are treated as aliases for 'verify-full'.
+In the next major version (pg-connection-string v3.0.0 and pg v9.0.0), these modes will adopt standard libpq semantics, which have weaker security guarantees.
+
+To prepare for this change:
+- If you want the current behavior, explicitly use 'sslmode=verify-full'
+- If you want libpq compatibility now, use 'uselibpqcompat=true&sslmode=require'
+
+See https://www.postgresql.org/docs/current/libpq-ssl.html for libpq SSL mode definitions.
+(Use `node --trace-warnings ...` to show where the warning was created)
+⨯ Error: Failed query: select "id", "user_id", "request_id", "captured_at", "ok", "url", "format", "width", "height", "bytes", "duration_ms", "blocked_requests", "code", "message" from "capture_logs" where "capture_logs"."user_id" = $1 order by "capture_logs"."captured_at" desc limit $2
+params: user_3K6OWLrojPANmCvIMfPCZ7CeI7C,6
+    at async listCaptures (..\..\packages\database\src\index.ts:190:16)
+    at async OverviewPage (src\app\(dashboard)\page.tsx:37:34)
+  188 | }
+  189 |
+> 190 | export async function listCaptures(userId: string, limit = 60): Promise<CaptureEntry[]> {
+      |                ^
+  191 |   const rows = await db.select().from(captureLogs).where(eq(captureLogs.userId, userId))
+  192 |     .orderBy(desc(captureLogs.capturedAt)).limit(Math.min(Math.max(limit, 1), 200));
+  193 |   return rows.map((row) => ({ id: row.id, at: row.capturedAt.getTime(), ok: row.ok, cached: row.cached, url: row.url, {
+  query: 'select "id", "user_id", "request_id", "captured_at", "ok", "url", "format", "width", "height", "bytes", "duration_ms", "blocked_requests", "code", "message" from "capture_logs" where "capture_logs"."user_id" = $1 order by "capture_logs"."captured_at" desc limit $2',
+  params: [ 'user_3K6OWLrojPANmCvIMfPCZ7CeI7C', 6 ],
+  digest: '1858410288',
+  [cause]: Error: Connection terminated due to connection timeout
+      at async listCaptures (..\..\packages\database\src\index.ts:190:16)
+      at async OverviewPage (src\app\(dashboard)\page.tsx:37:34)
+    188 | }
+    189 |
+  > 190 | export async function listCaptures(userId: string, limit = 60): Promise<CaptureEntry[]> {
+        |                ^
+    191 |   const rows = await db.select().from(captureLogs).where(eq(captureLogs.userId, userId))
+    192 |     .orderBy(desc(captureLogs.capturedAt)).limit(Math.min(Math.max(limit, 1), 200));
+    193 |   return rows.map((row) => ({ id: row.id, at: row.capturedAt.getTime(), ok: row.ok, cached: row.cached, url: row.url, {
+    [cause]: Error: Connection terminated unexpectedly
+        at ignore-listed frames
+  }
+}
+ GET / 500 in 36.2s (next.js: 2.9s, proxy.ts: 22.0s, application-code: 11.3s)
+[browser] Uncaught Error: Failed query: select "id", "user_id", "request_id", "captured_at", "ok", "url", "format", "width", "height", "bytes", "duration_ms", "blocked_requests", "code", "message" from "capture_logs" where "capture_logs"."user_id" = $1 order by "capture_logs"."captured_at" desc limit $2
+params: user_3K6OWLrojPANmCvIMfPCZ7CeI7C,6
+    at NodePgPreparedQuery.queryWithCache (..\..\node_modules\.pnpm\drizzle-orm@0.44.7_@types+pg@8.23.1_pg@8.23.1\node_modules\src\pg-core\session.ts:73:11)
+    at <anonymous> (..\..\node_modules\.pnpm\drizzle-orm@0.44.7_@types+pg@8.23.1_pg@8.23.1\node_modules\src\node-postgres\session.ts:154:19)
+    at  listCaptures (..\..\packages\database\src\index.ts:190:16)
+    at  OverviewPage (src\app\(dashboard)\page.tsx:37:34)
+  71 | 				return await query();
+  72 | 			} catch (e) {
+> 73 | 				throw new DrizzleQueryError(queryString, params, e as Error);
+     |       ^
+  74 | 			}
+  75 | 		}
+  76 |
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://meet-boar-7077.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:38:1032)
+⚠ Fast Refresh had to perform a full reload due to a runtime error.
+✓ Compiled in 1411ms
+ GET / 200 in 7.7s (next.js: 112ms, proxy.ts: 2.3s, application-code: 5.4s)
+ GET /api/health 200 in 2.2s (next.js: 2.0s, proxy.ts: 46ms, application-code: 84ms)
+ GET /api/health 200 in 2.2s (next.js: 2.1s, proxy.ts: 45ms, application-code: 19ms)
+ GET /api/health 200 in 116ms (next.js: 46ms, proxy.ts: 52ms, application-code: 18ms)
+ GET /api/health 200 in 28ms (next.js: 6ms, proxy.ts: 12ms, application-code: 10ms)
+ GET /api/health 200 in 53ms (next.js: 11ms, proxy.ts: 24ms, application-code: 19ms)
+ GET /api/health 200 in 35ms (next.js: 5ms, proxy.ts: 15ms, application-code: 15ms)
+ GET /api/health 200 in 47ms (next.js: 4ms, proxy.ts: 30ms, application-code: 14ms)
+ GET /api/health 200 in 44ms (next.js: 3ms, proxy.ts: 30ms, application-code: 11ms)
+✓ Compiled in 560ms
+ GET /api/health 200 in 71ms (next.js: 20ms, proxy.ts: 26ms, application-code: 25ms)
+Clerk - DEPRECATION WARNING: "createRouteMatcher" is deprecated and will be removed in the next major release.
+Use resource-based auth checks instead. Move auth checks into each page, layout, API route, or Server Function that accesses protected data. Middleware-based auth checks rely on path matching, which can diverge from how Next.js routes requests and leave protected resources reachable. For a migration guide, see: https://clerk.com/docs/guides/development/upgrading/upgrade-guides/migrate-from-create-route-matcher
+ GET / 200 in 8.4s (next.js: 371ms, proxy.ts: 2.4s, application-code: 5.7s)
+ GET / 200 in 5.3s (next.js: 12ms, proxy.ts: 14ms, application-code: 5.3s)
+ GET / 200 in 5.3s (next.js: 9ms, proxy.ts: 16ms, application-code: 5.2s)
+ GET / 200 in 5.1s (next.js: 5ms, proxy.ts: 13ms, application-code: 5.0s)
+ GET / 200 in 5.1s (next.js: 5ms, proxy.ts: 23ms, application-code: 5.1s)
+ GET / 200 in 5.2s (next.js: 10ms, proxy.ts: 16ms, application-code: 5.2s)
+ GET / 200 in 1683ms (next.js: 59ms, proxy.ts: 81ms, application-code: 1543ms)
+ GET / 200 in 1566ms (next.js: 140ms, proxy.ts: 70ms, application-code: 1357ms)
+ GET / 200 in 1585ms (next.js: 43ms, proxy.ts: 58ms, application-code: 1483ms)
+ GET / 200 in 1715ms (next.js: 36ms, proxy.ts: 161ms, application-code: 1517ms)
+ GET / 200 in 1715ms (next.js: 44ms, proxy.ts: 209ms, application-code: 1461ms)
+ GET / 200 in 1260ms (next.js: 55ms, proxy.ts: 120ms, application-code: 1085ms)
+ GET / 200 in 1611ms (next.js: 175ms, proxy.ts: 23ms, application-code: 1412ms)
+ GET / 200 in 1682ms (next.js: 175ms, proxy.ts: 46ms, application-code: 1461ms)
+ GET / 200 in 1794ms (next.js: 140ms, proxy.ts: 23ms, application-code: 1630ms)
+ GET / 200 in 1781ms (next.js: 20ms, proxy.ts: 53ms, application-code: 1708ms)
+ GET / 200 in 1611ms (next.js: 11ms, proxy.ts: 18ms, application-code: 1581ms)
+ GET / 200 in 1498ms (next.js: 23ms, proxy.ts: 75ms, application-code: 1400ms)
+ GET / 200 in 1525ms (next.js: 8ms, proxy.ts: 28ms, application-code: 1490ms)
+ GET / 200 in 1541ms (next.js: 10ms, proxy.ts: 17ms, application-code: 1514ms)
+ GET / 200 in 1500ms (next.js: 68ms, proxy.ts: 41ms, application-code: 1390ms)
+ GET / 200 in 1442ms (next.js: 12ms, proxy.ts: 26ms, application-code: 1404ms)
+ GET / 200 in 1343ms (next.js: 20ms, proxy.ts: 35ms, application-code: 1288ms)
+ GET / 200 in 1276ms (next.js: 22ms, proxy.ts: 55ms, application-code: 1199ms)
+ GET / 200 in 1236ms (next.js: 100ms, proxy.ts: 59ms, application-code: 1077ms)
+ GET / 200 in 1427ms (next.js: 29ms, proxy.ts: 59ms, application-code: 1339ms)
+ GET / 200 in 1482ms (next.js: 21ms, proxy.ts: 38ms, application-code: 1423ms)
+ GET / 200 in 1516ms (next.js: 17ms, proxy.ts: 37ms, application-code: 1462ms)
+ GET / 200 in 1552ms (next.js: 12ms, proxy.ts: 25ms, application-code: 1514ms)
+ GET / 200 in 1539ms (next.js: 8ms, proxy.ts: 28ms, application-code: 1503ms)
+ GET / 200 in 1519ms (next.js: 9ms, proxy.ts: 18ms, application-code: 1492ms)
+ GET / 200 in 1392ms (next.js: 7ms, proxy.ts: 29ms, application-code: 1355ms)
+ GET / 200 in 1429ms (next.js: 8ms, proxy.ts: 17ms, application-code: 1405ms)
+ GET / 200 in 1417ms (next.js: 8ms, proxy.ts: 21ms, application-code: 1388ms)
+ GET / 200 in 1312ms (next.js: 10ms, proxy.ts: 58ms, application-code: 1244ms)
+ GET / 200 in 1277ms (next.js: 9ms, proxy.ts: 18ms, application-code: 1250ms)
+ GET / 200 in 1554ms (next.js: 5ms, proxy.ts: 17ms, application-code: 1532ms)
+ GET / 200 in 1418ms (next.js: 12ms, proxy.ts: 46ms, application-code: 1361ms)
+ GET /api/health 200 in 116ms (next.js: 61ms, proxy.ts: 28ms, application-code: 27ms)
+ GET /api/health 200 in 198ms (next.js: 3ms, proxy.ts: 13ms, application-code: 182ms)
+✓ Compiled in 199ms
+ GET /api/health 200 in 186ms (next.js: 66ms, proxy.ts: 63ms, application-code: 57ms)
+⨯ Error: Failed query: select count(*), count(*) filter (where "ok"), count(*) filter (where not "ok"), count(*) filter (where "cached"), coalesce(sum("bytes") filter (where "ok"), 0), coalesce(sum("blocked_requests"), 0), coalesce(array_agg("duration_ms") filter (where "ok"), ARRAY[]::integer[]) from "capture_logs" where ("capture_logs"."user_id" = $1 and "capture_logs"."captured_at" >= $2)
+params: user_3K6OWLrojPANmCvIMfPCZ7CeI7C,2026-10-01T00:00:00.000Z
+    at async captureStats (..\..\packages\database\src\index.ts:216:23)
+    at async OverviewPage (src\app\(dashboard)\page.tsx:37:34)
+  214 | export async function captureStats(userId: string) {
+  215 |   const periodStart = currentPeriodStart();
+> 216 |   const [aggregate] = await db.select({ total: count(), succeeded: sql<number>`count(*) filter (where ${captureLogs.ok})`,
+      |                       ^
+  217 |     failed: sql<number>`count(*) filter (where not ${captureLogs.ok})`,
+  218 |     cacheHits: sql<number>`count(*) filter (where ${captureLogs.cached})`,
+  219 |     bytes: sql<number>`coalesce(sum(${captureLogs.bytes}) filter (where ${captureLogs.ok}), 0)`, {
+  query: 'select count(*), count(*) filter (where "ok"), count(*) filter (where not "ok"), count(*) filter (where "cached"), coalesce(sum("bytes") filter (where "ok"), 0), coalesce(sum("blocked_requests"), 0), coalesce(array_agg("duration_ms") filter (where "ok"), ARRAY[]::integer[]) from "capture_logs" where ("capture_logs"."user_id" = $1 and "capture_logs"."captured_at" >= $2)',
+  params: [ 'user_3K6OWLrojPANmCvIMfPCZ7CeI7C', '2026-10-01T00:00:00.000Z' ],
+  digest: '1028300325',
+  [cause]: error: column "cached" does not exist
+      at async captureStats (..\..\packages\database\src\index.ts:216:23)
+      at async OverviewPage (src\app\(dashboard)\page.tsx:37:34)
+    214 | export async function captureStats(userId: string) {
+    215 |   const periodStart = currentPeriodStart();
+  > 216 |   const [aggregate] = await db.select({ total: count(), succeeded: sql<number>`count(*) filter (where ${captureLogs.ok})`,
+        |                       ^
+    217 |     failed: sql<number>`count(*) filter (where not ${captureLogs.ok})`,
+    218 |     cacheHits: sql<number>`count(*) filter (where ${captureLogs.cached})`,
+    219 |     bytes: sql<number>`coalesce(sum(${captureLogs.bytes}) filter (where ${captureLogs.ok}), 0)`, {
+    length: 107,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '105',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3854',
+    routine: 'errorMissingColumn'
+  }
+}
+ GET / 500 in 8.9s (next.js: 176ms, proxy.ts: 1684ms, application-code: 7.1s)
+[browser] Uncaught Error: Failed query: select count(*), count(*) filter (where "ok"), count(*) filter (where not "ok"), count(*) filter (where "cached"), coalesce(sum("bytes") filter (where "ok"), 0), coalesce(sum("blocked_requests"), 0), coalesce(array_agg("duration_ms") filter (where "ok"), ARRAY[]::integer[]) from "capture_logs" where ("capture_logs"."user_id" = $1 and "capture_logs"."captured_at" >= $2)
+params: user_3K6OWLrojPANmCvIMfPCZ7CeI7C,2026-10-01T00:00:00.000Z
+    at NodePgPreparedQuery.queryWithCache (..\..\node_modules\.pnpm\drizzle-orm@0.44.7_@types+pg@8.23.1_pg@8.23.1\node_modules\src\pg-core\session.ts:73:11)
+    at <anonymous> (..\..\node_modules\.pnpm\drizzle-orm@0.44.7_@types+pg@8.23.1_pg@8.23.1\node_modules\src\node-postgres\session.ts:154:19)
+    at  captureStats (..\..\packages\database\src\index.ts:216:23)
+    at  OverviewPage (src\app\(dashboard)\page.tsx:37:34)
+  71 | 				return await query();
+  72 | 			} catch (e) {
+> 73 | 				throw new DrizzleQueryError(queryString, params, e as Error);
+     |       ^
+  74 | 			}
+  75 | 		}
+  76 |
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://meet-boar-7077.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:38:1032)

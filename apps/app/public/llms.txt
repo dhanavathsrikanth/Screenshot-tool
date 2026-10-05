@@ -1,0 +1,37 @@
+# Snapforge
+
+Snapforge is a screenshot API for websites and AI agents. This file is the compact, machine-readable entry point for the developer documentation.
+
+## API
+
+- Base URL: `https://api.snapforge.dev`
+- Authentication: `Authorization: Bearer $SNAPFORGE_API_KEY`
+- Create a capture: `POST /v1/screenshot`
+- Poll a queued capture: `GET /v1/jobs/{id}`
+- JSON request and response envelopes use `ok`, `request_id`, `data`, and `error` fields.
+- Sync capture is the default. Set `?mode=async` or `sync: false` to queue work.
+- Failed captures release their reserved credit. Only successful captures consume credits.
+
+## Request options
+
+`url` is required. Additional options include `device`, `viewport`, `full_page`, `format` (`png`, `jpeg`, `webp`, `pdf`), `quality`, `wait_until`, `wait_for_idle`, `wait_for_selector`, `delay`, `timeout`, `dark_mode`, `block_ads`, `block_cookie_banners`, `hide_selectors`, `remove_selectors`, `custom_css`, and `custom_js`.
+
+- `fail_if_incomplete` defaults to true and rejects obvious loading shells. Set false only when capturing an intentional loading state.
+- `fail_if_content_missing` and `fail_if_content_contains` accept arrays of required or forbidden case-insensitive text. Each allows at most 32 strings of 1–500 characters.
+- `min_capture_height` and `min_capture_bytes` accept positive integers and reject outputs below those thresholds.
+- Quality requirements are checked before delivery or cache storage. Persistent failures return `render_incomplete` and release reserved credits.
+- `proxy` accepts `{ "server": "http://proxy.example:8000", "username": "optional", "password": "optional" }`, with or without `region`. Bring your own provider; proxy use does not guarantee access to blocked sites.
+- `cache_ttl` bounds screenshot reuse in seconds; zero forces a fresh render. A shorter TTL never extends a stored capture's original validity window.
+- The hosted worker restricts target, redirect, resource, WebSocket, and proxy destinations to public networks.
+
+`GET /v1/health` returns HTTP 200 only when Redis, the configured database, and at least one recently initialized worker are ready and the queue is unpaused; otherwise it returns HTTP 503.
+
+API key scopes are `screenshot:read`, `screenshot:write`, `jobs:read`, and `webhooks:write`. Creating screenshots requires `screenshot:write`; polling jobs requires `jobs:read`.
+
+## Errors
+
+Errors return a stable `error.code`, human-readable `error.message`, `error.retriable`, and `request_id`. Common codes include `invalid_request`, `unauthorized`, `quota_exceeded`, `render_timeout`, `navigation_failed`, `blocked_by_target`, `render_crashed`, and `render_incomplete`. `render_incomplete` uses HTTP 502 and is retriable. Rate limits may return HTTP 429 with a `Retry-After` header.
+
+## Interactive reference
+
+Open `/docs` in the Snapforge dashboard for searchable endpoint, parameter, and error references. Use `/playground` to generate cURL, TypeScript, Python, and MCP configuration examples from capture options.

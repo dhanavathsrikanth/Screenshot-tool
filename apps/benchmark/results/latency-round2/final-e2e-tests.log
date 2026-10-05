@@ -1,0 +1,37 @@
+▶ engine end-to-end capture suite
+  ✔ worker warmup prepares an isolated page without navigating a target (6400.7096ms)
+  ✔ captures a basic viewport png (2144.1908ms)
+  ✔ short static captures skip guards with identical screenshot pixels (4201.2998ms)
+  ✔ automatic capture still waits for delayed SPA hydration (2481.1685ms)
+  ✔ explicit content thresholds still fail on short static pages (2767.5972ms)
+  ✔ custom JavaScript keeps the content guard for delayed mutations (3053.5253ms)
+  ✔ captures the full page beyond the viewport (2374.6101ms)
+  ✔ captures jpeg output (2043.0293ms)
+  ✔ captures webp output (1979.9371ms)
+  ✔ captures pdf output (2012.1325ms)
+  ✔ captures a targeted element (1965.0856ms)
+  ✔ annihilates cookie banners (2028.8917ms)
+  ✔ keeps banners when annihilation is disabled (2158.6618ms)
+  ✔ hides elements via hide_selectors (1912.5703ms)
+  ✔ removes elements via remove_selectors (1898.4348ms)
+  ✔ rejects invalid hide selectors (1884.0594ms)
+  ✔ accepts comma separated hide selectors (6965.0775ms)
+  ✔ waits for a delayed selector (6998.3555ms)
+  ✔ times out on a missing selector (2865.9308ms)
+  ✔ blocks tracker requests and reports the count (6923.3148ms)
+  ✔ classifies anti-bot challenges as blocked_by_target (4423.9317ms)
+  ✔ classifies http 503 as target_error (1857.0394ms)
+  ✔ classifies unreachable hosts as navigation_failed (2714.3162ms)
+  ✔ applies the stealth fingerprint (11296.7665ms)
+  ✔ runs concurrent captures within the concurrency limit (6149.4452ms)
+  ✔ standby pages preserve cookie, storage, viewport, and locale isolation (11581.1691ms)
+  ✔ browser recycling discards standby pages and counts served contexts (16584.5461ms)
+✔ engine end-to-end capture suite (119768.4819ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 28
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 121098.1374

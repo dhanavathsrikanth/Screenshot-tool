@@ -1,0 +1,15 @@
+[ 1/5] PASS moderate github-home               30493ms
+[ 2/5] PASS moderate allbirds-store            16634ms
+[ 3/5] PASS moderate dribbble-grid             16663ms
+[ 4/5] PASS hard     youtube-watch             43789ms
+[ 5/5] FAIL hard     spotify-home              23347ms  min_bytes
+
+=== Gauntlet summary ===
+  easy       0/0 passed  pass      0%  success      0%  p50     0ms  p95     0ms
+  moderate   3/3 passed  pass    100%  success    100%  p50 16663ms  p95 30493ms
+  hard       1/2 passed  pass     50%  success    100%  p50 23347ms  p95 43789ms
+  overall    4/5 passed  pass     80%  success    100%  p50 23347ms  p95 43789ms
+
+  Gate: 80% >= 95% → FAIL
+
+  Reports: apps\benchmark\results\latency-round2\failure-recheck\latest.md

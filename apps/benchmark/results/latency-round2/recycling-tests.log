@@ -1,0 +1,136 @@
+▶ engine end-to-end capture suite
+  ✔ worker warmup prepares an isolated page without navigating a target (6252.6493ms)
+  ✔ captures a basic viewport png (1321.9043ms)
+  ✔ short static captures skip guards with identical screenshot pixels (3013.5624ms)
+  ✔ automatic capture still waits for delayed SPA hydration (1576.5981ms)
+  ✔ explicit content thresholds still fail on short static pages (1705.344ms)
+  ✔ custom JavaScript keeps the content guard for delayed mutations (1662.8019ms)
+  ✔ captures the full page beyond the viewport (868.5539ms)
+  ✔ captures jpeg output (1056.5496ms)
+  ✔ captures webp output (1378.0152ms)
+  ✔ captures pdf output (1303.4735ms)
+  ✔ captures a targeted element (1359.474ms)
+  ✔ annihilates cookie banners (1249.0107ms)
+  ✔ keeps banners when annihilation is disabled (1375.5234ms)
+  ✔ hides elements via hide_selectors (1346.2843ms)
+  ✔ removes elements via remove_selectors (1225.5498ms)
+  ✔ rejects invalid hide selectors (1298.7421ms)
+  ✔ accepts comma separated hide selectors (6483.4172ms)
+  ✔ waits for a delayed selector (5602.2839ms)
+  ✔ times out on a missing selector (1518.8761ms)
+  ✔ blocks tracker requests and reports the count (5615.4842ms)
+  ✔ classifies anti-bot challenges as blocked_by_target (3079.5369ms)
+  ✔ classifies http 503 as target_error (568.8451ms)
+  ✔ classifies unreachable hosts as navigation_failed (3341.9435ms)
+An error occured while executing "onPageCreated" in plugin "stealth/evasions/chrome.app": page.addInitScript: Target page, context or browser has been closed
+    at async Proxy.<anonymous> (C:\Users\ratho\Desktop\scr tool\node_modules\.pnpm\playwright-extra@4.3.6_play_d5121e49d128d3bb02c6b3d3fc8159d2\node_modules\playwright-extra\dist\index.cjs.js:236:32) {
+  log: []
+}
+An error occured while executing "onPageCreated" in plugin "stealth/evasions/chrome.csi": page.addInitScript: Target page, context or browser has been closed
+    at async Proxy.<anonymous> (C:\Users\ratho\Desktop\scr tool\node_modules\.pnpm\playwright-extra@4.3.6_play_d5121e49d128d3bb02c6b3d3fc8159d2\node_modules\playwright-extra\dist\index.cjs.js:236:32) {
+  log: []
+}
+An error occured while executing "onPageCreated" in plugin "stealth/evasions/chrome.loadTimes": page.addInitScript: Target page, context or browser has been closed
+    at async Proxy.<anonymous> (C:\Users\ratho\Desktop\scr tool\node_modules\.pnpm\playwright-extra@4.3.6_play_d5121e49d128d3bb02c6b3d3fc8159d2\node_modules\playwright-extra\dist\index.cjs.js:236:32) {
+  log: []
+}
+An error occured while executing "onPageCreated" in plugin "stealth/evasions/chrome.runtime": page.addInitScript: Target page, context or browser has been closed
+    at async Proxy.<anonymous> (C:\Users\ratho\Desktop\scr tool\node_modules\.pnpm\playwright-extra@4.3.6_play_d5121e49d128d3bb02c6b3d3fc8159d2\node_modules\playwright-extra\dist\index.cjs.js:236:32) {
+  log: []
+}
+An error occured while executing "onPageCreated" in plugin "stealth/evasions/media.codecs": page.addInitScript: Target page, context or browser has been closed
+    at async Proxy.<anonymous> (C:\Users\ratho\Desktop\scr tool\node_modules\.pnpm\playwright-extra@4.3.6_play_d5121e49d128d3bb02c6b3d3fc8159d2\node_modules\playwright-extra\dist\index.cjs.js:236:32) {
+  log: []
+}
+An error occured while executing "onPageCreated" in plugin "stealth/evasions/navigator.hardwareConcurrency": page.addInitScript: Target page, context or browser has been closed
+    at async Proxy.<anonymous> (C:\Users\ratho\Desktop\scr tool\node_modules\.pnpm\playwright-extra@4.3.6_play_d5121e49d128d3bb02c6b3d3fc8159d2\node_modules\playwright-extra\dist\index.cjs.js:236:32) {
+  log: []
+}
+An error occured while executing "onPageCreated" in plugin "stealth/evasions/navigator.languages": page.addInitScript: Target page, context or browser has been closed
+    at async Proxy.<anonymous> (C:\Users\ratho\Desktop\scr tool\node_modules\.pnpm\playwright-extra@4.3.6_play_d5121e49d128d3bb02c6b3d3fc8159d2\node_modules\playwright-extra\dist\index.cjs.js:236:32) {
+  log: []
+}
+An error occured while executing "onPageCreated" in plugin "stealth/evasions/navigator.permissions": page.addInitScript: Target page, context or browser has been closed
+    at async Proxy.<anonymous> (C:\Users\ratho\Desktop\scr tool\node_modules\.pnpm\playwright-extra@4.3.6_play_d5121e49d128d3bb02c6b3d3fc8159d2\node_modules\playwright-extra\dist\index.cjs.js:236:32) {
+  log: []
+}
+An error occured while executing "onPageCreated" in plugin "stealth/evasions/navigator.plugins": page.addInitScript: Target page, context or browser has been closed
+    at async Proxy.<anonymous> (C:\Users\ratho\Desktop\scr tool\node_modules\.pnpm\playwright-extra@4.3.6_play_d5121e49d128d3bb02c6b3d3fc8159d2\node_modules\playwright-extra\dist\index.cjs.js:236:32) {
+  log: []
+}
+An error occured while executing "onPageCreated" in plugin "stealth/evasions/navigator.webdriver": page.addInitScript: Target page, context or browser has been closed
+    at async Proxy.<anonymous> (C:\Users\ratho\Desktop\scr tool\node_modules\.pnpm\playwright-extra@4.3.6_play_d5121e49d128d3bb02c6b3d3fc8159d2\node_modules\playwright-extra\dist\index.cjs.js:236:32)
+    at async Plugin.onPageCreated (C:\Users\ratho\Desktop\scr tool\node_modules\.pnpm\puppeteer-extra-plugin-stea_2cc470db6477bfe829e48e95711f0cce\node_modules\puppeteer-extra-plugin-stealth\evasions\navigator.webdriver\index.js:19:5) {
+  log: []
+}
+An error occured while executing "onPageCreated" in plugin "stealth/evasions/webgl.vendor": page.addInitScript: Target page, context or browser has been closed
+    at async Proxy.<anonymous> (C:\Users\ratho\Desktop\scr tool\node_modules\.pnpm\playwright-extra@4.3.6_play_d5121e49d128d3bb02c6b3d3fc8159d2\node_modules\playwright-extra\dist\index.cjs.js:236:32) {
+  log: []
+}
+An error occured while executing "onPageCreated" in plugin "stealth/evasions/window.outerdimensions": page.addInitScript: Target page, context or browser has been closed
+    at async Proxy.<anonymous> (C:\Users\ratho\Desktop\scr tool\node_modules\.pnpm\playwright-extra@4.3.6_play_d5121e49d128d3bb02c6b3d3fc8159d2\node_modules\playwright-extra\dist\index.cjs.js:236:32)
+    at async Plugin.onPageCreated (C:\Users\ratho\Desktop\scr tool\node_modules\.pnpm\puppeteer-extra-plugin-stea_2cc470db6477bfe829e48e95711f0cce\node_modules\puppeteer-extra-plugin-stealth\evasions\window.outerdimensions\index.js:20:5) {
+  log: []
+}
+An error occured while executing "onPageCreated" in plugin "stealth/evasions/iframe.contentWindow": page.addInitScript: Target page, context or browser has been closed
+    at async Proxy.<anonymous> (C:\Users\ratho\Desktop\scr tool\node_modules\.pnpm\playwright-extra@4.3.6_play_d5121e49d128d3bb02c6b3d3fc8159d2\node_modules\playwright-extra\dist\index.cjs.js:236:32) {
+  log: []
+}
+  ✖ applies the stealth fingerprint (6026.5596ms)
+  ✖ runs concurrent captures within the concurrency limit (1.2217ms)
+  ✖ standby pages preserve cookie, storage, viewport, and locale isolation (1328.7809ms)
+✖ engine end-to-end capture suite (61579.4697ms)
+✖ browser recycling discards standby pages and counts served contexts (8075.4881ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 23
+ℹ fail 3
+ℹ cancelled 2
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 71027.6768
+
+✖ failing tests:
+
+test at packages\engine\dist\e2e.test.js:296:13
+✖ applies the stealth fingerprint (6026.5596ms)
+  Error [SnapforgeError]: custom_js failed: page.evaluate: Target page, context or browser has been closed
+      at toSnapforgeError (file:///C:/Users/ratho/Desktop/scr%20tool/packages/engine/dist/errors.js:103:16)
+      at SnapforgeEngine.capture (file:///C:/Users/ratho/Desktop/scr%20tool/packages/engine/dist/engine.js:197:19)
+      at async TestContext.<anonymous> (file:///C:/Users/ratho/Desktop/scr%20tool/packages/engine/dist/e2e.test.js:297:26)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async TestContext.<anonymous> (file:///C:/Users/ratho/Desktop/scr%20tool/packages/engine/dist/e2e.test.js:296:5) {
+    code: 'invalid_request',
+    retriable: false,
+    statusCode: 400,
+    requestId: 'req_57aee454-8ec5-4a0d-a00b-02f75998115f',
+    details: { slot: 0, artifacts: { console_errors: [], page_errors: [], failed_requests: [], final_url: 'http://127.0.0.1:52339/stealth', dom: undefined }, timings: { total_ms: 6026, phases_ms: [Object] } }
+  }
+
+test at packages\engine\dist\e2e.test.js:305:13
+✖ runs concurrent captures within the concurrency limit (1.2217ms)
+  Error [SnapforgeError]: Browser pool is closed
+      at toSnapforgeError (file:///C:/Users/ratho/Desktop/scr%20tool/packages/engine/dist/errors.js:103:16)
+      at SnapforgeEngine.capture (file:///C:/Users/ratho/Desktop/scr%20tool/packages/engine/dist/engine.js:197:19)
+      at async Promise.all (index 0)
+      at async TestContext.<anonymous> (file:///C:/Users/ratho/Desktop/scr%20tool/packages/engine/dist/e2e.test.js:306:25)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async TestContext.<anonymous> (file:///C:/Users/ratho/Desktop/scr%20tool/packages/engine/dist/e2e.test.js:305:5) {
+    code: 'internal_error',
+    retriable: true,
+    statusCode: 500,
+    requestId: 'req_20f2cb24-84ce-4846-a516-0e47ed101901',
+    details: { timings: { total_ms: 1, phases_ms: [Object] } }
+  }
+
+test at packages\engine\dist\e2e.test.js:322:13
+✖ standby pages preserve cookie, storage, viewport, and locale isolation (1328.7809ms)
+  'test did not finish before its parent and was cancelled'
+
+test at packages\engine\dist\e2e.test.js:54:1
+✖ engine end-to-end capture suite (61579.4697ms)
+  'test timed out after 60000ms'
+
+test at packages\engine\dist\e2e.test.js:351:13
+✖ browser recycling discards standby pages and counts served contexts (8075.4881ms)
+  'test could not be started because its parent finished'

@@ -1,0 +1,69 @@
+{
+  "started_at": "2026-10-02T07:06:31.147Z",
+  "finished_at": "2026-10-02T07:06:49.208Z",
+  "options": {
+    "concurrency": 4,
+    "retries": 1,
+    "inspect_text": true,
+    "gate_percent": 95
+  },
+  "summary": {
+    "total": 1,
+    "passed": 0,
+    "pass_rate": 0,
+    "success_rate": 100,
+    "gate_percent": 95,
+    "gate_passed": false,
+    "p50_ms": 18046,
+    "p95_ms": 18046,
+    "by_tier": {
+      "easy": {
+        "tier": "easy",
+        "total": 1,
+        "passed": 0,
+        "pass_rate": 0,
+        "success_rate": 100,
+        "p50_ms": 18046,
+        "p95_ms": 18046
+      },
+      "moderate": {
+        "tier": "moderate",
+        "total": 0,
+        "passed": 0,
+        "pass_rate": 0,
+        "success_rate": 0,
+        "p50_ms": 0,
+        "p95_ms": 0
+      },
+      "hard": {
+        "tier": "hard",
+        "total": 0,
+        "passed": 0,
+        "pass_rate": 0,
+        "success_rate": 0,
+        "p50_ms": 0,
+        "p95_ms": 0
+      }
+    }
+  },
+  "results": [
+    {
+      "id": "example-com",
+      "tier": "easy",
+      "url": "https://example.com",
+      "ok": false,
+      "attempts": 1,
+      "latency_ms": 18046,
+      "width": 1280,
+      "height": 720,
+      "bytes": 10967,
+      "failures": [
+        {
+          "check": "expect_text",
+          "message": "Expected text \"Example Domain\" was not found on the page"
+        }
+      ],
+      "text_checks_skipped": false
+    }
+  ]
+}

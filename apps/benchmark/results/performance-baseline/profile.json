@@ -1,0 +1,167 @@
+{
+  "recorded_at": "2026-10-02T10:36:37.814Z",
+  "results": [
+    {
+      "id": "static-1",
+      "url": "http://127.0.0.1:57739",
+      "ok": true,
+      "timings": {
+        "total_ms": 12684,
+        "phases_ms": {
+          "pool_wait": 0,
+          "browser_start": 1973,
+          "session_setup": 5021,
+          "egress": 0,
+          "navigation": 39,
+          "load_settle": 546,
+          "challenge_check": 7,
+          "dom_tweaks": 23,
+          "pre_capture": 5006,
+          "page_metrics": 1,
+          "screenshot": 27,
+          "inspection": 28,
+          "cleanup": 9
+        }
+      },
+      "bytes": 9620,
+      "width": 1280,
+      "height": 720,
+      "text": "# Example Domain\n\nThis domain is for use in documentation examples without needing permission."
+    },
+    {
+      "id": "static-2",
+      "url": "http://127.0.0.1:57739",
+      "ok": true,
+      "timings": {
+        "total_ms": 7135,
+        "phases_ms": {
+          "pool_wait": 0,
+          "browser_start": 0,
+          "session_setup": 1507,
+          "egress": 0,
+          "navigation": 20,
+          "load_settle": 537,
+          "challenge_check": 3,
+          "dom_tweaks": 15,
+          "pre_capture": 5004,
+          "page_metrics": 1,
+          "screenshot": 22,
+          "inspection": 20,
+          "cleanup": 4
+        }
+      },
+      "bytes": 9620,
+      "width": 1280,
+      "height": 720,
+      "text": "# Example Domain\n\nThis domain is for use in documentation examples without needing permission."
+    },
+    {
+      "id": "static-3",
+      "url": "http://127.0.0.1:57739",
+      "ok": true,
+      "timings": {
+        "total_ms": 7070,
+        "phases_ms": {
+          "pool_wait": 0,
+          "browser_start": 0,
+          "session_setup": 1457,
+          "egress": 0,
+          "navigation": 21,
+          "load_settle": 515,
+          "challenge_check": 4,
+          "dom_tweaks": 15,
+          "pre_capture": 5011,
+          "page_metrics": 1,
+          "screenshot": 23,
+          "inspection": 19,
+          "cleanup": 4
+        }
+      },
+      "bytes": 9620,
+      "width": 1280,
+      "height": 720,
+      "text": "# Example Domain\n\nThis domain is for use in documentation examples without needing permission."
+    },
+    {
+      "id": "hydration",
+      "url": "http://127.0.0.1:57739/hydration",
+      "ok": true,
+      "timings": {
+        "total_ms": 2614,
+        "phases_ms": {
+          "pool_wait": 0,
+          "browser_start": 0,
+          "session_setup": 1467,
+          "egress": 0,
+          "navigation": 19,
+          "load_settle": 542,
+          "challenge_check": 4,
+          "dom_tweaks": 15,
+          "pre_capture": 517,
+          "page_metrics": 1,
+          "screenshot": 25,
+          "inspection": 20,
+          "cleanup": 3
+        }
+      },
+      "bytes": 19960,
+      "width": 1280,
+      "height": 720,
+      "text": "# Hydrated fixture\n\nHydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content. Hydrated content."
+    },
+    {
+      "id": "https://example.com",
+      "url": "https://example.com",
+      "ok": true,
+      "timings": {
+        "total_ms": 5526,
+        "phases_ms": {
+          "pool_wait": 0,
+          "browser_start": 0,
+          "session_setup": 1491,
+          "egress": 0,
+          "navigation": 3416,
+          "load_settle": 515,
+          "challenge_check": 6,
+          "dom_tweaks": 23,
+          "pre_capture": 3,
+          "page_metrics": 1,
+          "screenshot": 35,
+          "inspection": 32,
+          "cleanup": 3
+        }
+      },
+      "bytes": 10967,
+      "width": 1280,
+      "height": 720,
+      "text": "This domain is for use in documentation examples without needing permission. This is not a service, avoid relying on it for testing and monitoring purposes.\n\nهذا النطاق مُخصص للاستخدام في أمثلة التوثيق دون الحاجة إلى إذن. هذه ليست خدمة، يُرجى تجنب الاعتماد عليها لأغراض الاختبار والمراقبة.\n\n该域名仅用于文档示例，无需获得许可。这并非一项服务，请勿将其用于测试和监控目的。\n\nL’usage de ce domaine est réservé à des exemples de documentation, sans autorisation préalable. Il ne s’agit pas d’un service ; son utilisation à des fins de test ou de surveillance est à éviter.\n\nДанный домен предназначен для использования в примерах документации без необходимости получения предварительного разрешения. Это не сервис; не рекомендуется его использование для тестирования и мониторинга.\n\nEste dominio está destinado al uso en ejemplos de documentación sin necesidad de permiso. Esto no es un servicio, evitar utilizarlo para realizar pruebas o monitoreos."
+    },
+    {
+      "id": "https://www.kernel.org/",
+      "url": "https://www.kernel.org/",
+      "ok": true,
+      "timings": {
+        "total_ms": 3076,
+        "phases_ms": {
+          "pool_wait": 0,
+          "browser_start": 0,
+          "session_setup": 1516,
+          "egress": 0,
+          "navigation": 530,
+          "load_settle": 915,
+          "challenge_check": 4,
+          "dom_tweaks": 6,
+          "pre_capture": 1,
+          "page_metrics": 1,
+          "screenshot": 55,
+          "inspection": 42,
+          "cleanup": 3
+        }
+      },
+      "bytes": 141719,
+      "width": 1280,
+      "height": 720,
+      "text": "Protocol\tLocation\nHTTP\thttps://www.kernel.org/pub/\nGIT\thttps://git.kernel.org/\nRSYNC\trsync://rsync.kernel.org/pub/\nLatest Release\n\n7.2.8\n\t\nmainline:\t7.3-rc5\t2026-09-27\t[tarball]\t\t[patch]\t[inc. patch]\t[view diff]\t[browse]\t\nstable:\t7.2.8\t2026-09-25\t[tarball]\t[pgp]\t[patch]\t[inc. patch]\t[view diff]\t[browse]\t[changelog]\nstable:\t7.1.13 [EOL]\t2026-09-02\t[tarball]\t[pgp]\t[patch]\t[inc. patch]\t[view diff]\t[browse]\t[changelog]\nlongterm:\t6.18.54\t2026-09-25\t[tarball]\t[pgp]\t[patch]\t[inc. patch]\t[view diff]\t[browse]\t[changelog]\nlongterm:\t6.12.111\t2026-09-21\t[tarball]\t[pgp]\t[patch]\t[inc. patch]\t[view diff]\t[browse]\t[changelog]\nlongterm:\t6.6.157\t2026-09-14\t[tarball]\t[pgp]\t[patch]\t[inc. patch]\t[view diff]\t[browse]\t[changelog]\nlongterm:\t6.1.188\t2026-09-14\t[tarball]\t[pgp]\t[patch]\t[inc. patch]\t[view diff]\t[browse]\t[changelog]\nlongterm:\t5.15.221\t2026-09-14\t[tarball]\t[pgp]\t[patch]\t[inc. patch]\t[view diff]\t[browse]\t[changelog]\nlongterm:\t5.10.270\t2026-09-14\t[tarball]\t[pgp]\t[patch]\t[inc. patch]\t[view diff]\t[browse]\t[changelog]\nlinux-next:\tnext-20261001\t2026-10-01\t\t\t\t\t\t[browse]"
+    }
+  ]
+}
