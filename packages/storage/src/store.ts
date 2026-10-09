@@ -1,4 +1,4 @@
-import type { CaptureOptions, CaptureSuccessData } from "@snapforge/contracts";
+import { renderDiagnosticsSchema, type CaptureOptions, type CaptureSuccessData } from "@snapforge/contracts";
 import { CaptureCache, type CacheEntry } from "./cache.js";
 import type { StorageClient } from "./r2.js";
 
@@ -44,6 +44,7 @@ function metadataFromData(data: CaptureSuccessData, storedAt: number, ttl: numbe
     blocked_requests: String(data.blocked_requests),
     stored_at: String(storedAt),
     expires_at: String(storedAt + ttl * 1000),
+    ...(data.render_diagnostics ? { render_diagnostics: JSON.stringify(data.render_diagnostics) } : {}),
   };
 }
 
@@ -59,6 +60,8 @@ function rehydrateFromMetadata(
   byteLength: number,
   url: string,
 ): CaptureSuccessData {
+  let diagnostics: ReturnType<typeof renderDiagnosticsSchema.safeParse> | undefined;
+  try { diagnostics = renderDiagnosticsSchema.safeParse(JSON.parse(head.custom.render_diagnostics ?? "null")); } catch {}
   const num = (raw: string | undefined, fallback: number): number => {
     if (raw === undefined) return fallback;
     const parsed = Number(raw);
@@ -75,6 +78,7 @@ function rehydrateFromMetadata(
     blocked_requests: num(head.custom.blocked_requests, 0),
     cached: true,
     cdn_url: url,
+    ...(diagnostics?.success ? { render_diagnostics: diagnostics.data } : {}),
   };
 }
 

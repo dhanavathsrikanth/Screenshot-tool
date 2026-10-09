@@ -10,7 +10,8 @@ import type { ResolvedEngineConfig } from "./types.js";
 import type { ResolvedRegion } from "./region.js";
 import { CaptureTimer } from "./timings.js";
 import { RequestIdleTracker } from "./settlement.js";
-import { buildBannerRemovalScript, buildBannerStyleCss } from "./banners.js";
+import { buildBannerRemovalScript, buildBannerStyleCss, CMP_SELECTORS } from "./banners.js";
+import { CHAT_WIDGET_SELECTORS } from "./chats.js";
 import {
   buildFingerprintScripts,
   buildUserAgent,
@@ -25,7 +26,7 @@ import { installNetworkGuard } from "./network.js";
 const DEFAULT_VIEWPORT: ViewportOptions = {
   width: 1280,
   height: 720,
-  deviceScaleFactor: 1,
+  deviceScaleFactor: 2,
   isMobile: false,
   hasTouch: false,
 };
@@ -166,6 +167,7 @@ export function contextOptionsFor(
     ...(options.locale ? { locale: options.locale } : {}),
     ...(options.timezone ? { timezoneId: options.timezone } : {}),
     colorScheme: options.color_scheme ?? (options.dark_mode ? "dark" : "light"),
+    reducedMotion: options.reduce_motion ? "reduce" : "no-preference",
     serviceWorkers: "block",
     ...(options.headers ? { extraHTTPHeaders: options.headers } : {}),
   };
@@ -201,7 +203,10 @@ export async function createSession(
       }
     }
     if (options.block_cookie_banners) {
-      await context.addInitScript(buildBannerRemovalScript());
+      await context.addInitScript(buildBannerRemovalScript(undefined, options.timeout + 5000));
+    }
+    if (options.block_chats) {
+      await context.addInitScript(buildBannerRemovalScript(CHAT_WIDGET_SELECTORS, options.timeout + 5000, "__snapforgeChatSweep", false));
     }
   });
 
@@ -230,17 +235,22 @@ export async function createSession(
   standby?.prepare(browser, contextOptions);
 
   const runBannerSweep = async () => {
-    if (!options.block_cookie_banners) return;
+    if (!options.block_cookie_banners && !options.block_chats) return;
     try {
-      await page.evaluate(() => {
+      await page.evaluate(({ cookies, chats }) => {
         const bridge = (
           window as unknown as {
             __snapforgeBannerSweep?: { run: () => number };
           }
         ).__snapforgeBannerSweep;
-        if (bridge) bridge.run();
-      });
-      await page.addStyleTag({ content: buildBannerStyleCss() });
+        const chatBridge = (window as unknown as { __snapforgeChatSweep?: { run: () => number } }).__snapforgeChatSweep;
+        if (cookies && bridge) bridge.run();
+        if (chats && chatBridge) chatBridge.run();
+      }, { cookies: options.block_cookie_banners, chats: options.block_chats });
+      await page.addStyleTag({ content: buildBannerStyleCss([
+        ...(options.block_cookie_banners ? CMP_SELECTORS : []),
+        ...(options.block_chats ? CHAT_WIDGET_SELECTORS : []),
+      ]) });
     } catch {
       // best effort
     }

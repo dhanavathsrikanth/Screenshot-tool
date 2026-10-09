@@ -61,6 +61,8 @@ export const CMP_SELECTORS: readonly string[] = [
 export function buildBannerRemovalScript(
   selectors: readonly string[] = CMP_SELECTORS,
   sweepLifetimeMs = 30_000,
+  bridgeName = "__snapforgeBannerSweep",
+  restoreScroll = true,
 ): string {
   return `(() => {
   const SELECTORS = ${JSON.stringify(selectors)};
@@ -118,7 +120,7 @@ export function buildBannerRemovalScript(
     }
     if (removed > 0) {
       removedTotal += removed;
-      unlockScroll();
+      if (${restoreScroll}) unlockScroll();
     }
     return removed;
   };
@@ -139,7 +141,7 @@ export function buildBannerRemovalScript(
     clearInterval(timer);
     observer.disconnect();
   }, LIFETIME);
-  window.__snapforgeBannerSweep = {
+  window[${JSON.stringify(bridgeName)}] = {
     run: sweep,
     count: () => removedTotal,
   };

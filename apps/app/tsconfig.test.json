@@ -6,7 +6,9 @@
     "outDir": ".test-dist",
     "declaration": false,
     "declarationMap": false,
-    "sourceMap": false
+    "sourceMap": false,
+    "resolveJsonModule": true
   },
-  "include": ["src/lib/capture*.ts", "src/lib/engine.ts", "src/lib/engine.test.ts"]
+  "include": ["src/lib/capture*.ts", "src/lib/engine.ts", "src/lib/engine.test.ts", "src/lib/docs-*.ts"],
+  "exclude": ["src/lib/capture-runtime-handler.ts"]
 }

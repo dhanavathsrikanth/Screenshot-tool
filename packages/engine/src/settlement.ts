@@ -277,9 +277,9 @@ export async function settlePreCapture(
 ): Promise<void> {
   if (options.wait_for_selector) {
     const selectorStart = Date.now();
-    const timeout = Math.max(250, budget.remaining());
+    const timeout = Math.max(1, budget.remaining());
     try {
-      await page.waitForSelector(options.wait_for_selector, {
+      await page.locator(options.wait_for_selector).first().waitFor({
         timeout,
         state: "visible",
       });

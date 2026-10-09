@@ -15,7 +15,8 @@ export function dashboardCaptureResult(snapshot: JobSnapshot): CaptureResult {
     const data = snapshot.result.data;
     if (snapshot.result.ok && data?.cdn_url) return { ok: true, id, at, metrics: {
       url: data.url, final_url: data.final_url, format: data.format as "png" | "jpeg" | "webp" | "pdf",
-      width: data.width, height: data.height, bytes: data.bytes, duration_ms: data.duration_ms, blocked_requests: data.blocked_requests,
+      width: data.width, height: data.height, bytes: data.bytes, duration_ms: data.duration_ms, blocked_requests: data.blocked_requests, cached: data.cached,
+      render_diagnostics: data.render_diagnostics,
     }, image: data.cdn_url, artifact_url: data.cdn_url };
     return { ok: false, id, at, error: snapshot.result.error ?? {
       code: "render_incomplete", message: "Capture did not produce a downloadable artifact", retriable: true, request_id: snapshot.request_id,

@@ -11,6 +11,70 @@ test("recovery admission fails closed on exhausted capacity, malformed replies, 
   }
 });
 
+test("acquireJob with httpRate issues a single Redis round-trip combining rate and admission", async () => {
+  const calls: Array<{ keys: number; args: unknown[] }> = [];
+  const redis = {
+    eval: async (_script: string, keyCount: number, ...args: Array<string | number>) => {
+      calls.push({ keys: keyCount, args });
+      return [1, 0];
+    },
+    zrem: async () => 0,
+  };
+  const admission = new RedisCaptureAdmission(redis);
+  await admission.acquireJob("account", "job-1", { httpKey: "key-abc", windowMs: 60_000, max: 100 });
+  assert.equal(calls.length, 1);
+  assert.equal(calls[0].keys, 2);
+  assert.ok(String(calls[0].args[0]).includes("http-rate:{key-abc}"), "rate key is the http-rate shard for this apiKey");
+  assert.ok(String(calls[0].args[1]).includes("capture-admission"), "active key is the per-account admission shard");
+  assert.equal(calls[0].args[3], 60_000, "windowMs");
+  assert.equal(calls[0].args[4], 100, "max");
+  assert.ok(String(calls[0].args[5]).startsWith(String(Date.now()).slice(0, 4)), "rate member is the now-ms prefix");
+  assert.equal(calls[0].args[8], "job-1", "requestId is the lease key");
+});
+
+test("acquireJob with httpRate returns 429 on rate-limited", async () => {
+  const redis = {
+    eval: async () => [0, 17],
+    zrem: async () => 0,
+  };
+  const admission = new RedisCaptureAdmission(redis);
+  await assert.rejects(
+    admission.acquireJob("account", "job", { httpKey: "key", windowMs: 60_000, max: 100 }),
+    (error: unknown) => error instanceof CaptureAdmissionError && error.httpStatus === 429 && error.retryAfterSeconds === 17,
+  );
+});
+
+test("acquireJob with httpRate returns 429 on admission-full", async () => {
+  const redis = {
+    eval: async () => [2, 1],
+    zrem: async () => 0,
+  };
+  const admission = new RedisCaptureAdmission(redis);
+  await assert.rejects(
+    admission.acquireJob("account", "job", { httpKey: "key", windowMs: 60_000, max: 100 }),
+    (error: unknown) => error instanceof CaptureAdmissionError && error.httpStatus === 429 && error.retryAfterSeconds === 1,
+  );
+});
+
+test("acquireJob without httpRate still uses the original CLAIM Lua", async () => {
+  const calls: Array<{ keys: number; args: unknown[] }> = [];
+  const redis = {
+    eval: async (_script: string, keyCount: number, ...args: Array<string | number>) => {
+      calls.push({ keys: keyCount, args });
+      return [1, 0];
+    },
+    zrem: async () => 0,
+  };
+  const admission = new RedisCaptureAdmission(redis, { requests: 50, concurrency: 4, leaseMs: 30_000 });
+  await admission.acquireJob("account", "job");
+  assert.equal(calls.length, 1);
+  assert.equal(calls[0].keys, 2);
+  assert.ok(String(calls[0].args[0]).includes("capture-admission"), "rate key is the per-account rate shard");
+  assert.equal(calls[0].args[2], 50, "per-account requests");
+  assert.equal(calls[0].args[4], 4, "concurrency");
+  assert.equal(calls[0].args[5], 30_000, "leaseMs");
+});
+
 test("live Redis recovery restores expired leases without bypassing concurrency or repeating request rate charges", {
   skip: process.env.SNAPFORGE_ADMISSION_REST_TEST !== "1" || !process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN,
 }, async () => {

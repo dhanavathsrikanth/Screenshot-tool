@@ -142,7 +142,7 @@ export function Label({
 }
 
 const CONTROL_BASE =
-  "w-full min-h-9 rounded-[8px] border border-line bg-canvas px-3 py-2 text-[13px] text-ink placeholder:text-ink-3/70 transition-colors focus:border-p-400 focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2";
+  "w-full min-h-9 rounded-[8px] border border-line bg-surface px-3 py-2 text-[13px] text-ink placeholder:text-ink-3/70 transition-colors focus:border-p-400 focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2";
 
 export function Input(props: React.InputHTMLAttributes<HTMLInputElement>) {
   return <input {...props} className={`${CONTROL_BASE} ${props.className ?? ""}`} />;
@@ -181,7 +181,7 @@ export function Toggle({
       aria-checked={checked}
       disabled={disabled}
       onClick={() => onChange(!checked)}
-      className="flex w-full items-start gap-3 rounded-md border border-line bg-canvas px-3 py-2.5 text-left transition-colors hover:border-line-strong disabled:cursor-not-allowed disabled:opacity-50"
+      className="flex w-full items-start gap-3 rounded-md border border-line bg-surface px-3 py-2.5 text-left transition-colors hover:border-line-strong disabled:cursor-not-allowed disabled:opacity-50"
     >
       <span
         className={`mt-0.5 flex h-5 w-9 shrink-0 items-center rounded-pill p-0.5 transition-colors ${checked ? "bg-accent" : "bg-line-strong"}`}

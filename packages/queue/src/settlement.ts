@@ -4,6 +4,7 @@ import type { JobSnapshot } from "./types.js";
 import { terminalOutcome } from "./outcome.js";
 import type { CaptureDispatcher } from "./dispatcher.js";
 import { deliverCaptureSubmission, type CaptureSubmissionCodec } from "./submission.js";
+import type { HotCache } from "./hot-cache.js";
 
 export interface CaptureLifecycleJob { accountId: string; jobId: string }
 
@@ -102,6 +103,7 @@ export class CaptureCompletionConsumer {
     admission: SettlementAdmission;
     dispatcher?: Pick<CaptureDispatcher, "dispatch">;
     submissionCodec?: CaptureSubmissionCodec;
+    hotCache?: HotCache;
     intervalMs?: number;
     batchSize?: number;
     retentionSeconds?: number;
@@ -171,6 +173,9 @@ export class CaptureCompletionConsumer {
     const outcome = await this.finalizer.finalize(job, snapshot, accountId);
     this.counters.finalized++;
     this.counters.settlement_lag_ms = Math.max(0, Date.now() - outcome.result!.completed_at);
+    if (this.deps.hotCache && outcome.result?.ok && outcome.result.data) {
+      this.deps.hotCache.set(job.data.options, outcome.result.data);
+    }
   }
 
   reconcile(): Promise<void> {

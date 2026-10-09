@@ -1,4 +1,4 @@
-import type { CaptureOptions, CaptureSuccessData } from "@snapforge/contracts";
+import { CAPTURE_RENDER_VERSION, type CaptureOptions, type CaptureSuccessData } from "@snapforge/contracts";
 
 /**
  * The engine's view of a capture store. Declared here rather than imported from
@@ -115,7 +115,7 @@ function cacheKeyOf(options: CaptureOptions): string {
     if (key === "sync" || key === "store" || key === "cache_ttl") continue;
     fingerprint[key] = (options as unknown as Record<string, unknown>)[key];
   }
-  return `${stableStringify(fingerprint)}|${options.url}`;
+  return `${CAPTURE_RENDER_VERSION}|${stableStringify(fingerprint)}|${options.url}`;
 }
 
 function stableStringify(value: unknown): string {

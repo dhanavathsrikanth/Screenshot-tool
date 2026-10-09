@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import { Badge, Button, Card, CardHeader, EmptyState, Input, PageHeader, Select } from "@/components/ui";
 import { Icon } from "@/components/icons";
-import { formatBytes, formatClock, formatDuration, formatNumber } from "@/lib/format";
+import { formatBytes, formatClock, formatNumber } from "@/lib/format";
 import type { CaptureLogEntry } from "@/lib/capture";
 import { preferenceSnapshot, readPreferences, subscribePreferences } from "@/lib/console-preferences";
 
@@ -73,7 +73,7 @@ export default function LogsPage() {
       <PageHeader
         eyebrow="Observability"
         title="Capture history"
-        description="Persistent capture history with response status, size, latency, cache outcome and blocked requests."
+        description="Persistent capture history with response status, format, and output size."
         action={
           <div className="flex items-center gap-2">
             <Button variant="ghost" onClick={() => void load()}>
@@ -131,7 +131,7 @@ export default function LogsPage() {
           />
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[880px] text-left text-sm">
+            <table className="w-full min-w-[720px] text-left text-sm">
               <thead>
                 <tr className="border-b border-line text-xs text-ink-3">
                   <th className="px-5 py-3 font-medium">Time</th>
@@ -139,9 +139,6 @@ export default function LogsPage() {
                   <th className="px-3 py-3 font-medium">URL</th>
                   <th className="px-3 py-3 font-medium">Format</th>
                   <th className="px-3 py-3 font-medium">Size</th>
-                  <th className="px-3 py-3 font-medium">Latency</th>
-                  <th className="px-3 py-3 font-medium">Cache</th>
-                  <th className="px-5 py-3 font-medium">Blocked</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-line">
@@ -180,15 +177,6 @@ export default function LogsPage() {
                     </td>
                     <td className="px-3 py-3 font-mono text-xs text-ink-2">
                       {entry.bytes ? formatBytes(entry.bytes) : "—"}
-                    </td>
-                    <td className="px-3 py-3 font-mono text-xs text-ink-2">
-                      {formatDuration(entry.duration_ms)}
-                    </td>
-                    <td className="px-3 py-3">
-                      {entry.cached ? <Badge tone="info">hit</Badge> : <span className="text-xs text-ink-3">miss</span>}
-                    </td>
-                    <td className="px-5 py-3 font-mono text-xs text-ink-2">
-                      {entry.blocked_requests || "—"}
                     </td>
                   </tr>
                 ))}

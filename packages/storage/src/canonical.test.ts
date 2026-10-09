@@ -7,6 +7,7 @@ import {
   normalizeTargetUrl,
   objectKeyFor,
   renderFingerprint,
+  sha256,
 } from "./canonical.js";
 
 const base = captureOptionsSchema.parse({ url: "https://example.com/a" });
@@ -80,6 +81,11 @@ test("cacheKey is a stable sha256 hex digest", () => {
   const key = cacheKey(base);
   assert.match(key, /^[0-9a-f]{64}$/);
   assert.equal(key, cacheKey(base));
+});
+
+test("renderer changes cannot reuse an artifact from the previous cache namespace", () => {
+  const previousKey = sha256(`${canonicalize(renderFingerprint(base))}|${normalizeTargetUrl(base.url)}`);
+  assert.notEqual(cacheKey(base), previousKey);
 });
 
 test("objectKeyFor shards by digest prefix and keeps the format", () => {

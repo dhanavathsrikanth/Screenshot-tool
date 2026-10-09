@@ -25,6 +25,17 @@ const DATA = {
   cached: false,
 };
 
+test("section capture diagnostics survive metadata-cache eviction", async () => {
+  const { store, cache } = harness();
+  const options = captureOptionsSchema.parse({ url: DATA.url, store: true });
+  const render_diagnostics = { version: 3, algorithm: "by_sections" as const, sections: 8, device_scale_factor: 2, scroll_height: 4500, stopped_reason: "bottom", truncated: false };
+  await store.save(options, { ...DATA, render_diagnostics }, Buffer.from("png"));
+  await cache.delete(options);
+  const result = await store.lookup(options);
+  assert.equal(result.hit, true);
+  if (result.hit) assert.deepEqual(result.data.render_diagnostics, render_diagnostics);
+});
+
 /** Records commands instead of talking to R2, so the assertions are on intent. */
 function fakeClient() {
   const sent: { name: string; input: Record<string, unknown> }[] = [];

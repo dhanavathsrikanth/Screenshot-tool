@@ -20,6 +20,12 @@ export {
 } from "./cache.js";
 
 export {
+  FastLRU,
+  type FastLruOptions,
+  type FastLruStats,
+} from "./fast-lru.js";
+
+export {
   R2Storage,
   StorageConfigError,
   createR2Storage,

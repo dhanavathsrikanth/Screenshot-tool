@@ -1,7 +1,7 @@
 import { createHash, randomUUID } from "node:crypto";
 import { Hono } from "hono";
 import { SnapforgeError, type ErrorCode } from "@snapforge/contracts";
-import { CaptureService, CaptureAdmissionError, RedisCaptureAdmission, createRedisCaptureBilling, readCaptureRequest } from "@snapforge/queue";
+import { CaptureService, CaptureAdmissionError, HotCache, RedisCaptureAdmission, createRedisCaptureBilling, readCaptureRequest } from "@snapforge/queue";
 import type { CaptureBilling, CaptureDispatcher, CaptureQueue, CaptureSubmissionCodec, WebhookOutboxRepository } from "@snapforge/queue";
 import type { Redis } from "ioredis";
 
@@ -18,6 +18,7 @@ export interface GatewayDependencies {
   dispatcher: CaptureDispatcher;
   submissionCodec?: CaptureSubmissionCodec;
   webhooks?: WebhookOutboxRepository;
+  hotCache?: HotCache;
   keyCacheTtlMs?: number;
   rateLimit?: { requests: number; windowMs: number };
   concurrencyLimit?: number;
@@ -44,7 +45,8 @@ export function createGateway(deps: GatewayDependencies) {
   const rate = deps.rateLimit ?? { requests: 60, windowMs: 60_000 };
   const admission = new RedisCaptureAdmission(deps.redis, { ...rate, concurrency: deps.concurrencyLimit ?? 5, leaseMs: 7_200_000 });
   const service = new CaptureService({ queue: deps.queue, dispatcher: deps.dispatcher, admission,
-    billing: deps.database ?? createRedisCaptureBilling(deps.redis), submissionCodec: deps.submissionCodec, logger: deps.logger });
+    billing: deps.database ?? createRedisCaptureBilling(deps.redis), submissionCodec: deps.submissionCodec, logger: deps.logger,
+    hotCache: deps.hotCache });
 
   app.use("*", async (c, next) => {
     const supplied = c.req.header("x-request-id");
@@ -104,7 +106,7 @@ export function createGateway(deps: GatewayDependencies) {
   });
 
   app.use("/v1/*", async (c, next) => {
-    if (c.req.method === "POST" && c.req.path === "/v1/screenshot" && !c.req.header("idempotency-key")) return next();
+    if (c.req.method === "POST" && c.req.path === "/v1/screenshot") return next();
     const now = Date.now();
     const result = await deps.redis.eval(rateScript, 1, `snapforge:rate:${c.var.apiKey.id}`, now, rate.windowMs, rate.requests, `${now}:${randomUUID()}`) as [number, number | string];
     if (Number(result[0]) !== 1) {
@@ -123,7 +125,8 @@ export function createGateway(deps: GatewayDependencies) {
     const { requestId, apiKey } = c.var;
     scope(apiKey, "screenshot:write", requestId);
     const snapshot = await service.submit(identity(apiKey), () => readCaptureRequest(c.req.raw, requestId), requestId,
-      c.req.query("mode") === "async" ? "async" : undefined, c.req.header("idempotency-key"));
+      c.req.query("mode") === "async" ? "async" : undefined, c.req.header("idempotency-key"),
+      { httpKey: apiKey.id, windowMs: rate.windowMs, max: rate.requests });
     if (snapshot.result && (snapshot.state === "completed" || snapshot.state === "failed")) {
       if (snapshot.result.ok) return c.json({ ok: true, request_id: requestId, data: snapshot.result.data }, 200);
       throw new SnapforgeError({ ...snapshot.result.error!, requestId });

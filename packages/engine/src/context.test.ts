@@ -38,7 +38,7 @@ test("failed network-guard initialization closes its context with a bounded wait
         },
       };
       const browser = { newContext: async () => context } as unknown as Browser;
-      const options = captureOptionsSchema.parse({ url: "https://example.com", block_ads: false, block_trackers: false, block_cookie_banners: false });
+      const options = captureOptionsSchema.parse({ url: "https://example.com", block_ads: false, block_trackers: false, block_cookie_banners: false, block_chats: false });
       await assert.rejects(createSession(browser, options, resolveViewport(options, "guard"), "fixture", resolveConfig({
         stealth: false, allowPrivateNetwork: false, closeTimeoutMs: 20,
       }), null), (error: unknown) => error === failure);

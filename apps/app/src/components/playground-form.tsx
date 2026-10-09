@@ -39,6 +39,7 @@ const DEVICES = [
   { key: "desktop_4k", label: "Desktop 4K 3840×2160" },
   { key: "iphone_15_pro", label: "iPhone 15 Pro" },
   { key: "iphone_15_pro_max", label: "iPhone 15 Pro Max" },
+  { key: "iphone_17_pro_max", label: "iPhone 17 Pro Max" },
   { key: "pixel_8", label: "Pixel 8" },
   { key: "ipad_pro_11", label: "iPad Pro 11″" },
   { key: "custom", label: "Custom viewport" },
@@ -280,7 +281,7 @@ export function Playground({ localCapture = false }: { localCapture?: boolean })
                   ))}
                 </div>
               </div>
-              {state.format !== "png" ? (
+              {state.format === "jpeg" || state.format === "webp" ? (
                 <div className="space-y-1.5">
                   <Label hint="1–100">Quality</Label>
                   <Range
@@ -298,6 +299,20 @@ export function Playground({ localCapture = false }: { localCapture?: boolean })
                 label="Full page"
                 description="Include content below the initial viewport."
               />
+              {state.fullPage ? <>
+                <div className="space-y-1.5">
+                  <Label htmlFor="fullPageAlgorithm">Full-page capture</Label>
+                  <Select id="fullPageAlgorithm" value={state.fullPageAlgorithm} onChange={(event) => patch({ fullPageAlgorithm: event.target.value as PlaygroundState["fullPageAlgorithm"] })}>
+                    <option value="by_sections">Visible sections (recommended)</option>
+                    <option value="native">Native full page</option>
+                  </Select>
+                </div>
+                <div className="space-y-1.5">
+                  <Label hint="ms">Wait after each scroll</Label>
+                  <Range label="Wait after each scroll" value={state.scrollDelay} min={0} max={2000} step={100} suffix=" ms" onChange={(scrollDelay) => patch({ scrollDelay })} />
+                </div>
+              </> : null}
+              <Toggle checked={state.reduceMotion} onChange={(reduceMotion) => patch({ reduceMotion })} label="Reduce motion" description="Finish reveal animations and pause moving media during capture." />
               <Toggle
                 checked={state.darkMode}
                 onChange={(darkMode) => patch({ darkMode })}
@@ -319,9 +334,9 @@ export function Playground({ localCapture = false }: { localCapture?: boolean })
                     patch({ waitUntil: event.target.value as PlaygroundState["waitUntil"] })
                   }
                 >
-                  <option value="networkidle">Network quiet (recommended)</option>
+                  <option value="networkidle">Network quiet</option>
                   <option value="load">Page loaded</option>
-                  <option value="domcontentloaded">Document ready</option>
+                  <option value="domcontentloaded">Document ready (recommended)</option>
                 </Select>
               </div>
               <div className="space-y-1.5">
@@ -375,6 +390,12 @@ export function Playground({ localCapture = false }: { localCapture?: boolean })
                 onChange={(blockCookieBanners) => patch({ blockCookieBanners })}
                 label="Hide cookie banners"
                 description="Remove supported cookie consent overlays."
+              />
+              <Toggle
+                checked={state.blockChats}
+                onChange={(blockChats) => patch({ blockChats })}
+                label="Hide chat widgets"
+                description="Remove supported floating chat popups, including HubSpot."
               />
               <Toggle
                 checked={state.blockAds}
@@ -457,7 +478,7 @@ export function Playground({ localCapture = false }: { localCapture?: boolean })
         </div>
 
         <div className="min-w-0 space-y-4">
-          <PreviewPanel result={result} pending={pending} localCapture={localCapture} />
+        <PreviewPanel result={result} pending={pending} device={state.device} localCapture={localCapture} />
 
           <Card>
             <CardHeader

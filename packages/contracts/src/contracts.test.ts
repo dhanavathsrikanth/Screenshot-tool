@@ -9,12 +9,25 @@ test("captureOptionsSchema normalizes URLs without protocol", () => {
     url: "example.com/test",
   });
   assert.equal(result.url, "https://example.com/test");
-  assert.equal(result.format, "png");
+  assert.equal(result.format, "webp");
+  assert.equal(result.quality, 90);
   assert.equal(result.timeout, 30000);
   assert.equal(result.block_ads, true);
   assert.equal(result.block_cookie_banners, true);
+  assert.equal(result.block_chats, true);
   assert.equal(result.wait_for_idle, true);
   assert.equal(result.dark_mode, false);
+  assert.equal(result.full_page_algorithm, "by_sections");
+  assert.equal(result.reduce_motion, true);
+});
+
+test("full-page scroll settings stay within bounded renderer controls", () => {
+  for (const options of [{ full_page_scroll_delay: -1 }, { full_page_scroll_delay: 5001 }, { full_page_scroll_by: 0 }, { full_page_algorithm: "unknown" }]) {
+    assert.equal(captureOptionsSchema.safeParse({ url: "https://example.com", ...options }).success, false);
+  }
+  const options = captureOptionsSchema.parse({ url: "https://example.com", full_page_algorithm: "native", full_page_scroll_delay: 0, full_page_scroll_by: 600, reduce_motion: false });
+  assert.equal(options.full_page_scroll_delay, 0);
+  assert.equal(options.reduce_motion, false);
 });
 
 test("captureOptionsSchema accepts spec page modifiers and settlement flags", () => {
@@ -61,11 +74,16 @@ test("device presets have valid viewports", () => {
   assert.ok(DEVICE_PRESETS.desktop_hd);
   assert.equal(DEVICE_PRESETS.desktop_hd.viewport.width, 1920);
   assert.equal(DEVICE_PRESETS.desktop_hd.viewport.height, 1080);
+  assert.equal(DEVICE_PRESETS.iphone_17_pro_max.viewport.width, 440);
+  assert.equal(DEVICE_PRESETS.iphone_17_pro_max.viewport.height, 956);
+  assert.equal(DEVICE_PRESETS.iphone_17_pro_max.viewport.deviceScaleFactor, 3);
+  assert.equal(DEVICE_PRESETS.iphone_17_pro_max.viewport.isMobile, true);
+  assert.equal(DEVICE_PRESETS.iphone_17_pro_max.viewport.hasTouch, true);
 });
 
 test("capture quality requirements are bounded and incomplete renders are retriable", () => {
   const options = captureOptionsSchema.parse({ url: "https://example.com", fail_if_content_missing: ["Report"], min_capture_height: 4000 });
-  assert.equal(options.fail_if_incomplete, true);
+  assert.equal(options.fail_if_incomplete, false);
   assert.throws(() => captureOptionsSchema.parse({ url: "https://example.com", fail_if_content_missing: [""] }));
   assert.throws(() => captureOptionsSchema.parse({ url: "https://example.com", min_capture_bytes: -1 }));
   const error = new SnapforgeError({ code: "render_incomplete", message: "Loading shell", requestId: "quality" });

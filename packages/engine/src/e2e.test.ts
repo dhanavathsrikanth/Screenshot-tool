@@ -115,16 +115,17 @@ test("engine end-to-end capture suite", async (t) => {
     assert.equal((await engine.health()).browser?.contexts_served, 1);
   });
 
-  await t.test("captures a basic viewport png", async () => {
+  await t.test("defaults to a compact, high-quality webp capture", async () => {
     const { data, buffer } = await engine.capture({ url: `${base}/`, timeout: 15000 });
-    assert.equal(data.format, "png");
-    assert.equal(data.width, 1280);
-    assert.equal(data.height, 720);
+    assert.equal(data.format, "webp");
+    assert.equal(data.width, 2560);
+    assert.equal(data.height, 1440);
     assert.ok(data.bytes > 1000);
     assert.equal(data.cached, false);
     assert.ok(data.final_url.startsWith(base));
     assert.equal(data.blocked_requests, 0);
-    assert.equal(buffer.subarray(0, 4).toString("hex"), "89504e47");
+    assert.equal(buffer.subarray(0, 4).toString("ascii"), "RIFF");
+    assert.equal(buffer.subarray(8, 12).toString("ascii"), "WEBP");
   });
 
   await t.test("short static captures skip guards with identical screenshot pixels", async () => {
@@ -169,9 +170,9 @@ test("engine end-to-end capture suite", async (t) => {
       full_page: true,
       timeout: 20000,
     });
-    assert.equal(data.width, 1280);
+    assert.equal(data.width, 2560);
     assert.ok(data.height >= 2900, `height ${data.height} should cover the tall document`);
-    assert.ok(data.height <= 24000);
+    assert.ok(data.height <= 48000);
   });
 
   await t.test("captures jpeg output", async () => {
@@ -297,7 +298,7 @@ test("engine end-to-end capture suite", async (t) => {
       hide_selectors: ["div, #heading", "p"],
       timeout: 15000,
     });
-    assert.equal(data.format, "png");
+    assert.equal(data.format, "webp");
   });
 
   await t.test("waits for a delayed selector", async () => {
@@ -306,7 +307,7 @@ test("engine end-to-end capture suite", async (t) => {
       wait_for_selector: "#ready",
       timeout: 10000,
     });
-    assert.equal(data.format, "png");
+    assert.equal(data.format, "webp");
   });
 
   await t.test("times out on a missing selector", async () => {
@@ -372,7 +373,7 @@ test("engine end-to-end capture suite", async (t) => {
       wait_for_selector: "#stealth-ok",
       timeout: 12000,
     });
-    assert.equal(data.format, "png");
+    assert.equal(data.format, "webp");
   });
 
   await t.test("runs concurrent captures within the concurrency limit", async () => {

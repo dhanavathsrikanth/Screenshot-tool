@@ -2,6 +2,8 @@ import { randomUUID } from "node:crypto";
 import type { Page, Response as PwResponse } from "playwright";
 import {
   captureOptionsSchema,
+  CAPTURE_RENDER_VERSION,
+  DEVICE_PRESETS,
   SnapforgeError,
   type CaptureOptions,
   type CaptureSuccessData,
@@ -25,8 +27,10 @@ import {
   type SettleDeps,
   type SettleStats,
 } from "./settlement.js";
-import { prepareFullPageCapture, waitForScrollGrowth } from "./fullpage.js";
-import { captureOutput, planCapture, readPngSize, type PageMetrics } from "./formats.js";
+import { scrollThrough, waitForScrollGrowth } from "./fullpage.js";
+import { assertCompleteScroll, captureTiles } from "./tiles.js";
+import { readContentState } from "./readiness.js";
+import { captureOutput, planCapture, readPngSize, type CaptureOutput, type PageMetrics } from "./formats.js";
 import { resolveRegion, type ResolvedRegion } from "./region.js";
 import { verifyEgress } from "./egress.js";
 import { nullCaptureCache, type CaptureCachePort } from "./cache.js";
@@ -307,7 +311,8 @@ export class SnapforgeEngine {
     const region = resolveRegion(options, requestId);
     const slot = this.pool.slot(slotId);
     const browser = await timer.measure("browser_start", () => slot.ensureBrowser());
-    const userAgent = options.user_agent ?? buildUserAgent(browser.version());
+    const presetUserAgent = options.device ? DEVICE_PRESETS[options.device]?.userAgent : undefined;
+    const userAgent = options.user_agent ?? presetUserAgent ?? buildUserAgent(browser.version());
     const session = await createSession(
       browser,
       options,
@@ -389,6 +394,7 @@ export class SnapforgeEngine {
     page.on("response", onNavResponse);
 
     const budget = new SettlementBudget(options.timeout);
+    if (options.format === "pdf") await page.emulateMedia({ media: "screen" });
     const waitUntil =
       options.wait_until === "networkidle" ? "domcontentloaded" : options.wait_until;
 
@@ -458,7 +464,8 @@ export class SnapforgeEngine {
       });
     }
 
-    let output: { buffer: Buffer; width: number; height: number };
+    let output: CaptureOutput;
+    let nativeTruncated = false;
     let selectorBox: { x: number; y: number; width: number; height: number } | undefined;
 
     if (options.selector) {
@@ -501,25 +508,36 @@ export class SnapforgeEngine {
       }
       output = { buffer, width, height };
     } else {
-      if (options.full_page && options.format !== "pdf") {
+      const staticPage = options.full_page && !options.custom_js && await page.evaluate(readContentState).then((state) => state.staticReady) &&
+        await page.evaluate(() => document.getAnimations().length === 0);
+      const scrollConfig = {
+        maxPageHeight: this.config.maxPageHeight,
+        maxScrollSteps: this.config.maxScrollSteps,
+        scrollSettleMs: options.full_page_scroll_delay ?? this.config.scrollSettleMs,
+        scrollBy: options.full_page_scroll_by,
+        maxPinnedElements: this.config.maxPinnedElements,
+        allowStatic: staticPage,
+      };
+      if (options.full_page) {
         await timer.measure("growth_wait", () => waitForScrollGrowth(
           page,
           Math.min(this.config.contentWaitMs, budget.remaining()),
           250,
           !options.custom_js,
         ));
-        await timer.measure("scroll", () => prepareFullPageCapture(page, {
-          maxPageHeight: this.config.maxPageHeight,
-          maxScrollSteps: this.config.maxScrollSteps,
-          scrollSettleMs: this.config.scrollSettleMs,
-          timeoutMs: options.timeout,
-          maxPinnedElements: this.config.maxPinnedElements,
-          allowStatic: !options.custom_js,
-        }));
-        await timer.measure("post_scroll", () => settleAfterScroll(page, budget, this.settleDeps, tracker));
+        if (options.full_page_algorithm === "native") {
+          const scroll = await timer.measure("scroll", () => scrollThrough(page, {
+            ...scrollConfig,
+            timeoutMs: budget.remaining(),
+          }));
+          assertCompleteScroll(scroll, requestId);
+          await timer.measure("post_scroll", () => settleAfterScroll(page, budget, this.settleDeps, tracker));
+        }
       }
 
-      await timer.measure("quality_check", () => ensureCaptureQuality(page, options, budget, this.config.contentWaitMs, requestId));
+      await timer.measure("quality_check", () => ensureCaptureQuality(page,
+        options.full_page ? { ...options, fail_if_content_missing: [], fail_if_content_contains: [] } : options,
+        budget, this.config.contentWaitMs, requestId));
       const raw = await timer.measure("page_metrics", () => page.evaluate(() => ({
         vw: window.innerWidth,
         vh: window.innerHeight,
@@ -534,7 +552,11 @@ export class SnapforgeEngine {
         docHeight: raw.dh,
       };
       const plan = planCapture(options, metrics, this.config.maxPageHeight);
-      output = await timer.measure("screenshot", () => captureOutput(page, plan, options, metrics));
+      nativeTruncated = options.full_page && raw.dh > this.config.maxPageHeight;
+      output = await timer.measure("screenshot", () => options.full_page && options.full_page_algorithm === "by_sections"
+        ? captureTiles(page, options, { ...scrollConfig, timeoutMs: budget.remaining() }, viewport.deviceScaleFactor, requestId)
+        : captureOutput(page, plan, options, metrics, this.config.maxPageHeight));
+      if (options.full_page) await timer.measure("quality_check", () => ensureCaptureQuality(page, options, budget, this.config.contentWaitMs, requestId));
     }
 
     ensureOutputQuality(output, options, requestId);
@@ -550,6 +572,15 @@ export class SnapforgeEngine {
       duration_ms: Date.now() - started,
       cached: false,
       blocked_requests: session.getBlockedRequests(),
+      render_diagnostics: output.diagnostics ?? {
+        version: CAPTURE_RENDER_VERSION,
+        algorithm: options.selector ? "element" : "native",
+        sections: 1,
+        device_scale_factor: viewport.deviceScaleFactor,
+        scroll_height: options.format === "pdf" ? output.height : output.height / viewport.deviceScaleFactor,
+        stopped_reason: "captured",
+        truncated: nativeTruncated,
+      },
       ...(session.region ? { region: session.region.id } : {}),
       ...(session.egressCountry ? { egress_country: session.egressCountry } : {}),
     };

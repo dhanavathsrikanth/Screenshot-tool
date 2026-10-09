@@ -9,6 +9,9 @@ export interface PlaygroundState {
   format: "png" | "jpeg" | "webp" | "pdf";
   quality: number;
   fullPage: boolean;
+  fullPageAlgorithm: "by_sections" | "native";
+  scrollDelay: number;
+  reduceMotion: boolean;
   darkMode: boolean;
   waitUntil: "load" | "domcontentloaded" | "networkidle";
   waitForIdle: boolean;
@@ -17,6 +20,7 @@ export interface PlaygroundState {
   timeout: number;
   blockAds: boolean;
   blockCookieBanners: boolean;
+  blockChats: boolean;
   blockTrackers: boolean;
   hideSelectors: string;
   removeSelectors: string;
@@ -29,17 +33,21 @@ export const DEFAULT_STATE: PlaygroundState = {
   device: "desktop_standard",
   customWidth: 1280,
   customHeight: 720,
-  format: "png",
-  quality: 85,
+  format: "webp",
+  quality: 90,
   fullPage: false,
+  fullPageAlgorithm: "by_sections",
+  scrollDelay: 400,
+  reduceMotion: true,
   darkMode: false,
-  waitUntil: "networkidle",
+  waitUntil: "domcontentloaded",
   waitForIdle: true,
   waitForSelector: "",
   delay: 0,
-  timeout: 30000,
+  timeout: 60000,
   blockAds: true,
   blockCookieBanners: true,
+  blockChats: true,
   blockTrackers: true,
   hideSelectors: "",
   removeSelectors: "",
@@ -59,7 +67,7 @@ export function effectiveViewport(state: PlaygroundState) {
     return {
       width: state.customWidth,
       height: state.customHeight,
-      deviceScaleFactor: 1,
+      deviceScaleFactor: 2,
     };
   }
   const preset = DEVICE_PRESETS[state.device];
@@ -75,6 +83,10 @@ export function toCaptureOptions(state: PlaygroundState): CaptureOptionsInput {
     url: state.url,
     format: state.format,
     full_page: state.fullPage,
+    full_page_algorithm: state.fullPageAlgorithm,
+    full_page_scroll_delay: state.scrollDelay,
+    reduce_motion: state.reduceMotion,
+    fail_if_incomplete: true,
     quality: state.quality,
     dark_mode: state.darkMode,
     wait_until: state.waitUntil,
@@ -83,6 +95,7 @@ export function toCaptureOptions(state: PlaygroundState): CaptureOptionsInput {
     timeout: state.timeout,
     block_ads: state.blockAds,
     block_cookie_banners: state.blockCookieBanners,
+    block_chats: state.blockChats,
     block_trackers: state.blockTrackers,
   };
 
@@ -90,7 +103,7 @@ export function toCaptureOptions(state: PlaygroundState): CaptureOptionsInput {
     options.viewport = {
       width: state.customWidth,
       height: state.customHeight,
-      deviceScaleFactor: 1,
+      deviceScaleFactor: 2,
     };
   } else {
     options.device = state.device;

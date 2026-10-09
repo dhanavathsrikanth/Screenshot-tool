@@ -23,7 +23,9 @@ export function isPublicAddress(address: string): boolean {
   const left = parts[0] ? parts[0].split(":") : [];
   const right = parts[1] ? parts[1].split(":") : [];
   const groups = [...left, ...Array(parts.length === 2 ? 8 - left.length - right.length : 0).fill("0"), ...right].map((value) => parseInt(value, 16));
-  if (groups.slice(0, 5).every((value) => value === 0) && groups[5] === 0xffff) {
+  const mapped = groups.slice(0, 5).every((value) => value === 0) && groups[5] === 0xffff;
+  const translated = groups[0] === 0x64 && groups[1] === 0xff9b && groups.slice(2, 6).every((value) => value === 0);
+  if (mapped || translated) {
     return isPublicAddress(`${groups[6] >> 8}.${groups[6] & 255}.${groups[7] >> 8}.${groups[7] & 255}`);
   }
   return groups[0] >= 0x2000 && groups[0] <= 0x3fff && groups[0] !== 0x2002 &&

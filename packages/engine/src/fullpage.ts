@@ -141,9 +141,18 @@ export interface ScrollConfig {
   scrollSettleMs: number;
   timeoutMs: number;
   allowStatic?: boolean;
+  scrollBy?: number;
+  onViewport?: (metrics: ScrollMetrics) => Promise<void>;
 }
 
-export type ScrollStopReason = "bottom" | "max_height" | "max_steps" | "no_scroll";
+export interface ScrollMetrics {
+  y: number;
+  height: number;
+  viewportHeight: number;
+  viewportWidth: number;
+}
+
+export type ScrollStopReason = "bottom" | "max_height" | "max_steps" | "no_scroll" | "timeout" | "scroll_blocked";
 
 export interface ScrollStats {
   steps: number;
@@ -151,15 +160,15 @@ export interface ScrollStats {
   stopped_reason: ScrollStopReason;
 }
 
-async function hydrateViewportMedia(page: Page, perImageTimeoutMs: number): Promise<void> {
+export async function hydrateViewportMedia(page: Page, perImageTimeoutMs: number): Promise<void> {
   try {
     await page.evaluate(async (timeout) => {
       const targets: Element[] = [];
       const nodes = document.querySelectorAll(
-        'img[loading="lazy"], iframe[loading="lazy"], source[loading="lazy"]',
+        'img, picture source, iframe[loading="lazy"]',
       );
       for (const el of Array.from(nodes)) {
-        const r = el.getBoundingClientRect();
+        const r = (el.closest("picture") ?? el).getBoundingClientRect();
         if (r.bottom < -300 || r.top > window.innerHeight + 300) continue;
         targets.push(el);
       }
@@ -168,10 +177,10 @@ async function hydrateViewportMedia(page: Page, perImageTimeoutMs: number): Prom
         if ("loading" in anyEl) anyEl.loading = "eager";
         const data = anyEl.dataset;
         if (data) {
-          if (data.src && !el.getAttribute("src")) el.setAttribute("src", data.src);
-          if (data.srcset && !el.getAttribute("srcset")) el.setAttribute("srcset", data.srcset);
-          if (data.lazySrc) el.setAttribute("src", data.lazySrc);
-          if (data.lazySrcset) el.setAttribute("srcset", data.lazySrcset);
+          const src = data.lazySrc ?? data.src;
+          const srcset = data.lazySrcset ?? data.srcset;
+          if (src && el.getAttribute("src") !== src) el.setAttribute("src", src);
+          if (srcset && el.getAttribute("srcset") !== srcset) el.setAttribute("srcset", srcset);
         }
       }
       const pending = targets
@@ -183,13 +192,29 @@ async function hydrateViewportMedia(page: Page, perImageTimeoutMs: number): Prom
           (el) =>
             new Promise<void>((resolve) => {
               const img = el as HTMLImageElement;
-              const done = () => resolve();
+              const done = () => {
+                clearTimeout(timer);
+                img.removeEventListener("load", done);
+                img.removeEventListener("error", done);
+                resolve();
+              };
+              const timer = setTimeout(done, timeout);
               img.addEventListener("load", done, { once: true });
               img.addEventListener("error", done, { once: true });
-              setTimeout(done, timeout);
+              if (img.complete) done();
             }),
         );
       await Promise.all(pending);
+      await Promise.all(targets.filter((el) => el instanceof HTMLImageElement).map(async (el) => {
+        const img = el as HTMLImageElement;
+        if (!img.complete || !img.naturalWidth) return;
+        let timer: ReturnType<typeof setTimeout> | undefined;
+        await Promise.race([
+          img.decode().catch(() => {}),
+          new Promise<void>((resolve) => { timer = setTimeout(resolve, timeout); }),
+        ]);
+        clearTimeout(timer);
+      }));
     }, perImageTimeoutMs);
   } catch {
     return;
@@ -197,7 +222,7 @@ async function hydrateViewportMedia(page: Page, perImageTimeoutMs: number): Prom
 }
 
 export async function scrollThrough(page: Page, config: ScrollConfig): Promise<ScrollStats> {
-  const deadline = Date.now() + Math.max(1000, config.timeoutMs);
+  const deadline = Date.now() + Math.max(0, config.timeoutMs);
   const staticReady = config.allowStatic && await page.evaluate(readContentState).then((state) => state.staticReady).catch(() => false);
   const settleMs = staticReady ? 0 : config.scrollSettleMs;
 
@@ -206,71 +231,88 @@ export async function scrollThrough(page: Page, config: ScrollConfig): Promise<S
       y: window.scrollY,
       height: document.documentElement.scrollHeight,
       viewportHeight: window.innerHeight,
+      viewportWidth: window.innerWidth,
     }));
 
-  let current = await metrics();
-  const history: number[] = [current.height];
+  const control = await page.evaluateHandle(() => {
+    const originals: { element: HTMLElement; key: string; value: string; priority: string }[] = [];
+    for (const element of [document.documentElement, document.body]) {
+      if (!element) continue;
+      for (const [key, value] of Object.entries({ "scroll-behavior": "auto", "scroll-snap-type": "none", "overflow-anchor": "none" })) {
+        originals.push({ element, key, value: element.style.getPropertyValue(key), priority: element.style.getPropertyPriority(key) });
+        element.style.setProperty(key, value, "important");
+      }
+    }
+    return originals;
+  });
   let steps = 0;
-  let stopped: ScrollStopReason | null = null;
-
-  const bottomLimit = Math.min(current.height, config.maxPageHeight) - current.viewportHeight;
-  if (bottomLimit <= 0) {
-    return { steps: 0, final_height: current.height, stopped_reason: "no_scroll" };
-  }
-
-  const step = computeScrollStep(current.viewportHeight);
-
-  while (steps < config.maxScrollSteps && Date.now() < deadline) {
-    const target = nextScrollTarget(
-      current.y,
-      step,
-      current.height,
-      current.viewportHeight,
-      config.maxPageHeight,
-    );
-    if (target === null) {
-      stopped = current.height > config.maxPageHeight ? "max_height" : "bottom";
-      break;
-    }
-
-    await page.evaluate((t) => window.scrollTo(0, t), target);
-    await page.evaluate(
-      () => new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve()))),
-    );
-    if (settleMs > 0) await sleep(settleMs);
-    await hydrateViewportMedia(page, 1200);
-
-    current = await metrics();
-    history.push(current.height);
-    steps += 1;
-
-    if (current.height > config.maxPageHeight && current.y >= config.maxPageHeight - current.viewportHeight) {
-      stopped = "max_height";
-      break;
-    }
-    if (target >= Math.min(current.height, config.maxPageHeight) - current.viewportHeight - 1) {
-      stopped = current.height > config.maxPageHeight ? "max_height" : "bottom";
-      break;
-    }
-    if (isConverged(history) && current.y >= current.height - current.viewportHeight - 4) {
-      stopped = "bottom";
-      break;
-    }
-  }
-
-  if (stopped === null) stopped = steps >= config.maxScrollSteps ? "max_steps" : "bottom";
-
-  await page.evaluate(() => window.scrollTo(0, 0));
-  await page.evaluate(
+  let current = await metrics();
+  let stopped: ScrollStopReason = "timeout";
+  const paint = () => page.evaluate(
     () => new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve()))),
   );
-  if (settleMs > 0) await sleep(Math.min(80, settleMs));
-
-  return {
-    steps,
-    final_height: Math.min(current.height, config.maxPageHeight),
-    stopped_reason: stopped,
+  const settleViewport = async () => {
+    await paint();
+    if (settleMs > 0) await sleep(Math.min(settleMs, Math.max(0, deadline - Date.now())));
+    await hydrateViewportMedia(page, Math.min(1200, Math.max(0, deadline - Date.now())));
+    current = await metrics();
+    if (!staticReady && current.height < config.maxPageHeight && current.y + current.viewportHeight >= current.height - 1) {
+      let stableSince = Date.now();
+      while (Date.now() < deadline && Date.now() - stableSince < Math.max(600, settleMs * 3)) {
+        await sleep(Math.min(100, Math.max(0, deadline - Date.now())));
+        const next = await metrics();
+        if (next.height !== current.height) stableSince = Date.now();
+        current = next;
+        if (current.height >= config.maxPageHeight || current.y + current.viewportHeight < current.height - 1) break;
+      }
+      await hydrateViewportMedia(page, Math.min(1200, Math.max(0, deadline - Date.now())));
+      current = await metrics();
+    }
+    if (Date.now() < deadline) await config.onViewport?.(current);
   };
+  try {
+    await page.evaluate(() => window.scrollTo(0, 0));
+    await settleViewport();
+    while (Date.now() < deadline) {
+      if (current.height > config.maxPageHeight && current.y >= config.maxPageHeight - current.viewportHeight) {
+        stopped = "max_height";
+        break;
+      }
+      const target = nextScrollTarget(current.y, Math.min(current.viewportHeight, config.scrollBy ?? computeScrollStep(current.viewportHeight)), current.height, current.viewportHeight, config.maxPageHeight);
+      if (target === null) {
+        stopped = steps === 0 ? "no_scroll" : "bottom";
+        break;
+      }
+      if (steps >= config.maxScrollSteps) {
+        stopped = "max_steps";
+        break;
+      }
+      const previousY = current.y;
+      await page.evaluate((t) => window.scrollTo(0, t), target);
+      await settleViewport();
+      steps++;
+      if (current.y <= previousY + 1) {
+        stopped = "scroll_blocked";
+        break;
+      }
+    }
+    current = await metrics();
+    return {
+      steps,
+      final_height: Math.min(current.height, config.maxPageHeight),
+      stopped_reason: stopped,
+    };
+  } finally {
+    await page.evaluate(() => window.scrollTo(0, 0)).catch(() => {});
+    await paint().catch(() => {});
+    await control.evaluate((originals) => {
+      for (const { element, key, value, priority } of originals) {
+        if (value) element.style.setProperty(key, value, priority);
+        else element.style.removeProperty(key);
+      }
+    }).catch(() => {});
+    await control.dispose();
+  }
 }
 
 export interface FullPageConfig extends ScrollConfig {

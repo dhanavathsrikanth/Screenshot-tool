@@ -18,6 +18,7 @@ interface EngineHolder {
   engine?: SnapforgeEngine;
   store?: CaptureStore;
   starting?: Promise<SnapforgeEngine>;
+  prepared?: Promise<void>;
 }
 
 const globalRef = globalThis as unknown as { __snapforgeEngine?: EngineHolder };
@@ -55,13 +56,12 @@ export function createDashboardEngine(cache: CaptureCachePort): SnapforgeEngine 
   return createEngine({
     headless: true,
     stealth: true,
+    executablePath: process.env.PLAYWRIGHT_EXECUTABLE_PATH,
     allowPrivateNetwork: false,
     retries: 1,
     maxPageHeight: 24_000,
-    idlePhaseMs: 3_000,
-    fontWaitMs: 2_000,
     logger: (level, message, meta) => {
-      if (level === "error" || level === "warn") console.warn(`[engine] ${message}`, meta ?? {});
+      if (level === "error" || level === "warn") console.warn(`[engine] ${message} ${JSON.stringify(meta ?? {})}`);
     },
   }, cache);
 }
@@ -80,6 +80,14 @@ export function getEngine(): Promise<SnapforgeEngine> {
       });
   }
   return holder.starting;
+}
+
+export function prepareEngine(): Promise<void> {
+  holder.prepared ??= getEngine().then((engine) => engine.warm()).catch((error) => {
+    holder.prepared = undefined;
+    throw error;
+  });
+  return holder.prepared;
 }
 
 /** Cache counters for the health endpoint, when a store is configured. */

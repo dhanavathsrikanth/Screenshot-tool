@@ -1,5 +1,7 @@
 # Snapforge: Next-Gen Screenshot API Platform
 
+> Full-page engine rebuilt 2026-10-06: desktop output defaults to 2× resolution; the default algorithm loads and captures visible sections in one downward pass, preserving scroll reveals. Motion and scroll timing are configurable, PDF encoding reuses lossless compressed pixels, and the playground shows section/resolution evidence and height-limit status. [Behavior and verification](docs/full-page-capture.md). This does not close the live-site latency or deployment gates.
+
 > Workspace UI redesigned 2026-10-05: Xem-inspired inset layout, Geist typography, persistent sidebar rail, accessible mobile navigation and search, consistent page controls, and working browser capture preferences. Hostinger tokens remain the branding source of truth. Production build and all 42 dashboard capture regressions pass. [Design decisions and previews](docs/workspace-ui-redesign.md). This does not close the latency or deployment gates.
 
 > Remaining market-gap execution plan: [todo1.md](todo1.md). It breaks the follow-up into customer outcomes, implementation tickets, performance safeguards, and evidence-based release gates.

@@ -29,7 +29,7 @@ test("runtime quality and standalone proxy integration", { timeout: 120_000 }, a
   t.after(async () => { await engine.close(); await new Promise<void>((resolve) => server.close(() => resolve())); });
 
   await t.test("navigation/footer text cannot make a loading shell successful or cached", async () => {
-    await assert.rejects(engine.capture({ url: `${base}/shell`, timeout: 10_000 }), (error: unknown) => {
+    await assert.rejects(engine.capture({ url: `${base}/shell`, timeout: 10_000, fail_if_incomplete: true }), (error: unknown) => {
       assert.ok(error instanceof SnapforgeError);
       assert.equal(error.code, "render_incomplete");
       assert.deepEqual(error.details?.failures, ["loading_shell"]);

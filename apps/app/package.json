@@ -12,17 +12,18 @@
     "test": "node --env-file-if-exists=../../.env --test --test-concurrency=1 .test-dist/lib/*.test.js"
   },
   "dependencies": {
-    "@dodopayments/nextjs": "^0.3.1",
     "@clerk/nextjs": "^7.9.8",
-    "@snapforge/database": "workspace:*",
+    "@dodopayments/nextjs": "^0.3.1",
     "@snapforge/brand": "workspace:*",
     "@snapforge/contracts": "workspace:*",
-    "@snapforge/queue": "workspace:*",
+    "@snapforge/database": "workspace:*",
     "@snapforge/engine": "workspace:*",
+    "@snapforge/queue": "workspace:*",
     "@snapforge/storage": "workspace:*",
     "dotenv": "^16.6.1",
     "ioredis": "^5.4.1",
     "next": "^16.0.3",
+    "pdfjs-dist": "6.4.299",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },

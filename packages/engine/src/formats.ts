@@ -1,5 +1,5 @@
 import type { Page } from "playwright";
-import type { CaptureOptions } from "@snapforge/contracts";
+import type { CaptureOptions, RenderDiagnostics } from "@snapforge/contracts";
 
 export interface PageMetrics {
   viewportWidth: number;
@@ -23,9 +23,12 @@ export function planCapture(
   maxPageHeight: number,
 ): CapturePlan {
   if (options.format === "pdf") {
+    const pdfHeight = options.full_page
+      ? Math.min(Math.max(metrics.viewportHeight, metrics.docHeight), maxPageHeight)
+      : metrics.viewportHeight;
     return {
       kind: "pdf",
-      region: { width: metrics.viewportWidth, height: metrics.viewportHeight },
+      region: { width: metrics.viewportWidth, height: pdfHeight },
     };
   }
 
@@ -55,15 +58,22 @@ export function planCapture(
   };
 }
 
-export function buildPdfOptions(options: CaptureOptions, metrics: PageMetrics) {
+export function buildPdfOptions(
+  options: CaptureOptions,
+  metrics: PageMetrics,
+  maxPageHeight = 24_000,
+) {
+  const heightPx = options.full_page
+    ? Math.min(Math.max(metrics.viewportHeight, metrics.docHeight), maxPageHeight)
+    : metrics.viewportHeight;
   return {
     printBackground: true,
     preferCSSPageSize: false,
     margin: { top: "0px", right: "0px", bottom: "0px", left: "0px" },
     width: `${metrics.viewportWidth}px`,
-    height: `${metrics.viewportHeight}px`,
+    height: `${heightPx}px`,
     scale: 1,
-    ...(options.full_page ? {} : { pageRanges: "1" }),
+    pageRanges: "1",
   };
 }
 
@@ -88,6 +98,7 @@ export interface CaptureOutput {
   buffer: Buffer;
   width: number;
   height: number;
+  diagnostics?: RenderDiagnostics;
 }
 
 export async function captureOutput(
@@ -95,15 +106,17 @@ export async function captureOutput(
   plan: CapturePlan,
   options: CaptureOptions,
   metrics: PageMetrics,
+  maxPageHeight = 24_000,
 ): Promise<CaptureOutput> {
   const dsf = metrics.deviceScaleFactor;
 
   if (plan.kind === "pdf") {
-    const buffer = await page.pdf(buildPdfOptions(options, metrics));
+    await page.addStyleTag({ content: ":root { -webkit-print-color-adjust: exact; print-color-adjust: exact; }" });
+    const buffer = await page.pdf(buildPdfOptions(options, metrics, maxPageHeight));
     return {
       buffer: buffer as unknown as Buffer,
-      width: metrics.viewportWidth,
-      height: metrics.viewportHeight,
+      width: plan.region.width,
+      height: plan.region.height,
     };
   }
 
@@ -113,6 +126,7 @@ export async function captureOutput(
     ...(plan.clip ? { clip: plan.clip, fullPage: true as const } : {}),
     animations: "disabled" as const,
     caret: "hide" as const,
+    scale: "device" as const,
   };
 
   let buffer: Buffer;

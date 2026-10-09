@@ -15,6 +15,13 @@ test("DNS validation rejects a hostname with any private answer", async () => {
   await assertPublicUrl("https://example.com", "network", async () => [{ address: "8.8.8.8" }]);
 });
 
+test("well-known NAT64 translations apply the embedded IPv4 network policy", async () => {
+  for (const address of ["64:ff9b::808:808", "64:ff9b::198.137.150.111"]) assert.equal(isPublicAddress(address), true, address);
+  for (const address of ["64:ff9b::7f00:1", "64:ff9b::a00:1", "64:ff9b::a9fe:a9fe", "64:ff9b::c0a8:1", "64:ff9b::6440:1", "64:ff9b::c612:1", "64:ff9b:1::808:808"]) assert.equal(isPublicAddress(address), false, address);
+  await assertPublicUrl("https://stripe.com", "translated", async () => [{ address: "64:ff9b::c689:966f" }, { address: "198.137.150.111" }]);
+  await assert.rejects(assertPublicUrl("https://example.com", "translated", async () => [{ address: "64:ff9b::7f00:1" }]), /private or reserved/);
+});
+
 test("encoded IP addresses and local hostnames cannot bypass public URL validation", async () => {
   for (const url of ["http://2130706433", "http://0x7f000001", "http://localhost", "http://metadata.google.internal", "http://[::ffff:7f00:1]", "file:///etc/passwd"]) {
     await assert.rejects(assertPublicUrl(url, "network", async () => [{ address: "8.8.8.8" }]), /private or reserved/);

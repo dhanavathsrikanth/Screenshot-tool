@@ -133,17 +133,23 @@ export async function startWorkerRuntime(runtime: {
   heartbeat?: Pick<WorkerHeartbeat, "start" | "close">;
   close(): Promise<void>;
 }): Promise<void> {
+  let keepWarmTimer: ReturnType<typeof setInterval> | undefined;
   try {
     await runtime.engine.warm();
+    keepWarmTimer = setInterval(() => {
+      void runtime.engine.warm().catch(() => {});
+    }, 10_000);
     const running = runtime.worker.start();
     void running.catch(() => {});
     await runtime.heartbeat?.start();
     try {
       await running;
     } finally {
+      if (keepWarmTimer) clearInterval(keepWarmTimer);
       await runtime.heartbeat?.close();
     }
   } catch (error) {
+    if (keepWarmTimer) clearInterval(keepWarmTimer);
     await runtime.close().catch(() => {});
     throw error;
   }

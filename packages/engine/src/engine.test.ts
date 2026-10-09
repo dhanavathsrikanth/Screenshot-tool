@@ -1,5 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import http from "node:http";
+import type { AddressInfo } from "node:net";
 import { captureOptionsSchema } from "@snapforge/contracts";
 import { createEngine, resolveViewport, SnapforgeEngine } from "./index.js";
 import { resolveConfig } from "./types.js";
@@ -15,7 +17,7 @@ test("resolveConfig applies production defaults", () => {
   assert.equal(config.prewarmPages, true);
   assert.equal(config.retries, 1);
   assert.equal(config.maxPageHeight, 24000);
-  assert.equal(config.idlePhaseMs, 3000);
+  assert.equal(config.idlePhaseMs, 1500);
   // Concurrency is derived from the host by default; the config value is only a ceiling.
   assert.equal(config.autoConcurrency, true);
   assert.equal(config.maxConcurrentCaptures, 12);
@@ -41,7 +43,7 @@ test("resolveViewport defaults to desktop standard", () => {
   assert.deepEqual(viewport, {
     width: 1280,
     height: 720,
-    deviceScaleFactor: 1,
+    deviceScaleFactor: 2,
     isMobile: false,
     hasTouch: false,
   });
@@ -58,6 +60,13 @@ test("resolveViewport applies device presets", () => {
   const iphone = resolveViewport(options({ device: "iphone_15_pro" }), "req");
   assert.equal(iphone.width, 393);
   assert.equal(iphone.deviceScaleFactor, 3);
+
+  const iphone17 = resolveViewport(options({ device: "iphone_17_pro_max" }), "req");
+  assert.equal(iphone17.width, 440);
+  assert.equal(iphone17.height, 956);
+  assert.equal(iphone17.deviceScaleFactor, 3);
+  assert.equal(iphone17.isMobile, true);
+  assert.equal(iphone17.hasTouch, true);
 });
 
 test("resolveViewport prefers explicit viewport over preset defaults", () => {
@@ -67,7 +76,7 @@ test("resolveViewport prefers explicit viewport over preset defaults", () => {
   );
   assert.equal(viewport.width, 1024);
   assert.equal(viewport.height, 600);
-  assert.equal(viewport.deviceScaleFactor, 1);
+  assert.equal(viewport.deviceScaleFactor, 2);
 });
 
 test("resolveViewport rejects unknown device presets", () => {
@@ -81,6 +90,39 @@ test("resolveViewport rejects unknown device presets", () => {
       return true;
     },
   );
+});
+
+test("capture applies responsive device emulation and returns preset-sized output", { timeout: 120_000 }, async (t) => {
+  const requests: string[] = [];
+  const server = http.createServer((request, response) => {
+    requests.push(request.headers["user-agent"] ?? "");
+    response.writeHead(200, { "content-type": "text/html" });
+    response.end(`<!doctype html><html><head><meta name="viewport" content="width=device-width, initial-scale=1">
+      <style>body{margin:0}#mobile{display:block}#desktop{display:none}@media(min-width:900px){#mobile{display:none}#desktop{display:block}}</style></head>
+      <body><main><h1 id="mobile">Mobile responsive layout</h1><h1 id="desktop">Desktop responsive layout</h1></main></body></html>`);
+  });
+  await new Promise<void>((resolve) => server.listen(0, "127.0.0.1", resolve));
+  t.after(() => server.close());
+
+  const engine = createEngine({ stealth: false, executablePath: process.env.PLAYWRIGHT_EXECUTABLE_PATH, allowPrivateNetwork: true, retries: 0 });
+  t.after(() => engine.close());
+  const url = `http://127.0.0.1:${(server.address() as AddressInfo).port}`;
+  const presets = [
+    { device: "iphone_15_pro", width: 393, height: 852, scale: 3, expectedLayout: "Mobile responsive layout", expectedUa: /iPhone/ },
+    { device: "iphone_15_pro_max", width: 430, height: 932, scale: 3, expectedLayout: "Mobile responsive layout", expectedUa: /iPhone/ },
+    { device: "iphone_17_pro_max", width: 440, height: 956, scale: 3, expectedLayout: "Mobile responsive layout", expectedUa: /iPhone OS 18_7/ },
+    { device: "pixel_8", width: 412, height: 915, scale: 2.625, expectedLayout: "Mobile responsive layout", expectedUa: /Android.*Pixel 8/ },
+    { device: "ipad_pro_11", width: 834, height: 1194, scale: 2, expectedLayout: "Mobile responsive layout", expectedUa: /iPad/ },
+    { device: "desktop_standard", width: 1280, height: 720, scale: 2, expectedLayout: "Desktop responsive layout", expectedUa: /Chrome/ },
+  ];
+
+  for (const preset of presets) {
+    const result = await engine.capture({ url, device: preset.device, format: "png", cache_ttl: 0 }, { inspectPage: true });
+    assert.equal(result.data.width, Math.round(preset.width * preset.scale), `${preset.device} output width`);
+    assert.equal(result.data.height, Math.round(preset.height * preset.scale), `${preset.device} output height`);
+    assert.ok(result.inspection?.markdown?.includes(preset.expectedLayout), `${preset.device} responsive breakpoint`);
+    assert.match(requests.at(-1) ?? "", preset.expectedUa, `${preset.device} user-agent`);
+  }
 });
 
 test("capture rejects invalid urls without launching a browser", async () => {

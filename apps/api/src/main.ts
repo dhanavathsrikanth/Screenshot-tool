@@ -1,5 +1,5 @@
 import { serve } from "@hono/node-server";
-import { WebhookDeliveryConsumer, captureSubmissionCodecFromEnv, createQueue, createQueueConnection, createQueueEvents, createQueueEventsWaiter, CaptureCompletionConsumer, RedisCaptureAdmission, CaptureDispatcher, CaptureQueue, resolveQueueConfig, readyWorkerCount } from "@snapforge/queue";
+import { WebhookDeliveryConsumer, captureSubmissionCodecFromEnv, createQueue, createQueueConnection, createQueueEvents, createQueueEventsWaiter, CaptureCompletionConsumer, RedisCaptureAdmission, CaptureDispatcher, CaptureQueue, HotCache, resolveQueueConfig, readyWorkerCount } from "@snapforge/queue";
 import { createGateway } from "./gateway.js";
 import { webhookDeliveries, captureLifecycle, captureSubmissions, findApiKeyByHash, linkReservationToJob, pool, recordCapture, reservationForJob, reserveCapture, settleCapture } from "@snapforge/database";
 
@@ -13,7 +13,8 @@ const queue = new CaptureQueue(queueHost, config);
 const events = await createQueueEvents(config, connection.producer);
 const dispatcher = new CaptureDispatcher(queue, config, createQueueEventsWaiter(events, queue));
 const billing = { reserveCapture, settleCapture, linkReservationToJob, reservationForJob, recordCapture, lifecycle: captureLifecycle, submissions: captureSubmissions };
-const completion = new CaptureCompletionConsumer({ queue, events, billing, dispatcher, submissionCodec,
+const hotCache = new HotCache({ maxEntries: Number(process.env.SNAPFORGE_HOT_CACHE_ENTRIES ?? 4096) });
+const completion = new CaptureCompletionConsumer({ queue, events, billing, dispatcher, submissionCodec, hotCache,
   admission: new RedisCaptureAdmission(connection.producer, { leaseMs: 7_200_000 }),
   retentionSeconds: Math.max(config.resultTtlSeconds, config.failedTtlSeconds),
   logger: (message, fields) => { console.info(message, fields); },
@@ -35,7 +36,7 @@ const app = createGateway({ redis: connection.producer, queue, dispatcher, submi
   ...billing,
   ping: async () => { await pool.query("SELECT 1"); },
   findApiKeyByHash,
-} });
+}, hotCache });
 
 const server = serve({ fetch: app.fetch, port, hostname: process.env.HOST ?? "0.0.0.0" }, (info) => {
   process.stdout.write(`Snapforge API listening on ${info.address}:${info.port}\n`);

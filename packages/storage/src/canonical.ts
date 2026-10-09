@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import type { CaptureOptions } from "@snapforge/contracts";
+import { CAPTURE_RENDER_VERSION, type CaptureOptions } from "@snapforge/contracts";
 
 /**
  * Options that describe *delivery* rather than *rendering*. Two requests differing only
@@ -85,7 +85,7 @@ export interface CacheKeyParts {
 export function cacheKey(options: CaptureOptions): string {
   const fingerprint = renderFingerprint(options);
   const targetUrl = normalizeTargetUrl(options.url);
-  return sha256(`${canonicalize(fingerprint)}|${targetUrl}`);
+  return sha256(`${CAPTURE_RENDER_VERSION}|${canonicalize(fingerprint)}|${targetUrl}`);
 }
 
 export function cacheKeyParts(options: CaptureOptions): CacheKeyParts {

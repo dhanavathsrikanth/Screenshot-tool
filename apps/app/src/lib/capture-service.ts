@@ -1,5 +1,5 @@
 import { Redis } from "ioredis";
-import { captureSubmissionCodecFromEnv, CaptureDispatcher, CaptureQueue, CaptureService, RedisCaptureAdmission, createQueue, readyWorkerCount, resolveQueueConfig } from "@snapforge/queue";
+import { captureSubmissionCodecFromEnv, CaptureDispatcher, CaptureQueue, CaptureService, HotCache, RedisCaptureAdmission, createQueue, readyWorkerCount, resolveQueueConfig } from "@snapforge/queue";
 import { captureLifecycle, captureSubmissions, linkReservationToJob, recordCapture, reservationForJob, reserveCapture, settleCapture } from "@snapforge/database";
 
 export function localCaptureEnabled(env: NodeJS.ProcessEnv = process.env): boolean {
@@ -19,10 +19,12 @@ async function createRuntime() {
   try { await redis.connect(); } catch { redis.disconnect(); throw new Error("Capture queue connection unavailable"); }
   const host = createQueue(config, redis);
   const queue = new CaptureQueue(host, config);
+  const hotCache = new HotCache({ maxEntries: Number(process.env.SNAPFORGE_HOT_CACHE_ENTRIES ?? 1024) });
   const service = new CaptureService({
     queue, dispatcher: new CaptureDispatcher(queue, config),
     admission: new RedisCaptureAdmission(redis, { leaseMs: 7_200_000 }),
     billing: { reserveCapture, settleCapture, linkReservationToJob, reservationForJob, recordCapture, lifecycle: captureLifecycle, submissions: captureSubmissions },
+    hotCache,
     submissionCodec,
     logger: (message, fields) => { console.warn(message, fields); },
   });

@@ -51,25 +51,25 @@ test("shared service reserves and links a stable owned job before enqueueing", a
   assert.equal(f.host.added[0].data.reservation_id, "stable-job");
   assert.equal(f.host.added[0].opts.jobId, "stable-job");
   assert.equal(f.host.added[0].data.api_key_id, undefined);
-  assert.equal(f.host.added[0].data.options.fail_if_incomplete, true);
+  assert.equal(f.host.added[0].data.options.fail_if_incomplete, false);
   assert.equal(f.held.size, 1);
 });
 
-test("admission denial happens before request parsing or reservation", async () => {
-  let read = false;
+test("admission denial still fails closed before reservation or rendering", async () => {
   const f = fixture({ admission: { acquireJob: async () => { throw new CaptureAdmissionError("id", true); }, releaseJob: async () => {} } });
-  await assert.rejects(f.service.submit({ accountId: "account" }, async () => { read = true; return input; }, "request", "async"), CaptureAdmissionError);
-  assert.equal(read, false);
-  assert.deepEqual(f.calls, []);
+  await assert.rejects(f.service.submit({ accountId: "account" }, input, "request", "async"), CaptureAdmissionError);
+  assert.equal(f.host.jobs.size, 0, "no enqueue must reach the queue");
+  assert.equal(f.calls.includes("reserve"), false, "no reservation is taken");
+  assert.equal(f.calls.includes("release"), false, "admission was never granted, so there is nothing to release");
 });
 
 for (const body of [{ ...input, format: "bad" }, async () => { throw new SnapforgeError({ code: "invalid_request", message: "bad JSON", requestId: "request" }); }]) {
-  test("invalid requests release admission without rendering or credit consumption", async () => {
+  test("invalid requests fail closed without consuming admission, reservation, or render", async () => {
     const f = fixture();
     let billingCalls = 0;
     f.deps.billing.settleCapture = async () => { billingCalls++; };
     await assert.rejects(f.service.submit({ accountId: "account" }, body, "request", "async"), SnapforgeError);
-    assert.deepEqual(f.calls, ["admit:account", "release"]);
+    assert.deepEqual(f.calls, [], "admission is taken only after a valid body parses");
     assert.equal(f.host.jobs.size, 0);
     assert.equal(billingCalls, 0);
   });
@@ -213,4 +213,117 @@ test("sync waiter failures cannot settle a still-active worker job", async () =>
   });
   assert.equal((await f.service.submit({ accountId: "account" }, input, "request", "sync")).state, "active");
   assert.deepEqual(f.settlements, []);
+});
+
+import { HotCache } from "./hot-cache.js";
+import { captureOptionsSchema } from "@snapforge/contracts";
+
+test("hot-cache hit returns the cached artifact synchronously without admitting or charging", async () => {
+  const hotCache = new HotCache();
+  const f = fixture({ hotCache });
+  hotCache.set(captureOptionsSchema.parse({ ...input, cache_ttl: 120 }), data);
+
+  const reply = await f.service.submit({ accountId: "account" }, { ...input, cache_ttl: 120 }, "request", "async");
+  assert.equal(reply.state, "completed");
+  assert.equal(reply.result?.ok, true);
+  assert.equal(reply.result?.data?.cached, true);
+  assert.equal(reply.result?.data?.cdn_url, data.cdn_url);
+  assert.equal(reply.result?.worker_id, "hot-cache");
+  assert.equal(f.host.added.length, 0, "no enqueue on cache hit");
+  assert.deepEqual(f.calls, [], "no admission, no reservation, no link");
+  assert.equal(f.settlements.length, 0);
+});
+
+test("hot-cache miss falls through to the normal reserve + dispatch path", async () => {
+  const hotCache = new HotCache();
+  const f = fixture({ hotCache });
+  const reply = await f.service.submit({ accountId: "account" }, input, "request", "async");
+  assert.equal(reply.state, "waiting");
+  assert.equal(f.host.added.length, 1);
+  assert.deepEqual(f.calls.slice(0, 3), ["admit:account", "reserve:account", "link:stable-job"]);
+});
+
+test("webhook-bearing submit bypasses the hot cache", async () => {
+  const hotCache = new HotCache();
+  const f = fixture({ hotCache });
+  hotCache.set(captureOptionsSchema.parse({ ...input, cache_ttl: 120 }), data);
+
+  const webhook = { url: "https://hook.example.com", secret: "a-very-strong-shared-secret-key" };
+  await assert.rejects(
+    f.service.submit({ accountId: "account" }, { ...input, cache_ttl: 120, webhook }, "request", "async"),
+    (error: unknown) => error instanceof SnapforgeError && error.code === "unsupported_option",
+  );
+  assert.equal(f.host.added.length, 0, "webhook requests must not bypass durable delivery");
+});
+
+test("durable submission mode bypasses the hot cache", async () => {
+  const hotCache = new HotCache();
+  const submissionCodec = {
+    seal: () => "cipher",
+    open: () => ({ accountId: "account", apiKeyId: undefined, jobId: "stable-job", mode: "async" as const, enqueuedAt: Date.now(), options: captureOptionsSchema.parse({ ...input, cache_ttl: 120 }), webhook: undefined }),
+    sealWebhook: () => "cipher",
+    openWebhook: () => ({ url: "https://hook.example.com", secret: "a-very-strong-shared-secret-key" }),
+  };
+  const billingWithSubmissions = {
+    reserveCapture: async () => true,
+    settleCapture: async () => undefined,
+    linkReservationToJob: async () => undefined,
+    reservationForJob: async () => null,
+    recordCapture: async () => undefined,
+    submissions: {
+      reserveSubmission: async () => true,
+      dispatchSubmission: async () => true,
+      claimPendingSubmissions: async () => [],
+      pendingSubmission: async () => null,
+      existingRequest: async () => null,
+    },
+  };
+  const f = fixture({ hotCache, billing: billingWithSubmissions, submissionCodec });
+  hotCache.set(captureOptionsSchema.parse({ ...input, cache_ttl: 120 }), data);
+
+  await assert.rejects(
+    f.service.submit({ accountId: "account" }, { ...input, cache_ttl: 120 }, "request", "async"),
+    (error: unknown) => error instanceof SnapforgeError && error.code === "egress_unavailable",
+    "durable submission paths run through the queue, not the hot cache, so acknowledge fails when the fake queue has no job",
+  );
+  assert.notEqual(f.calls.at(0), undefined, "durable path must run even with a hot cache hit available");
+  assert.equal(f.calls.includes("release"), false, "durable submissions keep admission until recovery confirms the job");
+});
+
+test("lookup populates the hot cache after a successful finalize", async () => {
+  const hotCache = new HotCache();
+  const f = fixture({ hotCache });
+  await f.service.submit({ accountId: "account" }, input, "request", "async");
+  complete(f.host.jobs.get("stable-job")!);
+
+  assert.equal(hotCache.size, 0);
+  await f.service.lookup({ accountId: "account" }, "stable-job", "read");
+  assert.equal(hotCache.size, 1);
+  assert.equal(hotCache.get(captureOptionsSchema.parse(input))?.cdn_url, data.cdn_url);
+});
+
+test("lookup does not populate the hot cache on failed captures", async () => {
+  const hotCache = new HotCache();
+  const f = fixture({ hotCache });
+  await f.service.submit({ accountId: "account" }, input, "request", "async");
+  const job = f.host.jobs.get("stable-job")!;
+  job.setState("failed");
+  job.returnvalue = { request_id: "stable-job", mode: job.data.mode, ok: false,
+    error: { code: "render_timeout", message: "navigation exceeded 15000ms", retriable: true, request_id: "stable-job" },
+    duration_ms: 15_000, attempts_made: 3, enqueued_at: job.timestamp, completed_at: Date.now() };
+  await f.service.lookup({ accountId: "account" }, "stable-job", "read");
+  assert.equal(hotCache.size, 0);
+});
+
+test("hot-cache hit is reusable across requests for the same options", async () => {
+  const hotCache = new HotCache();
+  const f = fixture({ hotCache });
+  const options = captureOptionsSchema.parse({ ...input, cache_ttl: 60 });
+  hotCache.set(options, data);
+
+  const first = await f.service.submit({ accountId: "account" }, { ...input, cache_ttl: 60 }, "request-1", "async");
+  const second = await f.service.submit({ accountId: "account" }, { ...input, cache_ttl: 60 }, "request-2", "async");
+  assert.equal(first.state, "completed");
+  assert.equal(second.state, "completed");
+  assert.equal(f.host.added.length, 0);
 });

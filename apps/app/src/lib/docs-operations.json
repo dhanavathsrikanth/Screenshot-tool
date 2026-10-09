@@ -1,0 +1,8 @@
+{
+  "capture": { "method": "POST", "endpoint": "/v1/screenshot", "label": "Send capture", "handle": "" },
+  "job": { "method": "GET", "endpoint": "/v1/jobs/{id}", "label": "Check job", "handle": "Job ID" },
+  "request": { "method": "GET", "endpoint": "/v1/requests/{key}", "label": "Find request", "handle": "Idempotency key" },
+  "health": { "method": "GET", "endpoint": "/v1/health", "label": "Check health", "handle": "" },
+  "webhook": { "method": "GET", "endpoint": "/v1/jobs/{id}/webhook", "label": "Check delivery", "handle": "Job ID" },
+  "redeliver": { "method": "POST", "endpoint": "/v1/jobs/{id}/webhook/redeliver", "label": "Redeliver webhook", "handle": "Job ID" }
+}

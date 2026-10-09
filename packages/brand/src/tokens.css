@@ -76,8 +76,8 @@
   --sf-border: var(--sf-color-neutral-200);
   --sf-border-strong: var(--sf-color-neutral-300);
   --sf-text-primary: var(--sf-color-neutral-900);
-  --sf-text-secondary: var(--sf-color-neutral-700);
-  --sf-text-muted: var(--sf-color-neutral-600);
+  --sf-text-secondary: var(--sf-color-neutral-800);
+  --sf-text-muted: var(--sf-color-neutral-700);
   --sf-accent: var(--sf-color-primary-600);
   --sf-accent-hover: var(--sf-color-primary-700);
   --sf-accent-text: var(--sf-color-primary-700);

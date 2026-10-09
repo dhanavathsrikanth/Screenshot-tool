@@ -172,7 +172,7 @@ test("HTTP idempotency replays and request-key recovery use the original account
   const app = createGateway(f.deps);
   const retryHeaders = { ...headers, "idempotency-key": "http-lost-response" };
   const post = (body: unknown) => app.request("/v1/screenshot?mode=async", { method: "POST", headers: retryHeaders, body: JSON.stringify(body) });
-  const original = await post({ url: "https://example.com" });
+  const original = await post({ url: "https://example.com", format: "png" });
   assert.equal(original.status, 202);
   const id = (await original.json() as { data: { job_id: string } }).data.job_id;
   assert.equal((await post({ url: "https://example.com", format: "png" })).status, 202);

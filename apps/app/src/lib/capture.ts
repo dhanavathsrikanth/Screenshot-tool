@@ -1,4 +1,4 @@
-import type { CaptureFormat } from "@snapforge/contracts";
+import type { CaptureFormat, RenderDiagnostics } from "@snapforge/contracts";
 
 export interface CaptureMetrics {
   url: string;
@@ -9,6 +9,8 @@ export interface CaptureMetrics {
   bytes: number;
   duration_ms: number;
   blocked_requests: number;
+  cached?: boolean;
+  render_diagnostics?: RenderDiagnostics;
 }
 
 export interface CaptureFailure {

@@ -22,7 +22,9 @@ export function createLauncher(stealth: boolean): EngineLauncher {
   if (!stealth) return pwChromium;
   if (!cachedStealthLauncher) {
     const extra = addExtra(pwChromium);
-    extra.use(StealthPlugin());
+    const plugin = StealthPlugin();
+    plugin.enabledEvasions.delete("iframe.contentWindow");
+    extra.use(plugin);
     cachedStealthLauncher = extra;
   }
   return cachedStealthLauncher;

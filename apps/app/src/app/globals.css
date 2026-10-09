@@ -66,7 +66,7 @@
   }
 
   html {
-    color-scheme: dark;
+    color-scheme: light;
   }
 
   body {
@@ -107,8 +107,8 @@
 @layer components {
   .sf-card {
     border-radius: 12px;
-    background: color-mix(in srgb, var(--sf-bg-surface) 45%, var(--sf-bg-canvas));
-    border-color: color-mix(in srgb, var(--sf-border) 75%, transparent);
+    background: var(--sf-bg-surface);
+    border-color: var(--sf-border);
   }
 
   .sf-stat-group {

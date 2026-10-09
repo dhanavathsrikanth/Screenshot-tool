@@ -89,6 +89,37 @@ test("PDF success provides bytes to the existing download action", async () => {
   assert.equal(body.image, `data:application/pdf;base64,${pdf.toString("base64")}`);
 });
 
+test("local capture forwards section diagnostics and honors an explicit quality override", async () => {
+  const render_diagnostics = { version: 3, algorithm: "by_sections" as const, sections: 8, device_scale_factor: 2, scroll_height: 4500, stopped_reason: "bottom", truncated: false };
+  const { POST, calls } = harness({ getEngine: async () => ({ capture: async (options) => { calls.push({ name: "capture", args: [options] }); return { ...outcome, data: { ...outcome.data, render_diagnostics } }; } }) });
+  const response = await POST(request({ url: "https://example.com", fail_if_incomplete: false }));
+  assert.deepEqual((await response.json()).metrics.render_diagnostics, render_diagnostics);
+  assert.equal((calls.find((call) => call.name === "capture")?.args[0] as Record<string, unknown>).fail_if_incomplete, false);
+});
+
+test("browser preparation overlaps billing reservation and cannot render before credits are reserved", async () => {
+  let finish: () => void = () => {};
+  let prepared = false;
+  const preparing = new Promise<void>((resolve) => { finish = resolve; });
+  const { POST } = harness({
+    prepare: async () => { prepared = true; await preparing; },
+    reserve: async () => { assert.equal(prepared, true); finish(); return true; },
+  });
+  const response = await POST(request());
+  assert.equal(response.status, 200);
+  assert.match(response.headers.get("server-timing")!, /reservation;dur=\d/);
+  assert.match(response.headers.get("server-timing")!, /render;dur=\d/);
+  assert.match(response.headers.get("server-timing")!, /total;dur=\d/);
+});
+
+test("optional preparation failure does not discard a successful capture or bypass quota", async () => {
+  for (const allowed of [true, false]) {
+    const { POST, calls } = harness({ prepare: async () => { throw new Error("warmup unavailable"); }, reserve: async () => allowed });
+    assert.equal((await POST(request())).status, allowed ? 200 : 429);
+    assert.equal(calls.some((call) => call.name === "capture"), allowed);
+  }
+});
+
 for (const code of ["invalid_request", "render_incomplete", "render_timeout"] as const) {
   test(`${code} refunds reserved credits and releases admission`, async () => {
     const { POST, calls } = harness({ getEngine: async () => ({ capture: async () => { throw new SnapforgeError({ code, message: "Capture rejected", requestId: "engine-id" }); } }) });

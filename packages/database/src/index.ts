@@ -18,10 +18,11 @@ if (!connectionString) throw new Error("DATABASE_URL must be configured for @sna
 export const pool = globalDatabase.__snapforgePool ??= new Pool({
   connectionString,
   max: Number(process.env.DATABASE_POOL_MAX ?? 5),
-  idleTimeoutMillis: 30_000,
+  idleTimeoutMillis: Number(process.env.DATABASE_POOL_IDLE_TIMEOUT_MS ?? 120_000),
   connectionTimeoutMillis: 10_000,
   allowExitOnIdle: process.env.NODE_ENV !== "production",
 });
+if (pool.listenerCount("error") === 0) pool.on("error", () => { console.warn("Database idle connection closed; the pool will reconnect on demand"); });
 export const db = globalDatabase.__snapforgeDb ??= drizzle(pool, { schema });
 
 export interface ApiKeyRow {

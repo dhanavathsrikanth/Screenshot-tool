@@ -11,14 +11,14 @@
 .groupLabel { padding: 0 10px 8px; color: var(--sf-text-muted); font-size: 11px; font-weight: 500; }
 .navLink { display: flex; min-height: 34px; align-items: center; gap: 10px; padding: 7px 10px; margin: 2px 0; border-radius: 7px; color: var(--sf-text-secondary); font-size: 13px; transition: color 150ms, background 150ms; }
 .navLink:hover { color: var(--sf-text-primary); background: var(--sf-bg-surface); }
-.active { color: var(--sf-text-primary); background: var(--sf-bg-surface-raised); }
-.active svg { color: var(--sf-accent-text); }
+.active { color: var(--sf-color-primary-800); background: var(--sf-color-primary-50); }
+.active svg { color: var(--sf-color-primary-600); }
 .rail .brand { padding: 0 8px; }
 .rail .navBody { padding-inline: 4px; }
 .rail .navLink { justify-content: center; padding-inline: 0; }
 .footer { margin: 0 8px; padding: 12px 0; border-top: 1px solid var(--sf-border); }
 .footerText { padding: 12px 10px 0; color: var(--sf-text-muted); font-size: 10px; }
-.workspace { display: flex; flex: 1; flex-direction: column; min-width: 0; border: 1px solid var(--sf-border); border-radius: 14px; overflow: hidden; background: color-mix(in srgb, var(--sf-bg-surface) 25%, var(--sf-bg-canvas)); }
+.workspace { display: flex; flex: 1; flex-direction: column; min-width: 0; border: 1px solid var(--sf-border); border-radius: 14px; overflow: hidden; background: var(--sf-bg-surface); }
 .topbar { display: flex; flex-shrink: 0; align-items: center; gap: 12px; min-height: 56px; padding: 0 24px; border-bottom: 1px solid var(--sf-border); }
 .iconButton { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; flex-shrink: 0; border-radius: 6px; color: var(--sf-text-muted); cursor: pointer; }
 .iconButton:hover { color: var(--sf-text-primary); background: var(--sf-bg-surface-raised); }

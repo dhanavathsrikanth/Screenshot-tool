@@ -108,7 +108,7 @@ test("planCapture for pdf ignores clipping", () => {
   assert.equal(plan.clip, undefined);
 });
 
-test("buildPdfOptions sets print defaults and single page unless full page", () => {
+test("buildPdfOptions always produces a single-page pdf and tracks doc height when full_page", () => {
   const metrics = {
     viewportWidth: 800,
     viewportHeight: 600,
@@ -123,8 +123,15 @@ test("buildPdfOptions sets print defaults and single page unless full page", () 
   assert.equal(single.height, "600px");
   assert.equal(single.margin.top, "0px");
 
-  const full = buildPdfOptions(options({ format: "pdf", full_page: true }), metrics);
-  assert.equal(full.pageRanges, undefined);
+  const tallMetrics = { ...metrics, docHeight: 9000 };
+  const full = buildPdfOptions(options({ format: "pdf", full_page: true }), tallMetrics);
+  assert.equal(full.pageRanges, "1");
+  assert.equal(full.width, "800px");
+  assert.equal(full.height, "9000px");
+
+  const cappedMetrics = { ...metrics, docHeight: 60000 };
+  const capped = buildPdfOptions(options({ format: "pdf", full_page: true }), cappedMetrics, 24000);
+  assert.equal(capped.height, "24000px", "docHeight is capped at maxPageHeight so the rendered pdf stays a single page");
 });
 
 function pngHeader(width: number, height: number): Buffer {

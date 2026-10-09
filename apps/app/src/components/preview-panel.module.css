@@ -1,0 +1,238 @@
+.preview {
+  min-width: 0;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 10px;
+}
+
+.browserWindow {
+  overflow: hidden;
+  border: 1px solid var(--sf-color-neutral-900);
+  border-radius: 18px;
+  padding: 8px;
+  background: var(--sf-color-neutral-950);
+  box-shadow: 0 12px 28px color-mix(in srgb, var(--sf-color-neutral-950) 18%, transparent);
+}
+
+.browserBar {
+  display: flex;
+  height: 24px;
+  align-items: flex-start;
+  gap: 7px;
+  padding: 2px 4px 8px;
+}
+
+.closeDot,
+.minimizeDot,
+.maximizeDot {
+  width: 9px;
+  height: 9px;
+  flex: none;
+  border-radius: 50%;
+}
+
+.closeDot {
+  background: var(--sf-color-danger);
+}
+
+.minimizeDot {
+  background: var(--sf-color-warning);
+}
+
+.maximizeDot {
+  background: var(--sf-color-success);
+}
+
+.browserScreen {
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--sf-color-neutral-900);
+}
+
+.deviceFrame {
+  position: relative;
+  box-sizing: border-box;
+  width: calc(100% + 22px);
+  margin-inline: -11px;
+  padding: 10px;
+  border: 1px solid var(--sf-color-neutral-900);
+  background: linear-gradient(145deg, var(--sf-color-neutral-800), var(--sf-color-neutral-950) 38%);
+  box-shadow: 0 18px 42px color-mix(in srgb, var(--sf-color-neutral-950) 28%, transparent), inset 0 0 0 1px color-mix(in srgb, var(--sf-color-neutral-50) 8%, transparent);
+}
+
+.iphoneFrame,
+.androidFrame {
+  border-radius: 42px;
+}
+
+.tabletFrame {
+  border-radius: 25px;
+  padding: 12px;
+}
+
+.deviceScreen {
+  position: relative;
+  max-height: min(680px, calc(100vh - 280px));
+  min-height: 280px;
+  overflow: auto;
+  overscroll-behavior: contain;
+  border-radius: 32px;
+  background: var(--sf-color-neutral-900);
+  scrollbar-color: var(--sf-color-neutral-700) transparent;
+  scrollbar-width: thin;
+}
+
+.deviceScreen img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.deviceStatusBar {
+  position: relative;
+  display: flex;
+  height: 30px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 13px 2px;
+  color: var(--sf-color-neutral-50);
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+
+.deviceIsland {
+  position: absolute;
+  left: 50%;
+  width: 78px;
+  height: 19px;
+  transform: translateX(-50%);
+  border: 1px solid var(--sf-color-neutral-800);
+  border-radius: 999px;
+  background: var(--sf-color-neutral-950);
+  box-shadow: inset 0 1px 2px color-mix(in srgb, var(--sf-color-neutral-50) 10%, transparent);
+}
+
+.deviceIndicators {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.signal {
+  width: 13px;
+  height: 9px;
+  background: linear-gradient(to top, var(--sf-color-neutral-50) 0 100%) left bottom / 2px 4px no-repeat,
+    linear-gradient(to top, var(--sf-color-neutral-50) 0 100%) 4px bottom / 2px 6px no-repeat,
+    linear-gradient(to top, var(--sf-color-neutral-50) 0 100%) 8px bottom / 2px 8px no-repeat,
+    linear-gradient(to top, var(--sf-color-neutral-50) 0 100%) 12px bottom / 2px 9px no-repeat;
+}
+
+.battery {
+  position: relative;
+  width: 16px;
+  height: 8px;
+  border: 1px solid var(--sf-color-neutral-50);
+  border-radius: 2px;
+}
+
+.battery::before {
+  position: absolute;
+  inset: 1px 3px 1px 1px;
+  border-radius: 1px;
+  background: var(--sf-color-neutral-50);
+  content: "";
+}
+
+.battery::after {
+  position: absolute;
+  top: 2px;
+  right: -3px;
+  width: 2px;
+  height: 3px;
+  border-radius: 0 2px 2px 0;
+  background: var(--sf-color-neutral-50);
+  content: "";
+}
+
+.deviceHomeBar {
+  display: flex;
+  height: 20px;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 1px;
+}
+
+.deviceHomeBar span {
+  width: 94px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--sf-color-neutral-50);
+}
+
+.deviceButton {
+  position: absolute;
+  z-index: 2;
+  top: 112px;
+  right: -3px;
+  width: 3px;
+  height: 64px;
+  border-radius: 0 3px 3px 0;
+  background: var(--sf-color-neutral-700);
+}
+
+.tabletFrame .deviceButton {
+  top: 104px;
+  height: 50px;
+}
+
+.androidFrame .deviceIsland {
+  width: 9px;
+  height: 9px;
+  border: 0;
+}
+
+.tabletFrame .deviceIsland {
+  width: 7px;
+  height: 7px;
+  border: 0;
+}
+
+.tabletFrame .deviceHomeBar span {
+  width: 56px;
+  height: 3px;
+}
+
+@media (max-width: 520px) {
+  .deviceFrame {
+    width: calc(100% + 16px);
+    margin-inline: -8px;
+    padding: 7px;
+  }
+
+  .iphoneFrame,
+  .androidFrame {
+    border-radius: 34px;
+  }
+
+  .tabletFrame {
+    border-radius: 20px;
+    padding: 9px;
+  }
+
+  .deviceScreen {
+    border-radius: 27px;
+  }
+
+  .deviceStatusBar {
+    height: 26px;
+    padding-inline: 10px;
+  }
+
+  .deviceHomeBar {
+    height: 17px;
+  }
+}

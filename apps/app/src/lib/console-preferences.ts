@@ -11,7 +11,7 @@ export interface ConsolePrefs {
 
 export const DEFAULT_PREFS: ConsolePrefs = {
   defaultDevice: "desktop_standard",
-  defaultFormat: "png",
+  defaultFormat: "webp",
   fullPageByDefault: false,
   autoRefreshLogs: true,
   showBlockedRequests: true,
@@ -26,7 +26,7 @@ export function readPreferences(): ConsolePrefs {
     if (!value || typeof value !== "object") return DEFAULT_PREFS;
     return {
       defaultDevice: typeof value.defaultDevice === "string" && Object.hasOwn(DEVICE_PRESETS, value.defaultDevice) ? value.defaultDevice : DEFAULT_PREFS.defaultDevice,
-      defaultFormat: ["png", "jpeg", "webp", "pdf"].includes(value.defaultFormat ?? "") ? value.defaultFormat! : "png",
+      defaultFormat: ["png", "jpeg", "webp", "pdf"].includes(value.defaultFormat ?? "") ? value.defaultFormat! : DEFAULT_PREFS.defaultFormat,
       fullPageByDefault: typeof value.fullPageByDefault === "boolean" ? value.fullPageByDefault : false,
       autoRefreshLogs: typeof value.autoRefreshLogs === "boolean" ? value.autoRefreshLogs : true,
       showBlockedRequests: typeof value.showBlockedRequests === "boolean" ? value.showBlockedRequests : true,

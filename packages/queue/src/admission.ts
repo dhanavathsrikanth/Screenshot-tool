@@ -23,6 +23,13 @@ export interface AdmissionRedis {
   zrem(key: string, member: string): Promise<number>;
 }
 
+export interface HttpRateLimit {
+  /** Stable per-caller identifier (e.g. API key id) used as the rate-limit shard. */
+  httpKey: string;
+  windowMs: number;
+  max: number;
+}
+
 type AdmissionOptions = { [K in keyof typeof CAPTURE_ADMISSION_DEFAULTS]: K extends "prefix" ? string : number };
 
 export class CaptureAdmissionError extends SnapforgeError {
@@ -88,6 +95,35 @@ redis.call('PEXPIRE', KEYS[2], ARGV[4])
 return {1, 0}
 `;
 
+/**
+ * Combined per-key HTTP rate limit + per-account admission in a single Redis round-trip.
+ *
+ * Replaces the gateway's separate `rateScript` Lua call and the admission CLAIM Lua call
+ * with one script, so a cold submit that does not hit the in-process hot cache pays
+ * one Redis RTT before the BullMQ enqueue.
+ *
+ * Returns `{state, retryAfterSeconds}` where `state` is 1 (admit), 0 (rate_limited),
+ * or 2 (admission_full).
+ */
+const CLAIM_WITH_HTTP_RATE = `
+redis.call('ZREMRANGEBYSCORE', KEYS[1], 0, tonumber(ARGV[1]) - tonumber(ARGV[2]))
+if redis.call('ZCARD', KEYS[1]) >= tonumber(ARGV[3]) then
+  local oldest = redis.call('ZRANGE', KEYS[1], 0, 0, 'WITHSCORES')
+  local oldestScore = tonumber(oldest[2]) or tonumber(ARGV[1])
+  return {0, math.max(1, math.ceil((oldestScore + tonumber(ARGV[2]) - tonumber(ARGV[1])) / 1000))}
+end
+redis.call('ZADD', KEYS[1], tonumber(ARGV[1]), ARGV[4])
+redis.call('PEXPIRE', KEYS[1], tonumber(ARGV[2]))
+local clock = redis.call('TIME')
+local now = tonumber(clock[1]) * 1000 + math.floor(tonumber(clock[2]) / 1000)
+redis.call('ZREMRANGEBYSCORE', KEYS[2], '-inf', now - tonumber(ARGV[6]))
+if redis.call('ZSCORE', KEYS[2], ARGV[7]) then return {1, 0} end
+if redis.call('ZCARD', KEYS[2]) >= tonumber(ARGV[5]) then return {2, 1} end
+redis.call('ZADD', KEYS[2], now + tonumber(ARGV[6]), ARGV[7])
+redis.call('PEXPIRE', KEYS[2], tonumber(ARGV[6]))
+return {1, 0}
+`;
+
 const RENEW = `
 if not redis.call('ZSCORE', KEYS[1], ARGV[1]) then return 0 end
 local clock = redis.call('TIME')
@@ -133,11 +169,30 @@ export class RedisCaptureAdmission implements CaptureAdmission {
     return `${this.options.prefix}:{${account}}`;
   }
 
-  async acquireJob(accountId: string, requestId: string): Promise<void> {
-    const key = this.accountKey(accountId);
+  async acquireJob(accountId: string, requestId: string, httpRate?: HttpRateLimit): Promise<void> {
+    const account = this.accountKey(accountId);
+    if (httpRate) {
+      const rateKey = `${this.options.prefix}:http-rate:{${httpRate.httpKey}}`;
+      const member = `${Date.now()}:${requestId}`;
+      let result: unknown;
+      try {
+        result = await this.redis.eval(CLAIM_WITH_HTTP_RATE, 2, rateKey, `${account}:active`,
+          Date.now(), httpRate.windowMs, httpRate.max,
+          member, this.options.concurrency, this.options.leaseMs, requestId);
+      } catch {
+        throw new CaptureAdmissionError(requestId, false);
+      }
+      if (!Array.isArray(result) || result.length !== 2 ||
+        ![0, 1, 2].includes(result[0]) || !Number.isSafeInteger(result[1]) || result[1] < 0) {
+        throw new CaptureAdmissionError(requestId, false);
+      }
+      const state = Number(result[0]);
+      if (state === 1) return;
+      throw new CaptureAdmissionError(requestId, true, Math.max(1, Number(result[1])));
+    }
     let result: unknown;
     try {
-      result = await this.redis.eval(CLAIM, 2, `${key}:rate`, `${key}:active`,
+      result = await this.redis.eval(CLAIM, 2, `${account}:rate`, `${account}:active`,
         this.options.requests, this.options.windowMs, this.options.concurrency, this.options.leaseMs, requestId);
     } catch {
       throw new CaptureAdmissionError(requestId, false);

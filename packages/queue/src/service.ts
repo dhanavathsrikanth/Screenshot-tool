@@ -1,5 +1,5 @@
 import { randomUUID } from "node:crypto";
-import { captureOptionsSchema, captureRequestSchema, idempotencyKeySchema, SnapforgeError, type CaptureOptions, type CaptureWebhook } from "@snapforge/contracts";
+import { captureOptionsSchema, captureRequestSchema, idempotencyKeySchema, SnapforgeError, type CaptureOptions, type CaptureSuccessData, type CaptureWebhook } from "@snapforge/contracts";
 import { captureRequestFingerprint, CaptureRequestConflictError, idempotentJobId } from "./idempotency.js";
 import { deliverCaptureSubmission, type CaptureSubmissionCodec, type CaptureSubmissionRepository } from "./submission.js";
 import { CaptureFinalizer, type CaptureLifecycleRepository } from "./settlement.js";
@@ -7,6 +7,8 @@ export { artifactData } from "./outcome.js";
 import type { CaptureDispatcher } from "./dispatcher.js";
 import type { CaptureQueue } from "./queue.js";
 import type { CaptureMode, JobSnapshot } from "./types.js";
+import type { HotCache } from "./hot-cache.js";
+import type { HttpRateLimit } from "./admission.js";
 
 export interface CaptureHistoryEntry {
   id: string; at: number; ok: boolean; cached?: boolean; url: string; format: string;
@@ -34,11 +36,16 @@ export interface CaptureServiceDependencies {
   dispatcher: Pick<CaptureDispatcher, "dispatch"> & Partial<Pick<CaptureDispatcher, "waitForResult">>;
   submissionCodec?: CaptureSubmissionCodec;
   admission: {
-    acquireJob(accountId: string, jobId: string): Promise<void>;
+    acquireJob(accountId: string, jobId: string, httpRate?: HttpRateLimit): Promise<void>;
     releaseJob(accountId: string, jobId: string): Promise<void>;
     recoverJob?(accountId: string, jobId: string): Promise<void>;
   };
   billing: CaptureBilling;
+  /**
+   * Optional synchronous LRU of completed results. When provided, submits for
+   * non-webhook captures hit the cache before admission/reservation/dispatch.
+   */
+  hotCache?: HotCache;
   newId?: () => string;
   logger?: (message: string, fields: Record<string, unknown>) => void;
 }
@@ -46,17 +53,28 @@ export interface CaptureServiceDependencies {
 export class CaptureService {
   constructor(private readonly deps: CaptureServiceDependencies) {}
 
-  async submit(identity: CaptureIdentity, input: unknown, requestId: string, mode?: CaptureMode, idempotencyKey?: string): Promise<JobSnapshot> {
+  async submit(identity: CaptureIdentity, input: unknown, requestId: string, mode?: CaptureMode, idempotencyKey?: string, httpRate?: HttpRateLimit): Promise<JobSnapshot> {
     if (idempotencyKey !== undefined) return this.submitIdempotent(identity, input, requestId, mode, idempotencyKey);
     const jobId = (this.deps.newId ?? randomUUID)();
-    await this.deps.admission.acquireJob(identity.accountId, jobId);
     let attemptedEnqueue = false;
     let reservationAttempted = false;
+    let admitted = false;
     try {
       const body = typeof input === "function" ? await (input as () => Promise<unknown>)() : input;
       const parsed = captureRequestSchema.safeParse(body);
       if (!parsed.success) throw new SnapforgeError({ code: "invalid_request", message: "Capture options are invalid", requestId });
       const options = captureOptionsSchema.parse(parsed.data);
+
+      // Synchronous hot-cache fast path. Webhook-bearing and durable-submission
+      // requests skip this so they always reach the queue/webhook pipeline.
+      if (!parsed.data.webhook && !this.deps.billing.submissions && this.deps.hotCache) {
+        const hit = this.deps.hotCache.get(options);
+        if (hit) return this.snapshotFromHotCache(jobId, requestId, hit);
+      }
+
+      await this.deps.admission.acquireJob(identity.accountId, jobId, httpRate);
+      admitted = true;
+
       if (this.deps.billing.submissions) return this.submitDurable(identity, jobId, options, requestId, mode ?? (options.sync ? "sync" : "async"), undefined, parsed.data.webhook);
       if (parsed.data.webhook) throw new SnapforgeError({ code: "unsupported_option", message: "Durable webhook delivery is not configured", requestId });
       reservationAttempted = true;
@@ -83,10 +101,37 @@ export class CaptureService {
         if (found) return this.acknowledge(identity, jobId, requestId);
       }
       if (reservationAttempted) await this.deps.billing.settleCapture(jobId, false).catch(() => this.warn("Capture reservation release failed", jobId));
-      await this.deps.admission.releaseJob(identity.accountId, jobId).catch(() => this.warn("Capture admission release failed", jobId));
+      if (admitted) await this.deps.admission.releaseJob(identity.accountId, jobId).catch(() => this.warn("Capture admission release failed", jobId));
       throw error;
     }
     return this.acknowledge(identity, jobId, requestId);
+  }
+
+  private snapshotFromHotCache(jobId: string, requestId: string, hit: CaptureSuccessData): JobSnapshot {
+    const now = Date.now();
+    const data: CaptureSuccessData = { ...hit, cached: true };
+    return {
+      id: jobId,
+      state: "completed",
+      mode: "sync",
+      request_id: requestId,
+      progress: null,
+      attempts_made: 0,
+      attempt_budget: 1,
+      enqueued_at: now,
+      result: {
+        request_id: requestId,
+        mode: "sync",
+        ok: true,
+        data,
+        duration_ms: hit.duration_ms,
+        attempts_made: 0,
+        enqueued_at: now,
+        completed_at: now,
+        worker_id: "hot-cache",
+      },
+      webhook: null,
+    };
   }
 
   private async submitIdempotent(identity: CaptureIdentity, input: unknown, requestId: string, mode: CaptureMode | undefined, key: string): Promise<JobSnapshot> {
@@ -182,7 +227,16 @@ export class CaptureService {
     if (!snapshot) throw new SnapforgeError({ code: "invalid_request", message: "Job not found", requestId });
     const result = { ...snapshot, webhook: snapshot.webhook ? { url: snapshot.webhook.url, event: snapshot.webhook.event } : null };
     if (snapshot.state !== "completed" && snapshot.state !== "failed") return result;
-    return new CaptureFinalizer(this.deps.billing, this.deps.admission, this.deps.logger).finalize(owned, snapshot, identity.accountId);
+    const finalized = await new CaptureFinalizer(this.deps.billing, this.deps.admission, this.deps.logger).finalize(owned, snapshot, identity.accountId);
+    this.populateHotCache(owned.data.options, finalized);
+    return finalized;
+  }
+
+  private populateHotCache(options: CaptureOptions, snapshot: JobSnapshot): void {
+    if (!this.deps.hotCache) return;
+    const data = snapshot.result?.data;
+    if (!snapshot.result?.ok || !data || !data.cdn_url) return;
+    this.deps.hotCache.set(options, data);
   }
 
   private warn(message: string, jobId: string): void {

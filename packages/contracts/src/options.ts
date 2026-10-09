@@ -3,6 +3,7 @@ import { REGION_IDS } from "./regions.js";
 
 export const CAPTURE_FORMATS = ["png", "jpeg", "webp", "pdf"] as const;
 export type CaptureFormat = (typeof CAPTURE_FORMATS)[number];
+export const CAPTURE_RENDER_VERSION = 7;
 
 export const CAPTURE_MIME_TYPES = {
   png: "image/png",
@@ -20,7 +21,7 @@ export type ColorScheme = (typeof COLOR_SCHEMES)[number];
 export const viewportSchema = z.object({
   width: z.number().int().min(320).max(3840).default(1280),
   height: z.number().int().min(240).max(2160).default(720),
-  deviceScaleFactor: z.number().min(1).max(3).default(1),
+  deviceScaleFactor: z.number().min(1).max(3).default(2),
   isMobile: z.boolean().default(false),
   hasTouch: z.boolean().default(false),
 });
@@ -85,10 +86,14 @@ export const captureOptionsSchema = z.object({
   viewport: viewportSchema.optional(),
   device: z.string().optional(),
   full_page: z.boolean().default(false),
+  full_page_algorithm: z.enum(["by_sections", "native"]).default("by_sections"),
+  full_page_scroll_delay: z.number().int().min(0).max(5000).optional(),
+  full_page_scroll_by: z.number().int().min(120).max(2160).optional(),
+  reduce_motion: z.boolean().default(true),
 
   // Output formatting
-  format: z.enum(CAPTURE_FORMATS).default("png"),
-  quality: z.number().int().min(1).max(100).default(85),
+  format: z.enum(CAPTURE_FORMATS).default("webp"),
+  quality: z.number().int().min(1).max(100).default(90),
 
   // Timing & Settlement
   delay: z.number().int().min(0).max(30000).default(0),
@@ -96,8 +101,8 @@ export const captureOptionsSchema = z.object({
   wait_for_selector: z.string().optional(),
   wait_for_content: z.boolean().default(false),
   wait_for_idle: z.boolean().default(true),
-  wait_until: z.enum(WAIT_UNTIL_EVENTS).default("networkidle"),
-  fail_if_incomplete: z.boolean().default(true),
+  wait_until: z.enum(WAIT_UNTIL_EVENTS).default("load"),
+  fail_if_incomplete: z.boolean().default(false),
   fail_if_content_missing: z.array(z.string().trim().min(1).max(500)).max(32).default([]),
   fail_if_content_contains: z.array(z.string().trim().min(1).max(500)).max(32).default([]),
   min_capture_height: z.number().int().positive().optional(),
@@ -118,6 +123,7 @@ export const captureOptionsSchema = z.object({
   // Content Filters & Stealth
   block_ads: z.boolean().default(true),
   block_cookie_banners: z.boolean().default(true),
+  block_chats: z.boolean().default(true),
   block_trackers: z.boolean().default(true),
 
   // DOM Tweaks & Element Targeting
