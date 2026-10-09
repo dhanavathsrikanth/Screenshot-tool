@@ -4,28 +4,47 @@ import { DEFAULT_SYNC_TIMEOUT_MS, QUEUE_DEFAULTS, resolveQueueConfig } from "./c
 
 describe("resolveQueueConfig", () => {
   it("falls back to a local Redis when REDIS_URL is absent", () => {
-    const previous = process.env.REDIS_URL;
+    const previousRedisUrl = process.env.REDIS_URL;
+    const previousUpstashRedisUrl = process.env.UPSTASH_REDIS_URL;
     delete process.env.REDIS_URL;
+    delete process.env.UPSTASH_REDIS_URL;
     try {
       assert.equal(resolveQueueConfig().redisUrl, "redis://127.0.0.1:6379");
     } finally {
-      if (previous !== undefined) {
-        process.env.REDIS_URL = previous;
-      }
+      if (previousRedisUrl === undefined) delete process.env.REDIS_URL;
+      else process.env.REDIS_URL = previousRedisUrl;
+      if (previousUpstashRedisUrl === undefined) delete process.env.UPSTASH_REDIS_URL;
+      else process.env.UPSTASH_REDIS_URL = previousUpstashRedisUrl;
     }
   });
 
   it("reads redisUrl from the environment", () => {
-    const previous = process.env.REDIS_URL;
+    const previousRedisUrl = process.env.REDIS_URL;
+    const previousUpstashRedisUrl = process.env.UPSTASH_REDIS_URL;
     process.env.REDIS_URL = "redis://queue.internal:6380/3";
+    delete process.env.UPSTASH_REDIS_URL;
     try {
       assert.equal(resolveQueueConfig().redisUrl, "redis://queue.internal:6380/3");
     } finally {
-      if (previous === undefined) {
-        delete process.env.REDIS_URL;
-      } else {
-        process.env.REDIS_URL = previous;
-      }
+      if (previousRedisUrl === undefined) delete process.env.REDIS_URL;
+      else process.env.REDIS_URL = previousRedisUrl;
+      if (previousUpstashRedisUrl === undefined) delete process.env.UPSTASH_REDIS_URL;
+      else process.env.UPSTASH_REDIS_URL = previousUpstashRedisUrl;
+    }
+  });
+
+  it("prefers the Upstash TCP URL when both Redis variables are set", () => {
+    const previousRedisUrl = process.env.REDIS_URL;
+    const previousUpstashRedisUrl = process.env.UPSTASH_REDIS_URL;
+    process.env.REDIS_URL = "redis://old-redis.internal:6379";
+    process.env.UPSTASH_REDIS_URL = "rediss://default:token@upstash.example:6379";
+    try {
+      assert.equal(resolveQueueConfig().redisUrl, "rediss://default:token@upstash.example:6379");
+    } finally {
+      if (previousRedisUrl === undefined) delete process.env.REDIS_URL;
+      else process.env.REDIS_URL = previousRedisUrl;
+      if (previousUpstashRedisUrl === undefined) delete process.env.UPSTASH_REDIS_URL;
+      else process.env.UPSTASH_REDIS_URL = previousUpstashRedisUrl;
     }
   });
 

@@ -7,7 +7,7 @@ The billing dashboard uses `@dodopayments/nextjs` for checkout and customer port
 - `DODO_PAYMENTS_ENVIRONMENT` as `test_mode` until live checkout is ready.
 - `DODO_PAYMENTS_RETURN_URL` as the absolute dashboard URL to return to after checkout.
 - `DODO_PRODUCT_PRO`, `DODO_PRODUCT_SCALE`, and `DODO_PRODUCT_CREDITS_10K`, `DODO_PRODUCT_CREDITS_50K`, `DODO_PRODUCT_CREDITS_250K` as the matching Dodo product IDs. Pro and Scale must be recurring products; credit packs must be one-time products.
-- `REDIS_URL` (or `UPSTASH_REDIS_URL`) using the Redis TCP connection already used by the API and worker.
+- `UPSTASH_REDIS_URL` from Upstash Connect > TCP (or `REDIS_URL` for another Redis provider). Use the same `rediss://` URL in the Vercel app and the API/worker; the Upstash REST URL and token cannot connect BullMQ.
 
 Hosted dashboard captures require this TCP connection and the worker fleet. API and dashboard share account admission: 60 capture attempts per rolling minute and five pending/running captures per account with the default configuration. Production returns a retryable HTTP 503 if admission is unavailable. HTTP 429 responses include `Retry-After`. Set `SNAPFORGE_LOCAL_CAPTURE=1` only in development to explicitly use the local inline adapter; production always uses the queue. See [the shared service migration](../../docs/shared-capture-service.md) for verification and remaining deployment work.
 

@@ -77,7 +77,7 @@ const resolveSyncTimeoutMs = (input: QueueConfigInput): number => {
 };
 
 export function resolveQueueConfig(input: QueueConfigInput = {}): QueueConfig {
-  const envRedisUrl = process.env.REDIS_URL?.trim() || process.env.UPSTASH_REDIS_URL?.trim();
+  const envRedisUrl = process.env.UPSTASH_REDIS_URL?.trim() || process.env.REDIS_URL?.trim();
   const redisUrl = input.redisUrl ?? envRedisUrl ?? "redis://127.0.0.1:6379";
 
   if (typeof redisUrl !== "string" || redisUrl.trim() === "") {
