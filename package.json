@@ -9,11 +9,5 @@
     "lint": "pnpm -r run lint",
     "gauntlet": "node apps/benchmark/dist/src/cli.js"
   },
-"packageManager": "pnpm@11.13.1",
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "msgpackr-extract",
-      "unrs-resolver"
-    ]
-  }
+  "packageManager": "pnpm@11.13.1"
 }
